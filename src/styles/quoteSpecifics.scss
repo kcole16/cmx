@@ -1,0 +1,129 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+$main-bg-color: #fffff;
+$main-blue: #2B4175;
+$main-green: #2BC6A8;
+$light-gray: #F9F9F9;
+$dark-gray: #5D6163;
+$border-color: #E6E6E6;
+
+.layout-container {
+  font-family: 'Roboto', sans-serif;
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
+}
+
+.title {
+  margin: 10px;
+  font-size: 18px;
+  font-weight: lighter;
+  color: $main-blue;
+}
+
+.form-row {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-flow: row wrap;
+  margin: 10px;
+
+  .form-data {
+    display: flex;
+    flex: 3;
+    flex-direction: column;
+
+    label {
+      color: $dark-gray;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 80%;
+      width: 330px;
+      border: $border-color 1px solid;
+      border-radius: 4px;
+      padding-left: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.request-button {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  button {
+    border: none;
+    height: 50px;
+    width: 200px;
+    background-color: $main-green;
+    color: white;
+    font-size: 16px;
+    border-radius: 3px;
+  }
+}
+
+.titles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid $main-blue;
+  }
+
+  .order {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-flow: row wrap;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .detail {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center; 
+
+      input {
+        width: 150px;
+        margin: 10px;
+        border: $border-color 1px solid;
+        border-radius: 4px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+      }
+    }
+
+  }
+}
+
+.add-order {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 140px;
+  color: $dark-gray;
+  img {
+    height: 15px;
+    width: 15px;
+    margin-right: 10px;
+  }
+}
