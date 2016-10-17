@@ -1,6 +1,6 @@
 import {configureStore} from '../store/configureStore';
 
-const url_base = 'http://localhost:5000';
+const url_base = 'http://commodityx.5634.flynnhub.com';
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
