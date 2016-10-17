@@ -6,7 +6,8 @@ from passlib.hash import sha256_crypt
 from settings import DATABASE_URI
 
 application = Flask(__name__)
-application.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+application.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fc131f658f39b82d84cadb8fb4f6b8dc:ec224d27d943493e9382c6a87b58f942@leader.postgres.discoverd:5432/be84d1b4d08b9c9822edffbe8d93efd1'
+
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)
 
