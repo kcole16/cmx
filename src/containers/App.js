@@ -3,8 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { Link } from 'react-router'
-import Login from '../containers/Login';
 import Suppliers from '../layouts/Suppliers/Suppliers';
+import Logo from '../assets/img/cxlogo.png';
+import Login from './Login';
 
 class App extends Component {
   constructor(props) {
@@ -13,25 +14,25 @@ class App extends Component {
 
   render() {
     const {state} = this.props;
-
-    // let content = <Login />;
-    
-    // if (state.user.user_id) {
-    // let content = <div style={{ marginTop: '1.5em' }}>{this.props.children}</div>;
-    let content = <Suppliers />;
-    // };
+    let content = <Login />;
+    if (state.user.isAuthenticated) {
+      content =  <div>
+                      <div className="main-bar">
+                        <Link className="nav-link" to="suppliers" activeClassName="active">Port & Suppliers</Link>
+                        <Link className="nav-link" to="quoteSpecifics" activeClassName="active">Quote Specifics</Link>
+                        <Link className="nav-link" to="viewQuotes" activeClassName="active">View Quotes</Link>
+                      </div>
+                      <div className="main-app-container">
+                        {this.props.children}
+                      </div>
+                     </div>;
+    };
     return (
           <div className="container">
             <div className="navbar">
+              <img src={Logo} />
             </div>
-            <div className="main-bar">
-              <Link className="nav-link" to="suppliers" activeClassName="active">Port & Suppliers</Link>
-              <Link className="nav-link" to="quoteSpecifics" activeClassName="active">Quote Specifics</Link>
-              <Link className="nav-link" to="viewQuotes" activeClassName="active">View Quotes</Link>
-            </div>
-            <div className="main-app-container">
-              {this.props.children}
-            </div>
+            {content}
           </div>
       )
     }

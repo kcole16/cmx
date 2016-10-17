@@ -1,0 +1,43 @@
+$main-bg-color: #fffff;
+$main-blue: #2B4175;
+$main-green: #2BC6A8;
+$light-gray: #F9F9F9;
+$dark-gray: #5D6163;
+$border-color: #E6E6E6;
+
+.login-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.login {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.login-name {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  .login-label {
+    margin-bottom: 10px;
+    label {
+      color: $dark-gray;
+      margin-bottom: 10px;
+    }
+  }
+
+  input {
+    width: 330px;
+    border: $border-color 1px solid;
+    border-radius: 4px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+  }
+}

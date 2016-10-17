@@ -1,6 +1,6 @@
 import {configureStore} from '../store/configureStore';
 
-const url_base = 'https://entrywire.fwd.wf';
+const url_base = 'http://localhost:5000';
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ function generateHeaders() {
   const store = configureStore();
   const state = store.getState();
   headers.user_id = state.user.user_id;
-  headers.auth_token = state.user.auth_token;
+  headers['Authorization'] = 'JWT '+state.user.access_token;
   return headers
 }
 

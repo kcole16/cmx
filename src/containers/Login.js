@@ -1,3 +1,4 @@
+require('../styles/login.scss');
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,23 +21,20 @@ class Login extends Component {
     const {fields: {email, password}} = this.props;
     return (
       <div className="login-container">
-        <div className="header">
-          <label>LOGIN</label>
-        </div>
         <div className="login">
           <div className="login-name">
             <div className="login-label">
-              <label>Email:</label>
+              <label>Email</label>
             </div>
             <input type="text" className="create-input" {...email}/>
           </div>
           <div className="login-name">
             <div className="login-label">
-              <label>Password:</label>
+              <label>Password</label>
             </div>
             <input type="password" className="create-input" {...password}/>
           </div>
-          <div className="login-button">
+          <div className="request-button">
             <button onClick={this.handleSubmit}>Login</button>
           </div>
         </div>

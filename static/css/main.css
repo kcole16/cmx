@@ -1,0 +1,158 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+/*$main-bg-color: #fffff;
+$main-blue: #2B4175;
+$main-green: #2BC6A8;
+$light-gray: #F9F9F9;
+$dark-gray: #5D6163;
+$border-color: #E6E6E6;
+$error-background: #FFCCCC;
+$error-red: #a94442;*/
+
+body {
+  width: 100%;
+  background-color: white;
+  font-family: 'Roboto script=all rev=1', sans-serif;
+}
+
+.main-app-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.layout-container {
+  font-family: 'Roboto', sans-serif;
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+}
+
+.main-app-nav {
+  font-size: 2em;
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  background-color: #2B4175;
+  height: 50px;
+  width: 100%;
+}
+
+.navbar img {
+  width: 200px;
+}
+
+.main-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  height: 150px;
+  width: 100%;
+  background-color: #F9F9F9;
+  border-bottom: 1px lightgray solid;
+}
+
+.main-bar-label {
+  margin-left: 5%;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  font-size: 30px;
+  font-weight: lighter;
+  color: #2B4175;
+}
+
+.title {
+  margin: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #2B4175;
+}
+
+.create-input {
+  height: 30px;
+  width: 330px;
+  background-color: #F9F9F9;
+  border: 1px solid #E6E6E6;
+  border-radius: 4px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.error-input {
+  height: 30px;
+  width: 330px;
+  background-color: #FFCCCC;
+  border: 2px solid #a94442;
+}
+
+.error {
+  color: #a94442;
+}
+
+.form-row {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-flow: row wrap;
+  margin: 10px;
+}
+
+.form-data {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.form-data label {
+  color: #5D6163;
+  margin-bottom: 10px;
+}
+
+.request-button {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 50px;
+}
+
+button {
+  border: none;
+  height: 50px;
+  width: 200px;
+  background-color: #2BC6A8;
+  color: white;
+  font-size: 16px;
+  border-radius: 3px;
+}
+
+.attributes {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+
+.attribute {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.attributes label {
+  color: #5D6163;
+}
+

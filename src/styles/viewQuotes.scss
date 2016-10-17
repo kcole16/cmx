@@ -7,14 +7,6 @@ $light-gray: #F9F9F9;
 $dark-gray: #5D6163;
 $border-color: #E6E6E6;
 
-.layout-container {
-  font-family: 'Roboto', sans-serif;
-  width: 80%;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 10px;
-}
-
 .suppliers {
 
   .supplier {
@@ -80,4 +72,67 @@ $border-color: #E6E6E6;
     }
   }
   
+}
+
+.deal-summary {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+
+  .title {
+    display: flex;
+    flex: 1;
+    align-self: center;
+    font-size: 18px;
+    color: $dark-gray;
+    margin-bottom: 30px;
+  }
+
+  .descriptor {
+    font-size: 18px;
+    font-weight: lighter;
+    color: $main-blue;
+    margin-bottom: 20px;
+  }
+
+  .attributes {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    margin-bottom: 30px;
+
+    .attribute {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      label {
+        color: $dark-gray;
+      }
+    }
+  }
+}
+
+.order {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .order-attribute {
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: center;
+
+    p {
+      margin: 0px;
+    }
+  }
 }

@@ -1,14 +1,14 @@
 export const STORE_USER = 'STORE_USER';
 
-export function storeUser(user) {
+export function storeUser(access_token) {
   return {
     type: STORE_USER,
-    user: user
+    access_token: access_token.access_token
   };
 }
 
 export function fetchLogin(user) {
-  const url = 'https://movements-staging.herokuapp.com/v1/sign_in';
+  const url = 'http://localhost:5000/auth';
   const obj = {
     method: 'POST',
     headers: {

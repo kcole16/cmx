@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CommodityX</title>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- 	<script>
+	$( function() {
+		$( "#eta" ).datepicker();
+	} );
+	</script> -->
+  </head>
+  <body>
+    <div class="navbar">
+      <img src="{{ url_for('static', filename='img/cxlogo.png') }}"/>
+    </div>
+	<div class="main-bar">
+		<label class="main-bar-label">Deal for {{deal.buyer}}</label>
+	</div>
+	<div class="main-app-container">
+		<label class="main-bar-label" style="margin-left: 0px">Thank you for submitting a quote!</label>
+	</div>
+  </body>
+</html>

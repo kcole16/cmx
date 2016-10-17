@@ -8,6 +8,10 @@ import { syncHistoryWithStore } from 'react-router-redux'
 
 import App from './App';
 
+import Suppliers from '../layouts/Suppliers/Suppliers';
+import QuoteSpecifics from '../layouts/QuoteSpecifics/QuoteSpecifics';
+import ViewQuotes from '../layouts/ViewQuotes/ViewQuotes';
+
 module.exports = class Root extends Component {
   render() {
     const { store } = this.props;
@@ -21,6 +25,9 @@ module.exports = class Root extends Component {
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={App}>
+            <Route path="suppliers" component={Suppliers}/>
+            <Route path="quoteSpecifics" component={QuoteSpecifics}/>
+            <Route path="viewQuotes" component={ViewQuotes}/>
           </Route>
         </Router>
       </Provider>

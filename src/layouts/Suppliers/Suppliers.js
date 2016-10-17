@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
-import {reduxForm, getValues} from 'redux-form';
+import { browserHistory } from 'react-router'
 import Supplier from './components/Supplier';
 
 class Suppliers extends Component {
@@ -12,25 +12,33 @@ class Suppliers extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+    this.selectPort = this.selectPort.bind(this);
   }
 
   handleSubmit() {
-    const {state, actions} = this.props;
-    const form = getValues(state.form.login);
-    actions.fetchLogin(form);
+    browserHistory.push('quoteSpecifics');
   }
 
-  handleCheck(value) {
-    // const {state, actions} = this.props;
-    // const form = getValues(state.form.login);
-    // actions.fetchLogin(form);
+  handleCheck(event) {
+    const {state, actions} = this.props;
+    console.log(actions);
+
+    actions.addSupplier(event.target.value);
+  }
+
+  selectPort(event) {
+    const {actions} = this.props;
+    actions.selectPort(event.target.value);
   }
 
   render() {
+    const {state} = this.props;
     const supplierList = [{
       name: 'Supplier A'
     },{
       name: 'Supplier B'
+    }, ,{
+      name: 'Supplier C'
     }];
     const portList = [{
       name: 'Singapore',
@@ -43,21 +51,21 @@ class Suppliers extends Component {
       id: 9
     }];
     const handleCheck = this.handleCheck;
-    const suppliers = supplierList.map(function(supplier) {
+    const suppliers = supplierList.map(function(supplier, index) {
       return (
-            <Supplier key={supplier.name} supplier={supplier} handleCheck={handleCheck} />
+            <Supplier key={index} supplier={supplier} handleCheck={handleCheck}/>
         );
     });
-    const ports = portList.map(function(port) {
+    const ports = portList.map(function(port, index) {
       return (
-            <option id={port.id} value={port.id}>{port.name}</option>
+            <option key={index} id={port.id} value={port.id}>{port.name}</option>
         );
     });
     return (
       <div className="layout-container">
         <div className="port-select">
           <label>Select Port</label>
-          <select className="styled-select">
+          <select className="styled-select" onChange={this.selectPort} value={state.deals.deal.port}>
             {ports}
           </select>
         </div>
@@ -72,7 +80,7 @@ class Suppliers extends Component {
         <div className="suppliers">
           {suppliers}
         </div>
-        <div className="request-button">
+        <div className="request-button" id="suppliers">
           <button onClick={this.handleSubmit}>Request Quotes</button>
         </div>
       </div>

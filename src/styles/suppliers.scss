@@ -7,14 +7,6 @@ $light-gray: #F9F9F9;
 $dark-gray: #5D6163;
 $border-color: #E6E6E6;
 
-.layout-container {
-  font-family: 'Roboto', sans-serif;
-  width: 80%;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 10px;
-}
-
 .suppliers {
   display: flex;
   flex-direction: column;
@@ -39,7 +31,7 @@ $border-color: #E6E6E6;
   }
 }
 
-.request-button {
+.request-button#suppliers {
   display: flex;
   flex: 1;
   align-items: flex-end;

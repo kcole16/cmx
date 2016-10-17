@@ -7,14 +7,6 @@ $light-gray: #F9F9F9;
 $dark-gray: #5D6163;
 $border-color: #E6E6E6;
 
-.layout-container {
-  font-family: 'Roboto', sans-serif;
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 10px;
-}
-
 .title {
   margin: 10px;
   font-size: 18px;
@@ -31,7 +23,7 @@ $border-color: #E6E6E6;
 
   .form-data {
     display: flex;
-    flex: 3;
+    flex: 1;
     flex-direction: column;
 
     label {
@@ -40,9 +32,7 @@ $border-color: #E6E6E6;
     }
 
     input {
-      width: 80%;
       width: 330px;
-      border: $border-color 1px solid;
       border-radius: 4px;
       padding-left: 10px;
       margin-bottom: 10px;

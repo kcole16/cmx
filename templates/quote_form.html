@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CommodityX</title>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- 	<script>
+	$( function() {
+		$( "#eta" ).datepicker();
+	} );
+	</script> -->
+  </head>
+  <body>
+    <div class="navbar">
+      <img src="{{ url_for('static', filename='img/cxlogo.png') }}"/>
+    </div>
+	<div class="main-bar">
+		<label class="main-bar-label">Deal for {{deal.buyer}}</label>
+	</div>
+	<div class="main-app-container">
+		<label class="title">Deal Details</label>
+        <div class="attributes">
+          <div class="attribute">
+            <label>Port</label>
+            <p>{{deal.port}}</p>
+          </div>
+          <div class="attribute">
+            <label>Vessel</label>
+            <p>{{deal.vessel}}</p>
+          </div>
+          <div class="attribute">
+            <label>ETA</label>
+            <p>{{deal.eta}}</p>
+          </div>
+          <div class="attribute">
+            <label>ETD</label>
+            <p>{{deal.etd}}</p>
+          </div>
+        </div>
+		<label class="title">Enter Quote</label>
+		<form method="post" action="/send_quote">
+	      <div class="form-row">
+	        <div class="form-data">
+	          <label>GasOil Price ($USD)</label>
+	          <input type="text" name="gas_oil" class="create-input" />
+	        </div>
+	        <div class="form-data">
+	          <label>FuelOil Price ($USD)</label>
+	          <input type="text" name="fuel_oil" class="create-input"/>
+	        </div>
+	      </div>
+	      <div class="form-row">
+	        <div class="form-data">
+	          <label>Expiration</label>
+	          <input type="text" name="expiration" class="create-input" placeholder="30 minutes"/>
+	        </div>
+	        <div class="form-data">
+	          <label>Payment Terms</label>
+	          <input type="text" name="terms" class="create-input" placeholder="Net 30"/>
+	        </div>
+	      </div>
+	        <input type="text" name="supplier_id" value="{{supplier_id}}" hidden />
+	        <input type="text" name="deal_id" value="{{deal_id}}" hidden />
+	      <div class="request-button">
+	        <button type="submit">Request Quotes</button>
+	      </div>
+	    </form>
+	</div>
+  </body>
+</html>
