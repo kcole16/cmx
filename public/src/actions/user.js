@@ -1,3 +1,4 @@
+import { url_base } from '../api';
 export const STORE_USER = 'STORE_USER';
 
 export function storeUser(access_token) {
@@ -8,7 +9,7 @@ export function storeUser(access_token) {
 }
 
 export function fetchLogin(user) {
-  const url = 'http://localhost:5000/auth';
+  let url = url_base+'/auth';
   const obj = {
     method: 'POST',
     headers: {
