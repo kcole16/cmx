@@ -46,8 +46,12 @@ class Suppliers extends Component {
       name: 'Lome',
       id: 9
     }];
+    let supplierList = state.deals.suppliers;
+    if (supplierList === undefined) {
+      supplierList = [];
+    };
     const handleCheck = this.handleCheck;
-    const suppliers = state.deals.suppliers.map(function(supplier, index) {
+    const suppliers = supplierList.map(function(supplier, index) {
       return (
             <Supplier key={index} supplier={supplier} handleCheck={handleCheck}/>
         );
