@@ -69,6 +69,14 @@ def request_quotes():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+@application.route('/getSuppliers', methods=['GET'])
+@jwt_required()
+def get_suppliers():
+    suppliers = [{'name': supplier.name} for supplier in Supplier.query.all()]
+    response = jsonify({'suppliers': suppliers})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 @application.route('/send_quote', methods=['GET','POST'])
 def send_quote():
     if request.method == 'POST':

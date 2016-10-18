@@ -3,12 +3,13 @@ import {
 	SELECT_PORT,
   ADD_SUPPLIER,
   SET_DEAL,
-  ADD_QUOTE
+  ADD_QUOTE,
+  GET_SUPPLIERS
 } from '../actions/index';
 
 const initialState = {
   deal: {
-    port: null,
+    port: 'Sinagpore',
     suppliers: [],
     vessel: null,
     imo: null,
@@ -22,15 +23,10 @@ const initialState = {
     portCallReason: null,
     agent: null,
     currency: null,
-    orders: [{
-      quality: null,
-      spec: null,
-      maxSulphur: null,
-      quantity: null,
-      unit: null
-    }],
+    orders: [],
     quotes: []
-  }
+  },
+  suppliers: []
 };
 
 function isUndefined(param) {
@@ -60,8 +56,8 @@ export default function deals(state = initialState, action={}) {
     };
     deal.suppliers = suppliers;
     return {
-      deal: deal,
-      ...state
+      ...state,
+      deal: deal
     };
   case SET_DEAL:
     return {
@@ -73,6 +69,11 @@ export default function deals(state = initialState, action={}) {
     deal.quotes = quotes;
     return {
       deal: deal
+    };
+  case GET_SUPPLIERS:
+    return {
+      ...state,
+      suppliers: action.suppliers
     };
   default:
     return state;

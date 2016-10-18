@@ -15,14 +15,17 @@ class Suppliers extends Component {
     this.selectPort = this.selectPort.bind(this);
   }
 
+  componentWillMount() {
+    const {actions} = this.props;
+    actions.fetchGetSuppliers();
+  }
+
   handleSubmit() {
     browserHistory.push('quoteSpecifics');
   }
 
   handleCheck(event) {
     const {state, actions} = this.props;
-    console.log(actions);
-
     actions.addSupplier(event.target.value);
   }
 
@@ -33,13 +36,6 @@ class Suppliers extends Component {
 
   render() {
     const {state} = this.props;
-    const supplierList = [{
-      name: 'Supplier A'
-    },{
-      name: 'Supplier B'
-    }, ,{
-      name: 'Supplier C'
-    }];
     const portList = [{
       name: 'Singapore',
       id: 7
@@ -51,14 +47,14 @@ class Suppliers extends Component {
       id: 9
     }];
     const handleCheck = this.handleCheck;
-    const suppliers = supplierList.map(function(supplier, index) {
+    const suppliers = state.deals.suppliers.map(function(supplier, index) {
       return (
             <Supplier key={index} supplier={supplier} handleCheck={handleCheck}/>
         );
     });
     const ports = portList.map(function(port, index) {
       return (
-            <option key={index} id={port.id} value={port.id}>{port.name}</option>
+            <option key={index} id={port.id} value={port.name}>{port.name}</option>
         );
     });
     return (

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
 import {reduxForm, getValues} from 'redux-form';
+import { browserHistory } from 'react-router';
 import Quote from './components/Quote';
 import DealSummary from '../../components/DealSummary';
 import Pusher from 'pusher-js';
@@ -18,10 +19,13 @@ class ViewQuotes extends Component {
   }
 
   componentDidMount() {
-    const {actions} = this.props;
+    const {state, actions} = this.props;
     this.channel.bind('my_event', function(data) {
       actions.addQuote(data);
     }, this);
+    if (state.deals.deal.orders.length <= 0) {
+      browserHistory.push('/quoteSpecifics');
+    };
   }
 
   handleSubmit() {

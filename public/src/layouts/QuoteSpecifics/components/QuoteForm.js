@@ -6,7 +6,7 @@ import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../../assets/img/add-plus-button.png';
 
 export const fields = ['vessel', 'imo', 'po', 'buyer', 'vesselType', 'requisition',
-    'orderedBy','portCallReason', 'agent', 'currency', 'orders[].quality',
+    'orderedBy','portCallReason', 'agent', 'eta', 'etd', 'currency', 'orders[].quality',
     'orders[].spec', 'orders[].maxSulphur', 'orders[].quantity', 'orders[].unit'];
 
 const validate = values => {
@@ -40,6 +40,9 @@ const validate = values => {
   }
   if (!values.currency) {
     errors.currency = 'Required'
+  }
+  if (!values.orders.length) {
+    errors.orders = 'Please add at least one order'
   }
   return errors
 }
@@ -150,7 +153,7 @@ class QuoteForm extends Component {
             </div>
           </div>
           <div className="orders">
-          {!orders.length && <div></div>}
+          {!orders.length && <div className="error">Please add at least one order</div>}
           {orders.map((order, index) => 
             <div className="order" key={index}>
               <div className="detail">

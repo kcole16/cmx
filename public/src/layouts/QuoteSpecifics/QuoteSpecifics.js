@@ -24,17 +24,28 @@ class QuoteSpecifics extends Component {
     }
   }
 
+  componentDidMount() {
+    const {state} = this.props;
+    if (state.deals.deal.suppliers.length <= 0) {
+      browserHistory.push('/suppliers');
+    }
+  }
+
   handleSubmit() {
     const {state, actions} = this.props;
     const deal = state.deals.deal;
     const form = getValues(state.form.quote);
     form.port = deal.port;
     form.suppliers = deal.suppliers;
-    form.eta = this.state.eta.format('YYYY/MM/DD').toString();;
-    form.etd = this.state.etd.format('YYYY/MM/DD').toString();;
-    actions.setDeal(form);
-    actions.fetchCreateQuotes(form);
-    browserHistory.push('/viewQuotes');
+    try {
+      form.eta = this.state.eta.format('YYYY/MM/DD').toString();
+      form.etd = this.state.etd.format('YYYY/MM/DD').toString();
+      actions.setDeal(form);
+      actions.fetchCreateQuotes(form);
+      browserHistory.push('/viewQuotes');
+    } catch(err) {
+      alert('Please enter ETA and ETD');
+    }
   }
 
   onEtaChange(date) {
