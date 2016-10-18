@@ -9,6 +9,9 @@ $border-color: #E6E6E6;
 $error-background: #FFCCCC;
 $error-red: #a94442;
 
+$break-small: 450px;
+$break-large: 1200px;
+
 body {
   background-color: $main-bg-color;
   display: flex;
@@ -103,6 +106,10 @@ footer {
     justify-content: center;
     text-decoration: none;
     font-weight: 100;
+    @media screen and (max-width: $break-small) {
+      margin-right: 20px;
+      margin-left: 20px;
+    }
   }
 
   .active {

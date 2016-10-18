@@ -157,19 +157,19 @@ class QuoteForm extends Component {
           {orders.map((order, index) => 
             <div className="order" key={index}>
               <div className="detail">
-                <input className="create-input" {...order.quality}/>
+                <input className="create-input" placeholder="Quality" {...order.quality}/>
               </div>
               <div className="detail">
-                <input className="create-input" {...order.spec}/>
+                <input className="create-input" placeholder="Spec" {...order.spec}/>
               </div>
               <div className="detail">
-                <input className="create-input" {...order.maxSulphur}/>
+                <input className="create-input" placeholder="Max Sulphur" {...order.maxSulphur}/>
               </div>
               <div className="detail">
-                <input className="create-input" {...order.quantity}/>
+                <input className="create-input" placeholder="Quantity" {...order.quantity}/>
               </div>
               <div className="detail">
-                <input className="create-input" {...order.unit}/>
+                <input className="create-input" placeholder="Unit" {...order.unit}/>
               </div>
             </div>)}
           </div>

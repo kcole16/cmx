@@ -7,6 +7,10 @@ $light-gray: #F9F9F9;
 $dark-gray: #5D6163;
 $border-color: #E6E6E6;
 
+$break-small: 450px;
+$break-medium: 770px;
+$break-large: 1200px;
+
 .title {
   margin: 10px;
   font-size: 18px;
@@ -36,6 +40,9 @@ $border-color: #E6E6E6;
       border-radius: 4px;
       padding-left: 10px;
       margin-bottom: 10px;
+      @media screen and (max-width: $break-small) {
+        width: 260px;
+      }
     }
   }
 }
@@ -97,9 +104,15 @@ $border-color: #E6E6E6;
         border-radius: 4px;
         padding-left: 10px;
         margin-bottom: 10px;
+        @media screen and (max-width: $break-medium) {
+          width: 260px;
+        }
       }
     }
-
+    @media screen and (max-width: $break-medium) {
+      flex-direction: column;
+      border-bottom: 2px solid $main-blue;
+    }
   }
 }
 

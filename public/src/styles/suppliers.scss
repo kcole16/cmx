@@ -7,6 +7,9 @@ $light-gray: #F9F9F9;
 $dark-gray: #5D6163;
 $border-color: #E6E6E6;
 
+$break-small: 450px;
+$break-large: 1200px;
+
 .suppliers-select {
   display: flex;
   flex-direction: column;
@@ -27,6 +30,16 @@ $border-color: #E6E6E6;
       flex: 1;
       align-items: center;
       justify-content: center;
+
+      .logo-row {
+        width: 300px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        @media screen and (max-width: $break-small) {
+          width: 145px;
+        }
+      }
     }
   }
 }
@@ -69,6 +82,9 @@ $border-color: #E6E6E6;
       font-size: 18px;
       color: $main-blue;
       margin-bottom: 10px;
+      @media screen and (max-width: $break-small) {
+        font-size: 14px;
+      }
     }
   }
 }
