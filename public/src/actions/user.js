@@ -9,6 +9,7 @@ export function storeUser(access_token) {
 }
 
 export function fetchLogin(user) {
+  console.log(url_base);
   let url = url_base+'/auth';
   const obj = {
     method: 'POST',

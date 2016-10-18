@@ -1,6 +1,12 @@
 import {configureStore} from '../store/configureStore';
 
-export const url_base = 'http://commodityx.5634.flynnhub.com';
+const env = process.env.NODE_ENV;
+let app_url = 'http://localhost:5000';
+if (env === 'production') {
+  app_url = 'http://commodityx.5634.flynnhub.com/suppliers';
+};
+
+export const url_base = app_url;
 
 const defaultHeaders = {
   'Content-Type': 'application/json',

@@ -14,6 +14,7 @@ def getenv(key):
                return v
    return None
 
+APP_URL=getenv("APP_URL")
 DATABASE_URI=getenv("DATABASE_URI")
 MAILGUN_API_KEY=getenv("MAILGUN_API_KEY")
 MAILGUN_APP=getenv("MAILGUN_APP")
