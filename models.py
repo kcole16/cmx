@@ -64,12 +64,14 @@ class Deal(db.Model):
 
 class Supplier(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True)
-    email = db.Column(db.String(120), unique=True)
+    name = db.Column(db.String(120), unique=False)
+    email = db.Column(db.String(120), unique=False)
+    port = db.Column(db.String(120), unique=False)
 
-    def __init__(self, name, email):
+    def __init__(self, name, email, port):
         self.name = name
         self.email = email
+        self.port = port
 
     def __str__(self):
         return "Supplier(id='%s')" % self.id

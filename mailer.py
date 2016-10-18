@@ -9,7 +9,7 @@ def send_message(supplier, deal):
 		"https://api.mailgun.net/v3/%s/messages" % MAILGUN_APP,
 		auth=("api", MAILGUN_API_KEY),
 		data={"from": "CommodityX <mailgun@sandboxdf65ab935f4644c28e2f811710a08f02.mailgun.org>",
-			  "to": [supplier.email],
+			  "to": ['kcole16@gmail.com'],
 			  "subject": subject,
 			  "text": message})
 

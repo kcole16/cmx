@@ -16,8 +16,8 @@ class Suppliers extends Component {
   }
 
   componentWillMount() {
-    const {actions} = this.props;
-    actions.fetchGetSuppliers();
+    const {state, actions} = this.props;
+    actions.fetchGetSuppliers(state.deals.deal.port);
   }
 
   handleSubmit() {
@@ -31,7 +31,7 @@ class Suppliers extends Component {
 
   selectPort(event) {
     const {actions} = this.props;
-    actions.selectPort(event.target.value);
+    actions.fetchGetSuppliers(event.target.value);
   }
 
   render() {
@@ -40,11 +40,8 @@ class Suppliers extends Component {
       name: 'Singapore',
       id: 7
     },{
-      name: 'Lagos',
+      name: 'Rotterdam',
       id: 8
-    },{
-      name: 'Lome',
-      id: 9
     }];
     let supplierList = state.deals.suppliers;
     if (supplierList === undefined) {
@@ -77,7 +74,7 @@ class Suppliers extends Component {
             <label>Select</label>
           </div>
         </div>
-        <div className="suppliers">
+        <div className="suppliers-select">
           {suppliers}
         </div>
         <div className="request-button" id="suppliers">

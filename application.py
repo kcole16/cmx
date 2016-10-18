@@ -72,7 +72,8 @@ def request_quotes():
 @application.route('/getSuppliers', methods=['GET'])
 @jwt_required()
 def get_suppliers():
-    suppliers = [{'name': supplier.name} for supplier in Supplier.query.all()]
+    port = request.args['port']
+    suppliers = [{'name': supplier.name} for supplier in Supplier.query.filter_by(port=port)]
     response = jsonify({'suppliers': suppliers})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

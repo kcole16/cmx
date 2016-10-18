@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   deal: {
-    port: 'Sinagpore',
+    port: 'Singapore',
     suppliers: [],
     vessel: null,
     imo: null,

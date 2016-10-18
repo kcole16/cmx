@@ -52,13 +52,14 @@ export function fetchCreateQuotes(deal) {
   }
 }
 
-export function fetchGetSuppliers(suppliers) {
-  const route = '/getSuppliers'
+export function fetchGetSuppliers(port) {
+  const route = '/getSuppliers?port='+port;
   const req = generateRequest('GET', route);
   return dispatch => {
     return fetch(req.url, req.obj)
       .then(res => res.json())
       .then(json => dispatch(getSuppliers(json)))
+      .then(() => dispatch(selectPort(port)))
       .catch(err => console.log(err))
   }
 }
