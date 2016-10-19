@@ -40,7 +40,12 @@ class ViewQuotes extends Component {
     const handleSubmit = this.handleSubmit;
     const quoteList = supplierList.map(function(supplier, index) {
       return (
-            <Quote key={index} supplier={supplier} handleSubmit={handleSubmit} />
+            <Quote 
+              key={index} 
+              supplier={supplier} 
+              eta={state.deals.deal.eta}
+              etd={state.deals.deal.etd} 
+              handleSubmit={handleSubmit} />
         );
     });
     const quotes = <div>

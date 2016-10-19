@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 export default class Quote extends Component {
   render() {
-  	const {supplier, handleSubmit} = this.props;
+  	const {supplier, handleSubmit, eta, etd} = this.props;
     return (
 	      <div className="supplier">
 	        <div className="attribute">
@@ -14,7 +14,7 @@ export default class Quote extends Component {
 	          <p>{supplier.price}</p>
 	        </div>
 	        <div className="attribute">
-	          <p>{supplier.dates}</p>
+	          <p>{eta} - {etd}</p>
 	        </div>
 	        <div className="attribute">
 	          <p>{supplier.terms}</p>

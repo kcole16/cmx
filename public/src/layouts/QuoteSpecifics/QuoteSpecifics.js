@@ -38,8 +38,8 @@ class QuoteSpecifics extends Component {
     form.port = deal.port;
     form.suppliers = deal.suppliers;
     try {
-      form.eta = this.state.eta.format('YYYY/MM/DD').toString();
-      form.etd = this.state.etd.format('YYYY/MM/DD').toString();
+      form.eta = this.state.eta.format('DD/MM/YYYY').toString();
+      form.etd = this.state.etd.format('DD/MM/YYYY').toString();
       actions.setDeal(form);
       actions.fetchCreateQuotes(form);
       browserHistory.push('/viewQuotes');
