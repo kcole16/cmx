@@ -5,38 +5,17 @@ import FormMessages from 'redux-form-validation';
 import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../../assets/img/add-plus-button.png';
 
-export const fields = ['vessel', 'imo', 'po', 'buyer', 'vesselType', 'requisition',
-    'orderedBy','portCallReason', 'agent', 'eta', 'etd', 'currency', 'orders[].quality',
-    'orders[].spec', 'orders[].maxSulphur', 'orders[].quantity', 'orders[].unit'];
+export const fields = ['vessel', 'imo', 'buyer', 'grossTonnage', 'loa',
+    'orderedBy','portCallReason', 'agent', 'eta', 'etd', 'currency', 'orders[].grade',
+    'orders[].quantity', 'orders[].unit', 'orders[].specification', 'orders[].comments', 'additionalInfo'];
 
 const validate = values => {
   const errors = {}
   if (!values.vessel) {
     errors.vessel = 'Required'
   }
-  if (!values.imo) {
-    errors.imo = 'Required'
-  }
-  if (!values.po) {
-    errors.po = 'Required'
-  }
   if (!values.buyer) {
     errors.buyer = 'Required'
-  }
-  if (!values.vesselType) {
-    errors.vesselType = 'Required'
-  }
-  if (!values.requisition) {
-    errors.requisition = 'Required'
-  }
-  if (!values.orderedBy) {
-    errors.orderedBy = 'Required'
-  }
-  if (!values.portCallReason) {
-    errors.portCallReason = 'Required'
-  }
-  if (!values.agent) {
-    errors.agent = 'Required'
   }
   if (!values.currency) {
     errors.currency = 'Required'
@@ -54,8 +33,17 @@ class QuoteForm extends Component {
 
   render() {
     const {state, actions, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd} = this.props;
-    const {fields: {vessel, imo, po, buyer, vesselType, requisition,
-      orderedBy,portCallReason, agent, currency, orders}} = this.props;
+    const {fields: {vessel, imo, buyer, grossTonnage, loa,
+      orderedBy,portCallReason, agent, currency, orders, additionalInfo}} = this.props;
+    if (!orders.length) {
+      orders.addField({
+              grade: null,
+              quantity: null,
+              unit: null,
+              specification: null,
+              comments: null
+            })
+    };
     return (
       <div>
         <label className="title">Vessel Details</label>
@@ -63,42 +51,31 @@ class QuoteForm extends Component {
           <div className="form-row">
             <div className="form-data">
               <label>Vessel</label>
-              <input type="text" className={vessel.touched && vessel.error ? "error-input" : "create-input"} {...vessel}/>
+              <input type="text" placeholder="Search by Vessel" className={vessel.touched && vessel.error ? "error-input" : "create-input"} {...vessel}/>
               {vessel.touched && vessel.error && <div className="error">{vessel.error}</div>}
             </div>
             <div className="form-data">
-              <label>IMO</label>
-              <input type="text" className={imo.touched && imo.error ? "error-input" : "create-input"} {...imo}/>
-              {imo.touched && imo.error && <div className="error">{imo.error}</div>}
-            </div>
-            <div className="form-data">
-              <label>PO#</label>
-              <input type="text" className={po.touched && po.error ? "error-input" : "create-input"} {...po}/>
-              {po.touched && po.error && <div className="error">{po.error}</div>}
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-data">
-              <label>Buyer</label>
-              <input type="text" className={buyer.touched && buyer.error ? "error-input" : "create-input"} {...buyer}/>
+              <label>Buyer Name</label>
+              <input type="text" placeholder="Full Legal Style" className={buyer.touched && buyer.error ? "error-input" : "create-input"} {...buyer}/>
               {buyer.touched && buyer.error && <div className="error">{buyer.error}</div>}
             </div>
             <div className="form-data">
-              <label>Vessel Type</label>
-              <input type="text" className={vesselType.touched && vesselType.error ? "error-input" : "create-input"}{...vesselType}/>
-              {vesselType.touched && vesselType.error && <div className="error">{vesselType.error}</div>}
-            </div>
-            <div className="form-data">
-              <label>Requisition#</label>
-              <input type="text" className={requisition.touched && requisition.error ? "error-input" : "create-input"} {...requisition}/>
-              {requisition.touched && requisition.error && <div className="error">{requisition.error}</div>}
+              <label>Broker</label>
+              <input type="text" placeholder="(optional)" className="create-input" {...orderedBy}/>
             </div>
           </div>
           <div className="form-row">
             <div className="form-data">
-              <label>Ordered By</label>
-              <input type="text" className={orderedBy.touched && orderedBy.error ? "error-input" : "create-input"} {...orderedBy}/>
-              {orderedBy.touched && orderedBy.error && <div className="error">{orderedBy.error}</div>}
+              <label>IMO</label>
+              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...imo}/>
+            </div>
+            <div className="form-data">
+              <label>Gross Tonnage</label>
+              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...grossTonnage}/>
+            </div>
+            <div className="form-data">
+              <label>LOA</label>
+              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...loa}/>
             </div>
           </div>
           <label className="title">Requirements</label>
@@ -116,34 +93,29 @@ class QuoteForm extends Component {
                       onChange={onEtdChange} />
             </div>
             <div className="form-data">
-              <label>Port Call Reason</label>
-              <input type="text" className={portCallReason.touched && portCallReason.error ? "error-input" : "create-input"} {...portCallReason}/>
-              {portCallReason.touched && portCallReason.error && <div className="error">{portCallReason.error}</div>}
             </div>
           </div>
           <div className="form-row">
             <div className="form-data">
               <label>Agent</label>
-              <input type="text" className={agent.touched && agent.error ? "error-input" : "create-input"} {...agent}/>
-              {agent.touched && agent.error && <div className="error">{agent.error}</div>}
+              <input type="text" className="create-input" {...agent}/>
+            </div>
+            <div className="form-data">
+              <label>Port Call Reason</label>
+              <input type="text" className="create-input" {...portCallReason}/>
             </div>
             <div className="form-data">
               <label>Currency</label>
-              <input type="text" className={currency.touched && currency.error ? "error-input" : "create-input"} {...currency}/>
-              {currency.touched && currency.error && <div className="error">{currency.error}</div>}
-            </div>
-            <div className="form-data">
+              <select className="create-input" style={{height: 34, width: 343}} {...currency}>
+                <option value="usd">USD</option>
+                <option value="euro">Euro</option>
+                <option value="gbp">GBP</option>
+              </select>
             </div>
           </div>
           <div className="titles">
             <div className="title">
-              <label>Quality</label>
-            </div>
-            <div className="title">
-              <label>Spec</label>
-            </div>
-            <div className="title">
-              <label>Max Sulphur</label>
+              <label>Grade</label>
             </div>
             <div className="title">
               <label>Quantity</label>
@@ -151,19 +123,19 @@ class QuoteForm extends Component {
             <div className="title">
               <label>Unit</label>
             </div>
+            <div className="title">
+              <label>Specification</label>
+            </div>
+            <div className="title">
+              <label>Comments</label>
+            </div>
           </div>
           <div className="orders">
           {!orders.length && <div className="error">Please add at least one order</div>}
           {orders.map((order, index) => 
             <div className="order" key={index}>
               <div className="detail">
-                <input className="create-input" placeholder="Quality" {...order.quality}/>
-              </div>
-              <div className="detail">
-                <input className="create-input" placeholder="Spec" {...order.spec}/>
-              </div>
-              <div className="detail">
-                <input className="create-input" placeholder="Max Sulphur" {...order.maxSulphur}/>
+                <input className="create-input" placeholder="Grade" {...order.grade}/>
               </div>
               <div className="detail">
                 <input className="create-input" placeholder="Quantity" {...order.quantity}/>
@@ -171,19 +143,29 @@ class QuoteForm extends Component {
               <div className="detail">
                 <input className="create-input" placeholder="Unit" {...order.unit}/>
               </div>
+              <div className="detail">
+                <input className="create-input" placeholder="Specification" {...order.specification}/>
+              </div>
+              <div className="detail">
+                <input className="create-input" placeholder="Comments" {...order.comments}/>
+              </div>
             </div>)}
           </div>
           <div className="add-order" onClick={() => {
               orders.addField({
-                quality: null,
-                spec: null,
-                maxSulphur: null,
+                grade: null,
                 quantity: null,
-                unit: null
+                unit: null,
+                specification: null,
+                comments: null
               })
             }}>
             <img src={PlusImg}/>
             <p>Add Order</p>
+          </div>
+          <div className="textarea">
+            <label>Additional Info</label>
+            <textarea rows={4} {...additionalInfo}/>
           </div>
           <div className="request-button">
             <button type="submit" disabled={submitting}>Request Quotes</button>

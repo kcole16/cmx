@@ -63,7 +63,7 @@ class ViewQuotes extends Component {
                         <label>Terms</label>
                       </div>
                       <div className="title">
-                        <label>Expiration</label>
+                        <label>Validity</label>
                       </div>
                       <div className="title">
                       </div>

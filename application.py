@@ -59,12 +59,12 @@ def request_quotes():
     for supplier in data['suppliers']:
       supplier = Supplier.query.filter_by(name=supplier).first()
       suppliers.append(supplier)
-    deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['po'], data['buyer'],
-        data['vesselType'], data['requisition'], data['orderedBy'], data['eta'],
-        data['etd'], data['portCallReason'], data['agent'], data['currency'])
+    deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['loa'], data['buyer'],
+        data['orderedBy'], data['grossTonnage'], data['additionalInfo'], data['eta'],data['etd'], 
+        data['portCallReason'], data['agent'], data['currency'])
     db.session.add(deal)
     db.session.commit()
-    send_supplier_emails(suppliers, deal)
+    send_supplier_emails(suppliers, deal, data['orders'])
     response = jsonify({'user': current_identity.email})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -90,7 +90,6 @@ def send_quote():
             'terms': data['terms'],
             'expiration': data['expiration']
         }
-        print(quote)
         pusher_client.trigger('test_channel', 'my_event', quote)
         return render_template('success_quote.html', deal=deal)
     else:

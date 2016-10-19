@@ -4,7 +4,8 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/index'
+    './src/index',
+    'whatwg-fetch'
   ],
   output: {
     path: '../static/',

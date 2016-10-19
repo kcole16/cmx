@@ -12,12 +12,18 @@ $break-large: 1200px;
 
 .suppliers-select {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   .supplier {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     flex-direction: row;
     width: 100%;
     margin-top: 10px;
@@ -27,6 +33,9 @@ $break-large: 1200px;
 
     .item {
       display: flex;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       flex: 1;
       align-items: center;
       justify-content: center;
@@ -34,6 +43,9 @@ $break-large: 1200px;
       .logo-row {
         width: 300px;
         display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
         flex-direction: row;
         align-items: center;
         @media screen and (max-width: $break-small) {
@@ -46,6 +58,9 @@ $break-large: 1200px;
 
 .request-button#suppliers {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex: 1;
   align-items: flex-end;
   justify-content: flex-end;
@@ -64,6 +79,9 @@ $break-large: 1200px;
 
 .titles {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -71,6 +89,9 @@ $break-large: 1200px;
 
   .title {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     width: 100%;
     height: 35px;
     margin: 0px;
@@ -91,6 +112,9 @@ $break-large: 1200px;
 
 .port-select {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: column;
   margin-top: 10px;
   margin-bottom: 40px;

@@ -20,13 +20,22 @@ $break-large: 1200px;
 
 .form-row {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex: 1;
   flex-direction: row;
   flex-flow: row wrap;
   margin: 10px;
+  @media screen and (max-width: $break-small) {
+    flex-direction: column;
+  }
 
   .form-data {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     flex: 1;
     flex-direction: column;
 
@@ -49,6 +58,9 @@ $break-large: 1200px;
 
 .request-button {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex: 1;
   align-items: flex-end;
   justify-content: flex-end;
@@ -66,12 +78,19 @@ $break-large: 1200px;
 
 .titles {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   align-items: center;
   justify-content: center;
+
 }
 
 .orders {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -84,6 +103,9 @@ $break-large: 1200px;
 
   .order {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     flex: 1;
     flex-direction: row;
     flex-flow: row wrap;
@@ -93,6 +115,9 @@ $break-large: 1200px;
 
     .detail {
       display: flex;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       flex: 1;
       align-items: center;
       justify-content: center; 
@@ -119,6 +144,9 @@ $break-large: 1200px;
 .add-order {
   cursor: pointer;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
@@ -129,4 +157,28 @@ $break-large: 1200px;
     width: 15px;
     margin-right: 10px;
   }
+}
+
+.textarea {
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 10px;
+    label {
+      color: $dark-gray;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 75px;
+      background-color: $light-gray;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      padding-left: 10px;
+      margin-bottom: 10px;
+    }
 }

@@ -72,6 +72,7 @@
     "redux-persist": "3.2.2",
     "redux-thunk": "1.0.3",
     "text-encoding": "0.6.0",
-    "url-loader": "0.5.7"
+    "url-loader": "0.5.7",
+    "whatwg-fetch": "^1.0.0"
   }
 }

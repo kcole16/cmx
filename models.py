@@ -30,28 +30,28 @@ class Deal(db.Model):
     port = db.Column(db.String(120), unique=False)
     vessel = db.Column(db.String(120), unique=False)
     imo = db.Column(db.String(120), unique=False)
-    po = db.Column(db.String(120), unique=False)
+    loa = db.Column(db.String(120), unique=False)
     buyer = db.Column(db.String(120), unique=False)
-    vesselType = db.Column(db.String(120), unique=False)
-    requisition = db.Column(db.String(120), unique=False)
     orderedBy = db.Column(db.String(120), unique=False)
+    grossTonnage = db.Column(db.String(120), unique=False)
+    additionalInfo = db.Column(db.String(120), unique=False)
     eta = db.Column(db.String(120), unique=False)
     etd = db.Column(db.String(120), unique=False)
     portCallReason = db.Column(db.String(120), unique=False)
     agent = db.Column(db.String(120), unique=False)
     currency = db.Column(db.String(120), unique=False)
 
-    def __init__(self, uuid, port, vessel, imo, po, buyer, vesselType, 
-    	requisition, orderedBy, eta, etd, portCallReason, agent, currency):
+    def __init__(self, uuid, port, vessel, imo, loa, buyer, orderedBy, 
+    	grossTonnage, additionalInfo, eta, etd, portCallReason, agent, currency):
         self.uuid = uuid
         self.port = port
         self.vessel = vessel
         self.imo = imo
-        self.po = po
+        self.loa = loa
         self.buyer = buyer
-        self.vesselType = vesselType
-        self.requisition = requisition
         self.orderedBy = orderedBy
+        self.grossTonnage = grossTonnage
+        self.additionalInfo = additionalInfo
         self.eta = eta
         self.etd = etd
         self.portCallReason = portCallReason

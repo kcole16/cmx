@@ -28,6 +28,9 @@ body {
 
 .img-container {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   align-items: center;
   justify-content: center;
   img {
@@ -75,6 +78,9 @@ footer {
 //Navbar
 .navbar {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   align-items: center;
   padding-left: 10px;
   background-color: $main-blue;
@@ -88,6 +94,9 @@ footer {
 
 .main-bar {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
@@ -98,6 +107,9 @@ footer {
 
   .nav-link {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     padding: 10px;
     margin-right: 50px;
     margin-left: 50px;
@@ -123,6 +135,9 @@ footer {
 //General
 .header {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   width: 80%;
   height: 40px;
   margin-right: auto;

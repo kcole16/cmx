@@ -7,12 +7,18 @@ $border-color: #E6E6E6;
 
 .login-container {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex: 1;
   flex-direction: column;
 }
 
 .login {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex: 1;
   flex-direction: column;
   justify-content: center;
@@ -22,6 +28,9 @@ $border-color: #E6E6E6;
 
 .login-name {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: column;
   margin-bottom: 20px;
 

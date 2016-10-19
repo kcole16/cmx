@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import {reduxForm, getValues} from 'redux-form';
+import {getValues} from 'redux-form';
+import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
   constructor(props) {
@@ -18,35 +19,14 @@ class Login extends Component {
   }
 
   render() {
-    const {fields: {email, password}} = this.props;
     return (
       <div className="login-container">
-        <div className="login">
-          <div className="login-name">
-            <div className="login-label">
-              <label>Email</label>
-            </div>
-            <input type="text" className="create-input" {...email}/>
-          </div>
-          <div className="login-name">
-            <div className="login-label">
-              <label>Password</label>
-            </div>
-            <input type="password" className="create-input" {...password}/>
-          </div>
-          <div className="request-button">
-            <button onClick={this.handleSubmit}>Login</button>
-          </div>
-        </div>
+        <LoginForm 
+          onSubmit={this.handleSubmit} />
       </div>
     );
   }
 }
-
-Login = reduxForm({ 
-  form: 'login',                       
-  fields: ['email','password']}
-)(Login);
 
 function mapStateToProps(state) {
   return {
