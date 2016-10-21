@@ -20,7 +20,7 @@ class LoginForm extends Component {
             </div>
             <input type="password" className="create-input" {...password}/>
           </div>
-          <div className="request-button">
+          <div className="request-button" style={{justifyContent: 'center'}}>
             <button type="submit">Login</button>
           </div>
         </form>

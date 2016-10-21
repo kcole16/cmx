@@ -11,23 +11,20 @@ import App from './App';
 import Suppliers from '../layouts/Suppliers/Suppliers';
 import QuoteSpecifics from '../layouts/QuoteSpecifics/QuoteSpecifics';
 import ViewQuotes from '../layouts/ViewQuotes/ViewQuotes';
+import Quote from '../layouts/Quote/Quote';
 
 module.exports = class Root extends Component {
   render() {
     const { store } = this.props;
     const history = syncHistoryWithStore(browserHistory, store);
     return (
-      /**
-       * Provider is a component provided to us by the 'react-redux' bindings that
-       * wraps our app - thus making the Redux store/state available to our 'connect()'
-       * calls in component hierarchy below.
-       */
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={App}>
             <Route path="suppliers" component={Suppliers}/>
             <Route path="quoteSpecifics" component={QuoteSpecifics}/>
             <Route path="viewQuotes" component={ViewQuotes}/>
+            <Route path="quote" component={Quote}/>
           </Route>
         </Router>
       </Provider>

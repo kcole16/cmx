@@ -23,7 +23,7 @@ export default class Quote extends Component {
 	          <p>{supplier.expiration}</p>
 	        </div>
 	        <div className="request-button">
-	          <button onClick={handleSubmit}>Full Details</button>
+	          <button onClick={handleSubmit.bind(this, supplier)}>Full Details</button>
 	        </div>
 	      </div>
     );

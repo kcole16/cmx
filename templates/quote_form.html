@@ -42,6 +42,26 @@
           </div>
         </div>
 		<label class="title">Enter Quote</label>
+		{% for order in order %}
+          <div className="order">
+          	<div className="detail">
+            	<input className="create-input" field={{order.grade}}/>
+            </div>
+          	<div className="detail">
+            	<input className="create-input" field={{order.spec}}/>
+            </div>
+          	<div className="detail">
+            	<input className="create-input" field={maxSulphur}/>
+            </div>
+          	<div className="detail">
+            	<input className="create-input" field={quantity}/>
+            </div>
+          	<div className="detail">
+            	<input className="create-input" field={unit}/>
+            </div>
+          </div>
+
+
 		<form method="post" action="/send_quote">
 	      <div class="form-row">
 	        <div class="form-data">

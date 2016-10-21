@@ -26,6 +26,17 @@ const validate = values => {
   return errors
 }
 
+const initialValues = {
+  imo: null,
+  loa: null,
+  grossTonnage: null,
+  orderedBy: null,
+  portCallReason: null,
+  agent: null,
+  additionalInfo: null,
+  currency: 'USD'
+};
+
 class QuoteForm extends Component {
   constructor(props) {
     super(props);
@@ -180,4 +191,5 @@ export default QuoteForm = reduxForm({
   form: 'quote',                      
   fields,
   validate,
+  initialValues
 })(QuoteForm);

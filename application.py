@@ -1,11 +1,9 @@
-import json
 from datetime import timedelta
 from uuid import uuid4
 
-from flask import Flask, render_template, jsonify, request
+from flask import render_template, jsonify, request
 from flask_jwt import JWT, jwt_required, current_identity
-from werkzeug.security import safe_str_cmp
-from flask.ext.cors import CORS, cross_origin
+from flask_cors import CORS
 from passlib.hash import sha256_crypt
 from whitenoise import WhiteNoise
 
@@ -59,6 +57,7 @@ def request_quotes():
     for supplier in data['suppliers']:
       supplier = Supplier.query.filter_by(name=supplier).first()
       suppliers.append(supplier)
+    print(data)
     deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['loa'], data['buyer'],
         data['orderedBy'], data['grossTonnage'], data['additionalInfo'], data['eta'],data['etd'], 
         data['portCallReason'], data['agent'], data['currency'])

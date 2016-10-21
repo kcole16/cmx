@@ -28,10 +28,9 @@ class ViewQuotes extends Component {
     };
   }
 
-  handleSubmit() {
+  handleSubmit(quote) {
     const {state, actions} = this.props;
-    const form = getValues(state.form.login);
-    actions.fetchLogin(form);
+    state.routing.push('/quote', {quote:quote});
   }
 
   render() {

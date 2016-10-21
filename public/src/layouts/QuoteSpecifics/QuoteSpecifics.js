@@ -38,9 +38,13 @@ class QuoteSpecifics extends Component {
     form.port = deal.port;
     form.suppliers = deal.suppliers;
     if (confirm("Clicking OK will send this request to "+deal.suppliers.length.toString()+" suppliers")) {
+      if (!this.state.etd) {
+        form.etd = null;
+      } else {
+        form.etd = this.state.etd.format('DD/MM/YYYY').toString();
+      };
       try {
         form.eta = this.state.eta.format('DD/MM/YYYY').toString();
-        form.etd = this.state.etd.format('DD/MM/YYYY').toString();
         actions.setDeal(form);
         actions.fetchCreateQuotes(form);
         browserHistory.push('/viewQuotes');

@@ -31,22 +31,22 @@ export default class DealSummary extends Component {
             <p>{deal.etd}</p>
           </div>
         </div>
-        <label className="descriptor" style={{marginBottom: 0}}>Orders</label>
-        <div className="titles">
+        <label className="descriptor" style={{marginBottom: 10}}>Orders</label>
+        <div className="titles" style={{height: 30}}>
           <div className="title">
-            <label>Quality</label>
-          </div>
-          <div className="title">
-            <label>Spec</label>
-          </div>
-          <div className="title">
-            <label>Max Sulphur</label>
+            <label>Grade</label>
           </div>
           <div className="title">
             <label>Quantity</label>
           </div>
           <div className="title">
             <label>Unit</label>
+          </div>
+          <div className="title">
+            <label>Specification</label>
+          </div>
+          <div className="title">
+            <label>Additional Comments</label>
           </div>
         </div>
         <div className="orders">
