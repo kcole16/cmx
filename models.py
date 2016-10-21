@@ -79,21 +79,21 @@ class Supplier(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    quality = db.Column(db.String(120), unique=False)
+    grade = db.Column(db.String(120), unique=False)
     quantity = db.Column(db.String(120), unique=False)
     spec = db.Column(db.String(120), unique=False)
-    maxSulphur = db.Column(db.String(120), unique=False)
     unit = db.Column(db.String(120), unique=False)
+    comments = db.Column(db.String(120), unique=False)
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship('Deal',
         backref=db.backref('orders', lazy='dynamic'))
 
-    def __init__(self, quality, quantity, spec, maxSulphur, unit, deal):
-        self.quality = quality
+    def __init__(self, grade, quantity, spec, unit, comments, deal):
+        self.grade = grade
         self.quantity = quantity
         self.spec = spec
-        self.maxSulphur = maxSulphur
         self.unit = unit
+        self.comments = comments
         self.deal = deal
 
     def __str__(self):

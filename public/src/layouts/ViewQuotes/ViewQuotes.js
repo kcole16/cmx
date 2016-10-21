@@ -30,7 +30,6 @@ class ViewQuotes extends Component {
 
   handleSubmit(quote) {
     const {state, actions} = this.props;
-    state.routing.push('/quote', {quote:quote});
   }
 
   render() {

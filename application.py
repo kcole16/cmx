@@ -7,7 +7,7 @@ from flask_cors import CORS
 from passlib.hash import sha256_crypt
 from whitenoise import WhiteNoise
 
-from models import application, db, User, Supplier, Deal
+from models import application, db, User, Supplier, Deal, Order
 from mailer import send_supplier_emails
 
 import pusher
@@ -61,6 +61,10 @@ def request_quotes():
     deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['loa'], data['buyer'],
         data['orderedBy'], data['grossTonnage'], data['additionalInfo'], data['eta'],data['etd'], 
         data['portCallReason'], data['agent'], data['currency'])
+    for order in data['orders']:
+        new_order = Order(order['grade'], order['quantity'], order['specification'], 
+            order['unit'], order['comments'], deal)
+        db.session.add(new_order)
     db.session.add(deal)
     db.session.commit()
     send_supplier_emails(suppliers, deal, data['orders'])
@@ -95,7 +99,21 @@ def send_quote():
         deal_id = request.args['deal_id']
         supplier_id = request.args['supplier_id']
         deal = Deal.query.filter_by(uuid=deal_id).first()
-        return render_template('quote_form.html', deal_id=deal_id, supplier_id=supplier_id, deal=deal)
+        orders = Order.query.filter_by(deal_id=deal.id)
+        order_list = []
+        count = 0
+        for order in orders:
+            order = {
+                'grade': order.grade,
+                'quantity': order.quantity,
+                'unit': order.unit,
+                'specification': order.spec,
+                'comments': order.comments
+            }   
+            order['number'] = count
+            order_list.append(order)
+            count += 1
+        return render_template('quote_form.html', deal_id=deal_id, supplier_id=supplier_id, deal=deal, orders=order_list)
 
 if __name__ == "__main__":
     application.debug = True

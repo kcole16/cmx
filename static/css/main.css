@@ -156,3 +156,12 @@ button {
   color: #5D6163;
 }
 
+.order {
+  display: flex;
+  flex-direction: row;
+}
+
+.order .detail .create-input {
+  width: 150px;
+}
+

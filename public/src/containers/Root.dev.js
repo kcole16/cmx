@@ -12,7 +12,6 @@ import Login from './Login';
 import Suppliers from '../layouts/Suppliers/Suppliers';
 import QuoteSpecifics from '../layouts/QuoteSpecifics/QuoteSpecifics';
 import ViewQuotes from '../layouts/ViewQuotes/ViewQuotes';
-import Quote from '../layouts/Quote/Quote';
 
 module.exports = class Root extends Component {
   render() {
@@ -26,7 +25,6 @@ module.exports = class Root extends Component {
               <Route path="suppliers" component={Suppliers}/>
               <Route path="quoteSpecifics" component={QuoteSpecifics}/>
               <Route path="viewQuotes" component={ViewQuotes}/>
-              <Route path="quote" component={Quote}/>
             </Route>
           </Router>
         </div>
