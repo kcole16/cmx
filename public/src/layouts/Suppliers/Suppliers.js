@@ -18,6 +18,9 @@ class Suppliers extends Component {
   componentWillMount() {
     const {state, actions} = this.props;
     actions.fetchGetSuppliers(state.deals.deal.port);
+    if (state.deals.deal.orders.length > 0) {
+      browserHistory.push('/viewQuotes');
+    };
   }
 
   handleSubmit() {

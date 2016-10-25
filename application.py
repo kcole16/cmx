@@ -83,16 +83,32 @@ def get_suppliers():
 
 @application.route('/send_quote', methods=['GET','POST'])
 def send_quote():
+    order_list = []
+    count = 0
     if request.method == 'POST':
         data = request.form
         supplier = Supplier.query.filter_by(id=data['supplier_id']).first()
         deal = Deal.query.filter_by(uuid=data['deal_id']).first()
+        orders = Order.query.filter_by(deal_id=deal.id)
         quote = {
-            'name': supplier.name,
-            'price': data['gas_oil']+'/'+data['fuel_oil'],
-            'terms': data['terms'],
-            'expiration': data['expiration']
+        'name': supplier.name,
+        'expiration': data['expiration'],
+        'info': data['info']
         }
+        for order in orders:
+            order = {
+                'grade': data['grade%s' % count],
+                'quantity': data['quantity%s' % count],
+                'unit': data['unit%s' % count],
+                'specifications': data['spec%s' % count],
+                'comments': data['comments%s' % count],
+                'price': data['price%s' % count],
+                'terms': data['terms%s' % count],
+                'delivery': data['delivery%s' % count]
+            }
+            order_list.append(order)
+            count += 1
+        quote['orders'] = order_list
         pusher_client.trigger('test_channel', 'my_event', quote)
         return render_template('success_quote.html', deal=deal)
     else:
@@ -100,16 +116,14 @@ def send_quote():
         supplier_id = request.args['supplier_id']
         deal = Deal.query.filter_by(uuid=deal_id).first()
         orders = Order.query.filter_by(deal_id=deal.id)
-        order_list = []
-        count = 0
         for order in orders:
             order = {
                 'grade': order.grade,
                 'quantity': order.quantity,
                 'unit': order.unit,
-                'specification': order.spec,
+                'spec': order.spec,
                 'comments': order.comments
-            }   
+            }
             order['number'] = count
             order_list.append(order)
             count += 1

@@ -28,7 +28,10 @@ class QuoteSpecifics extends Component {
     const {state} = this.props;
     if (state.deals.deal.suppliers.length <= 0) {
       browserHistory.push('/suppliers');
-    }
+    };
+    if (state.deals.deal.orders.length > 0) {
+      browserHistory.push('/viewQuotes');
+    };
   }
 
   handleSubmit() {

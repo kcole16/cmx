@@ -79,7 +79,7 @@ body {
 
 .create-input {
   height: 30px;
-  width: 330px;
+  width: 250px;
   background-color: #F9F9F9;
   border: 1px solid #E6E6E6;
   border-radius: 4px;
@@ -156,12 +156,8 @@ button {
   color: #5D6163;
 }
 
-.order {
-  display: flex;
-  flex-direction: row;
-}
-
-.order .detail .create-input {
-  width: 150px;
+.form-order {
+  margin-top: 10px;
+  border-bottom: 2px solid #2B4175;
 }
 

@@ -16,11 +16,15 @@ class ViewQuotes extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.pusher = new Pusher('213331f62067dec74527');
     this.channel = this.pusher.subscribe('test_channel');
+    this.state = {
+      active: []
+    };
   }
 
   componentDidMount() {
     const {state, actions} = this.props;
     this.channel.bind('my_event', function(data) {
+      console.log(data);
       actions.addQuote(data);
     }, this);
     if (state.deals.deal.orders.length <= 0) {
@@ -28,22 +32,36 @@ class ViewQuotes extends Component {
     };
   }
 
-  handleSubmit(quote) {
-    const {state, actions} = this.props;
+  handleSubmit(index) {
+    const active = this.state.active;
+    const indexOf = active.indexOf(index);
+    if (indexOf > -1) {
+      active.splice(indexOf, 1);
+    } else {
+      active.push(index)
+    };
+    this.setState({active: active});
   }
 
   render() {
     const {state, actions} = this.props;
     const supplierList = state.deals.deal.quotes;
     const handleSubmit = this.handleSubmit;
+    const active = this.state.active;
     const quoteList = supplierList.map(function(supplier, index) {
+      let isActive = false;
+      if (active.indexOf(index) > -1) {
+        isActive = true;
+      };
       return (
             <Quote 
               key={index} 
-              supplier={supplier} 
+              index={index}
+              quote={supplier} 
               eta={state.deals.deal.eta}
               etd={state.deals.deal.etd} 
-              handleSubmit={handleSubmit} />
+              handleSubmit={handleSubmit} 
+              isActive={isActive}/>
         );
     });
     const quotes = <div>
@@ -52,13 +70,13 @@ class ViewQuotes extends Component {
                         <label>Company</label>
                       </div>
                       <div className="title">
-                        <label>Price</label>
-                      </div>
-                      <div className="title">
-                        <label>Dates</label>
+                        <label>Prices</label>
                       </div>
                       <div className="title">
                         <label>Terms</label>
+                      </div>
+                      <div className="title">
+                        <label>Delivery</label>
                       </div>
                       <div className="title">
                         <label>Validity</label>

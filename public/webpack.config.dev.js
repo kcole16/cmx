@@ -52,7 +52,7 @@ module.exports = {
         loader: 'style!css!less'
       },
       { test: /\.css$/, 
-        loader: "style-loader!css-loader" 
+        loader: "style-loader!css-loader?modules" 
       },
       {
         test: /\.(jpg|png)$/,

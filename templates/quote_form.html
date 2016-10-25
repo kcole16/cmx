@@ -41,47 +41,102 @@
             <p>{{deal.etd}}</p>
           </div>
         </div>
-		<label class="title">Enter Quote</label>
-		{% for order in orders %}
-          <div class="order">
-          	<div class="detail">
-            	<input class="create-input" name="grade{{order.number}}" value="{{order.grade}}"/>
-            </div>
-          	<div class="detail">
-            	<input class="create-input" name="spec{{order.number}}" value="{{order.spec}}"/>
-            </div>
-          	<div class="detail">
-            	<input class="create-input" name="maxSulphur{{order.number}}" value="{{order.maxSulphur}}"/>
-            </div>
-          	<div class="detail">
-            	<input class="create-input" name="quantity{{order.number}}" value="{{order.quantity}}"/>
-            </div>
-          	<div class="detail">
-            	<input class="create-input" name="unit{{order.number}}"value="{{order.unit}}"/>
-            </div>
-          	<div class="detail">
-            	<input class="create-input" name="price{{order.number}}"/>
-            </div>
-          	<div class="detail">
-            	<input class="create-input" name="terms{{order.number}}"/>
-            </div>
-          	<div class="detail">
-            	<input class="create-input" name="delivery{{order.number}}"/>
-            </div>
+		<label class="title">Orders</label>
+        <div class="attributes">
+          <div class="attribute">
+            <label>Grade</label>
           </div>
-         {% endfor %}
+          <div class="attribute">
+            <label>Quantity</label>
+          </div>
+          <div class="attribute">
+            <label>Unit</label>
+          </div>
+          <div class="attribute">
+            <label>Specifications</label>
+          </div>
+          <div class="attribute">
+            <label>Comments</label>
+          </div>
+        </div>
+		{% for order in orders %}
+        <div class="attributes">
+          <div class="attribute">
+            <p>{{order.grade}}</p>
+          </div>
+          <div class="attribute">
+            <p>{{order.quantity}}</p>
+          </div>
+          <div class="attribute">
+            <p>{{order.unit}}</p>
+          </div>
+          <div class="attribute">
+            <p>{{order.spec}}</p>
+          </div>
+          <div class="attribute">
+            <p>{{order.comments}}</p>
+          </div>
+        </div>
+        {% endfor %}
 		<form method="post" action="/send_quote">
-	      <div class="form-row">
-	        <div class="form-data">
-	          <label>Validity of Quote</label>
-	          <input type="text" name="expiration" class="create-input" placeholder="30 minutes"/>
-	        </div>
-	      </div>
-	        <input type="text" name="supplier_id" value="{{supplier_id}}" hidden />
-	        <input type="text" name="deal_id" value="{{deal_id}}" hidden />
-	      <div class="request-button">
-	        <button type="submit">Request Quotes</button>
-	      </div>
+			<label class="title">Enter Quotes</label>
+			{% for order in orders %}
+			<div class="form-order">
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Grade</label>
+					  <input class="create-input" name="grade{{order.number}}" value="{{order.grade}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Quantity</label>
+					  <input class="create-input" name="quantity{{order.number}}" value="{{order.quantity}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Unit</label>
+					  <input class="create-input" name="unit{{order.number}}" value="{{order.unit}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Specifications</label>
+					  <input class="create-input" name="spec{{order.number}}" value="{{order.spec}}"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Comments</label>
+					  <input class="create-input" name="comments{{order.number}}" value="{{order.comments}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Price</label>
+					  <input class="create-input" name="price{{order.number}}" />
+					</div>
+					<div class="form-data">
+					  <label>Terms</label>
+					  <input class="create-input" name="terms{{order.number}}" />
+					</div>
+					<div class="form-data">
+					  <label>Delivery</label>
+					  <input class="create-input" name="delivery{{order.number}}"/>
+					</div>
+				</div>
+			</div>
+	        {% endfor %}
+			<div class="form-row">
+				<div class="form-data">
+				  <label>Validity of Quote</label>
+				  <input type="text" name="expiration" class="create-input" placeholder="30 minutes"/>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-data">
+				  <label>Additional Information</label>
+				  <textarea rows="5" name="info" class="create-input"></textarea>
+				</div>
+			</div>
+			<input type="text" name="supplier_id" value="{{supplier_id}}" hidden />
+			<input type="text" name="deal_id" value="{{deal_id}}" hidden />
+			<div class="request-button">
+				<button type="submit">Request Quotes</button>
+			</div>
 	    </form>
 	</div>
   </body>

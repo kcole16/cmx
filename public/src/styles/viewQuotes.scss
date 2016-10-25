@@ -11,43 +11,62 @@ $break-small: 450px;
 $break-medium: 770px;
 $break-large: 1200px;
 
-.suppliers {
+.layout-container {
+  margin-bottom: 50px;
+  font-family: 'Roboto script=all rev=1', sans-serif;
+}
 
+.suppliers {
   .supplier {
     display: flex;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     width: 100%;
-    height: 100px;
     border: 2px solid $border-color;
     box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.16);
     border-radius: 3px;
     margin-top: 20px;
     color: $dark-gray;
+    cursor: pointer;
 
-    .attribute {
+    .attributes {
       display: flex;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
-      flex: 1;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      height: 100px;
+
+      .attribute {
+        display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        @media screen and (max-width: $break-medium) {
+          margin: 3px;
+        }
+        p {
+          margin:0px;
+        }
+      }
+
+      .multiple {
+        display: flex;
+        flex-direction: column;
+      }
+
       @media screen and (max-width: $break-medium) {
-        margin: 3px;
+        height: 270px;
+        flex-direction: column;
       }
-      p {
-        margin:0px;
-      }
-    }
-    @media screen and (max-width: $break-medium) {
-      height: 270px;
-      flex-direction: column;
     }
   }
 
@@ -192,4 +211,89 @@ $break-large: 1200px;
       flex-direction: column;
       border-bottom: 2px solid $main-blue;
     }
+}
+
+.order-details {
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  flex-direction: column;
+
+  .order-banner {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    height: 50px;
+    background-color: $main-blue;
+
+    label {
+      margin-left: 10px;
+      align-self: center;
+      color: white;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+  }
+
+  .title {
+    margin-left: 30px;
+    font-size: 16px;
+    color: $main-blue;
+  }
+
+  .orders {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .order {
+      display: flex;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex-direction: row;
+      flex-flow: row wrap;
+
+      .detail {
+        display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+
+        p {
+          font-weight: 200;
+        }
+
+        input {
+          width: 100px;
+        }
+      }
+    }
+  }
+
+  .contact {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-direction: row;
+    flex-flow: row wrap;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .detail {
+      display: flex;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;
+      flex-direction: column;
+    }
+  }
 }

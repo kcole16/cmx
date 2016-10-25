@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-const port = (process.env.PORT || 3000);
+const port = (process.env.PORT || 8000);
 
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack')
@@ -30,5 +30,5 @@ app.listen(port, (err) => {
     return;
   }
 
-  console.log('Listening at http://localhost:3000');
+  console.log('Listening at http://localhost:8000');
 });
