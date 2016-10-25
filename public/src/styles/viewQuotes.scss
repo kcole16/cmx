@@ -29,7 +29,6 @@ $break-large: 1200px;
     border-radius: 3px;
     margin-top: 20px;
     color: $dark-gray;
-    cursor: pointer;
 
     .attributes {
       display: flex;
@@ -274,6 +273,13 @@ $break-large: 1200px;
         }
       }
     }
+  }
+
+  .comments {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+
   }
 
   .contact {

@@ -65,25 +65,6 @@ class ViewQuotes extends Component {
         );
     });
     const quotes = <div>
-                    <div className="titles">
-                      <div className="title">
-                        <label>Company</label>
-                      </div>
-                      <div className="title">
-                        <label>Prices</label>
-                      </div>
-                      <div className="title">
-                        <label>Terms</label>
-                      </div>
-                      <div className="title">
-                        <label>Delivery</label>
-                      </div>
-                      <div className="title">
-                        <label>Validity</label>
-                      </div>
-                      <div className="title">
-                      </div>
-                    </div>
                     <div className="suppliers">
                       {quoteList}
                     </div>
