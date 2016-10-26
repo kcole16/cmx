@@ -332,4 +332,30 @@ $break-large: 1200px;
   p {
     margin: 0px;
   }
+
+  .order-titles {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-direction: row;
+    margin-top: 15px;
+
+    p {
+      margin-right: 25px;
+    }
+  }
+
+  .order {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    p {
+      margin-right: 25px;
+    }
+  }
 }

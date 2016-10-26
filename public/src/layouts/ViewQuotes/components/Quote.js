@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 export default class Quote extends Component {
   render() {
-	const {index, quote, handleSubmit, eta, etd, isActive} = this.props;
+	const {index, quote, openModal, eta, etd, isActive} = this.props;
 	const skypeLink = "skype:"+quote.skype+"?chat";
 	const comments = quote.orders.map((order, index) => {
 		return (
@@ -87,7 +87,7 @@ export default class Quote extends Component {
 						<p><a href={skypeLink}>{quote.skype}</a></p>
 					</div>
 					<div className="request-button">
-					  <button onClick={handleSubmit.bind(this, index)}>Select Quote</button>
+					  <button onClick={openModal.bind(this, quote)}>Select Quote</button>
 					</div>
 				</div>
 			</div>

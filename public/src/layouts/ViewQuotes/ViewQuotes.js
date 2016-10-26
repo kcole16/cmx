@@ -15,17 +15,22 @@ class ViewQuotes extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.pusher = new Pusher('213331f62067dec74527');
     this.channel = this.pusher.subscribe('test_channel');
     this.state = {
-      active: []
+      active: [],
+      modalIsOpen: false,
+      quoteSelected: {
+        name: null
+      }
     };
   }
 
   componentDidMount() {
     const {state, actions} = this.props;
     this.channel.bind('my_event', function(data) {
-      console.log(data);
       actions.addQuote(data);
     }, this);
     if (state.deals.deal.orders.length <= 0) {
@@ -44,11 +49,98 @@ class ViewQuotes extends Component {
     this.setState({active: active});
   }
 
+  openModal(quote) {
+    const {state} = this.props;
+    this.setState({
+      modalIsOpen: true,
+      quoteSelected: quote
+    })
+  }
+
+  closeModal() {
+    this.setState({
+      modalIsOpen: false,
+      quoteSelected: {
+        name: null
+      }
+    })
+  }
+
   render() {
     const {state, actions} = this.props;
     const supplierList = state.deals.deal.quotes;
     const handleSubmit = this.handleSubmit;
     const active = this.state.active;
+    const openModal = this.openModal;
+    const deal = state.deals.deal;
+    let quote = this.state.quoteSelected;
+    let email = null;
+    if (quote) {
+      const orders = quote.orders.map((order, index) => {
+        return (
+            <div key={index} className="order">
+              <div className="detail">
+                <p>{order.grade}</p>
+              </div>
+              <div className="detail">
+                <p>{order.quantity}{order.unit}</p>
+              </div>
+              <div className="detail">
+                <p>{order.specifications}</p>
+              </div>
+              <div className="detail">
+                <p>{order.terms}</p>
+              </div>
+              <div className="detail">
+                <p>{order.delivery}</p>
+              </div>
+              <div className="detail">
+                <p>{order.price} {state.deals.deal.orders[0].currency}</p>
+              </div>
+            </div>
+          );
+      })
+      const orderComments = state.deals.deal.orders.map((order, index) => {
+        return (
+            <p key={index}>{order.grade}</p>
+          )
+      });
+      const comments = <div className="comments">
+                         {orderComments}
+                         <p>{quote.info}</p>
+                       </div>;
+      email = <div className="email">
+                <p>{deal.broker ? <p>deal.broker, acting in accordance with instructions received from</p>: null} {deal.buyer}, (hereafter referred to as "Buyers") have placed the following Bunker nomination with {quote.name} (hereafter referred to as "Sellers"):</p>
+                <p style={{marginTop: 15}}>Vessel: {deal.vessel}</p>
+                <p>Port: {deal.port}</p>
+                <p>ETA: {deal.eta}</p>
+                <div className="order-titles">
+                  <p>Grade</p>
+                  <p>Quantity</p>
+                  <p>Specification</p>
+                  <p>Terms</p>
+                  <p>Delivery</p>
+                  <p>Price</p>
+                </div>
+                {orders}
+                <p style={{marginTop: 15}}>Physical: {quote.name}</p>
+                <p style={{marginTop: 15}}>Agent: John Doe</p>
+                <p style={{marginTop: 15}}>Add Remarks:</p>
+                {comments}
+                <p style={{marginTop: 15}}>Remarks:</p>
+                <p>Fuels shall be a blend of hydrocarbons derived from petroleum refining.</p>
+                <p>This shall not preclude small amounts of additives intended to improve some aspects of performance.</p>
+                <p>The fuels shall be free of inorganic acids and should not include any added substance or chemical waste which:</p>
+                <p>·         jeopardizes the safety of ships or</p>
+                <p>·         adversely affects performance of machinery or</p>
+                <p>·         is harmful to personnel or</p>
+                <p>·         contributes overall to additional air pollution</p>
+                <p style={{marginTop: 15}}>This sale is subject to Sellers' General Terms and Conditions which, if not already held by the buyer, are available on
+                request to this office.</p>
+                <p style={{marginTop: 15}}>Please advise immediately if you feel any of the above terms are incorrect.</p>
+                <p style={{marginTop: 15}}>Best Regards,</p>
+              </div>;
+    };
     const quoteList = supplierList.map(function(supplier, index) {
       let isActive = false;
       if (active.indexOf(index) > -1) {
@@ -61,7 +153,7 @@ class ViewQuotes extends Component {
               quote={supplier} 
               eta={state.deals.deal.eta}
               etd={state.deals.deal.etd} 
-              handleSubmit={handleSubmit} 
+              openModal={openModal} 
               isActive={isActive}/>
         );
     });
@@ -72,6 +164,19 @@ class ViewQuotes extends Component {
                   </div>;
     return (
       <div className="layout-container">
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Example Modal">
+          <div className="rfq-modal">
+            <p>Clicking "Submit" below will generate and send the following recap to {quote.name}:</p>
+            {email}
+            <div className="request-button" style={{marginTop: 20}}>
+              <button onClick={this.handleSubmit}>Send Trade Recap</button>
+            </div>
+          </div>
+        </Modal>
         {quoteList.length > 0 ? quotes : 
           <DealSummary 
           title="Your quotes will appear here!" 
@@ -97,3 +202,29 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ViewQuotes);
+
+const customStyles = {
+  overlay : {
+    position          : 'fixed',
+    top               : 0,
+    left              : 0,
+    right             : 0,
+    bottom            : 0,
+    backgroundColor   : 'rgba(0, 0, 0, 0.75)'
+  },
+  content : {
+    position                   : 'absolute',
+    top                        : '40px',
+    left                       : '10%',
+    right                      : '10%',
+    bottom                     : '40px',
+    border                     : '1px solid #ccc',
+    background                 : '#fff',
+    overflow                   : 'auto',
+    WebkitOverflowScrolling    : 'touch',
+    borderRadius               : '4px',
+    outline                    : 'none',
+    padding                    : '20px'
+
+  }
+};
