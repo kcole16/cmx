@@ -93,7 +93,10 @@ def send_quote():
         quote = {
         'name': supplier.name,
         'expiration': data['expiration'],
-        'info': data['info']
+        'info': data['info'],
+        'phone': data['phone'],
+        'email': data['email'],
+        'skype': data['skype']
         }
         for order in orders:
             order = {

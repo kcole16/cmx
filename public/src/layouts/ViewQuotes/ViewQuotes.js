@@ -8,6 +8,7 @@ import {reduxForm, getValues} from 'redux-form';
 import { browserHistory } from 'react-router';
 import Quote from './components/Quote';
 import DealSummary from '../../components/DealSummary';
+import Modal from 'react-modal';
 import Pusher from 'pusher-js';
 
 class ViewQuotes extends Component {

@@ -133,6 +133,15 @@ $break-large: 1200px;
           width: 260px;
         }
       }
+
+      select.create-input {
+        height: 34px;
+        width: 163px;
+
+        @media screen and (max-width: $break-medium) {
+          width: 273px;
+        }
+      }
     }
     @media screen and (max-width: $break-medium) {
       flex-direction: column;

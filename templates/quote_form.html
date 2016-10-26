@@ -19,7 +19,7 @@
       <img src="{{ url_for('static', filename='img/cxlogo.png') }}"/>
     </div>
 	<div class="main-bar">
-		<label class="main-bar-label">Deal for {{deal.buyer}}</label>
+		<label class="main-bar-label">Enquiry: {{deal.buyer}} {{deal.vessel}} {{deal.port}} {{deal.eta}}</label>
 	</div>
 	<div class="main-app-container">
 		<label class="title">Deal Details</label>
@@ -78,8 +78,8 @@
           </div>
         </div>
         {% endfor %}
+		<label class="title">Enter Quotes</label>
 		<form method="post" action="/send_quote">
-			<label class="title">Enter Quotes</label>
 			{% for order in orders %}
 			<div class="form-order">
 				<div class="form-row">
@@ -93,7 +93,11 @@
 					</div>
 					<div class="form-data">
 					  <label>Unit</label>
-					  <input class="create-input" name="unit{{order.number}}" value="{{order.unit}}"/>
+					  <select class="styled-select" name="unit{{order.number}}" value="{{order.unit}}">
+					  	<option name="MT" value="MT">MT</option>
+					  	<option name="M3" value="M3">M<sub>3</sub></option>
+					  	<option name="L" value="L">L</option>
+					  </select>
 					</div>
 					<div class="form-data">
 					  <label>Specifications</label>
@@ -122,6 +126,22 @@
 	        {% endfor %}
 			<div class="form-row">
 				<div class="form-data">
+				  <label>Contact Number</label>
+				  <input type="text" name="phone" class="create-input"/>
+				</div>
+				<div class="form-data">
+				  <label>Email</label>
+				  <input type="text" name="email" class="create-input"/>
+				</div>
+				<div class="form-data">
+				  <label>Skype ID</label>
+				  <input type="text" name="skype" class="create-input"/>
+				</div>
+				<div class="form-data">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-data">
 				  <label>Validity of Quote</label>
 				  <input type="text" name="expiration" class="create-input" placeholder="30 minutes"/>
 				</div>
@@ -129,7 +149,7 @@
 			<div class="form-row">
 				<div class="form-data">
 				  <label>Additional Information</label>
-				  <textarea rows="5" name="info" class="create-input"></textarea>
+				  <textarea rows="5" name="info" class="create-textarea"></textarea>
 				</div>
 			</div>
 			<input type="text" name="supplier_id" value="{{supplier_id}}" hidden />

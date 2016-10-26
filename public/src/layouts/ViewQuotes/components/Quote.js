@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 export default class Quote extends Component {
   render() {
 	const {index, quote, handleSubmit, eta, etd, isActive} = this.props;
+	const skypeLink = "skype:"+quote.skype+"?chat";
 	const comments = quote.orders.map((order, index) => {
 		return (
 				<p key={index}>{order.grade}: {order.comments}</p>
@@ -68,19 +69,25 @@ export default class Quote extends Component {
 				<div className="comments">
 					{comments}
 					<div className="additional-comments">
-						<p>{quote.info}</p>
+						<p>{quote.info ? quote.info : null}</p>
 					</div>
 				</div>
 				<label className="title">Contact</label>
 				<div className="contact">
 					<div className="detail">
 						<label>Phone</label>
+						<p>{quote.phone}</p>
 					</div>
 					<div className="detail">
 						<label>Email</label>
+						<p>{quote.email}</p>
 					</div>
 					<div className="detail">
 						<label>Skype</label>
+						<p><a href={skypeLink}>{quote.skype}</a></p>
+					</div>
+					<div className="request-button">
+					  <button onClick={handleSubmit.bind(this, index)}>Select Quote</button>
 					</div>
 				</div>
 			</div>

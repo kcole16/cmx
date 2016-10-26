@@ -5,8 +5,8 @@ import FormMessages from 'redux-form-validation';
 import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../../assets/img/add-plus-button.png';
 
-export const fields = ['vessel', 'imo', 'buyer', 'grossTonnage', 'loa',
-    'orderedBy','portCallReason', 'agent', 'eta', 'etd', 'currency', 'orders[].grade',
+export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
+    'agent', 'eta', 'etd', 'currency', 'orders[].grade',
     'orders[].quantity', 'orders[].unit', 'orders[].specification', 'orders[].comments', 'additionalInfo'];
 
 const validate = values => {
@@ -34,7 +34,8 @@ const initialValues = {
   portCallReason: null,
   agent: null,
   additionalInfo: null,
-  currency: 'USD'
+  currency: 'USD',
+  'orders[].unit': 'MT'
 };
 
 class QuoteForm extends Component {
@@ -44,8 +45,8 @@ class QuoteForm extends Component {
 
   render() {
     const {state, actions, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd} = this.props;
-    const {fields: {vessel, imo, buyer, grossTonnage, loa,
-      orderedBy,portCallReason, agent, currency, orders, additionalInfo}} = this.props;
+    const {fields: {vessel, buyer, orderedBy, portCallReason, 
+      agent, currency, orders, additionalInfo}} = this.props;
     if (!orders.length) {
       orders.addField({
               grade: null,
@@ -54,6 +55,14 @@ class QuoteForm extends Component {
               specification: null,
               comments: null
             })
+    };
+    let imoVal = null;
+    let gtVal = null;
+    let loaVal = null;
+    if (buyer.touched) {
+      imoVal = '9732606';
+      loaVal = '300';
+      gtVal = '94300';
     };
     return (
       <div>
@@ -78,15 +87,15 @@ class QuoteForm extends Component {
           <div className="form-row">
             <div className="form-data">
               <label>IMO</label>
-              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...imo}/>
+              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" value={imoVal}/>
             </div>
             <div className="form-data">
-              <label>Gross Tonnage</label>
-              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...grossTonnage}/>
+              <label>Gross Tonnage (t)</label>
+              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" value={gtVal}/>
             </div>
             <div className="form-data">
-              <label>LOA</label>
-              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...loa}/>
+              <label>LOA (m)</label>
+              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" value={loaVal}/>
             </div>
           </div>
           <label className="title">Requirements</label>
@@ -152,7 +161,11 @@ class QuoteForm extends Component {
                 <input className="create-input" placeholder="Quantity" {...order.quantity}/>
               </div>
               <div className="detail">
-                <input className="create-input" placeholder="Unit" {...order.unit}/>
+                <select className="create-input" {...order.unit}>
+                  <option value="mt">MT</option>
+                  <option value="m3">M3</option>
+                  <option value="l">L</option>
+                </select>
               </div>
               <div className="detail">
                 <input className="create-input" placeholder="Specification" {...order.specification}/>

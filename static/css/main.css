@@ -72,6 +72,7 @@ body {
 
 .title {
   margin: 10px;
+  margin-top: 40px;
   font-size: 18px;
   font-weight: 500;
   color: #2B4175;
@@ -140,7 +141,7 @@ button {
   flex: 1;
   flex-direction: row;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   margin-left: 10px;
 }
 
@@ -159,5 +160,44 @@ button {
 .form-order {
   margin-top: 10px;
   border-bottom: 2px solid #2B4175;
+}
+
+.create-textarea {
+  height: 70px;
+  width: 100%;
+  background-color: #F9F9F9;
+  border: 1px solid #E6E6E6;
+  border-radius: 4px;
+}
+
+.styled-select {
+  background-color: #F9F9F9;
+  border: 1px solid #E6E6E6;
+  border-radius: 4px;
+  height: 34px;
+  width: 263px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 16px;
+   height: 29px;
+   padding: 5px;
+   width: 268px;
+}
+
+.styled-select.slate {
+   height: 34px;
+   width: 263px;
+}
+
+.styled-select.slate select {
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 268px;
 }
 
