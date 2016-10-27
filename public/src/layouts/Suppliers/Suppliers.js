@@ -21,6 +21,9 @@ class Suppliers extends Component {
     if (state.deals.deal.orders.length > 0) {
       browserHistory.push('/viewQuotes');
     };
+    if (state.deals.deal.suppliers.length > 0) {
+      browserHistory.push('/quoteSpecifics');
+    };
   }
 
   handleSubmit() {

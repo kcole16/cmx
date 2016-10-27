@@ -110,7 +110,7 @@ class QuoteSpecifics extends Component {
                     <p>{form.buyer}</p>
                     <p>Bunker Enquiry</p>
                     <p style={{marginTop: 15}}>Please Offer:</p>
-                    <p>{form.vessel} (IMO: ) (LOA:  m) (GT:  MT)</p>
+                    <p>{form.vessel} (IMO: 9732606) (LOA:  300m) (GT:  94300MT)</p>
                     <div>
                       {orders}
                     </div>
@@ -119,14 +119,14 @@ class QuoteSpecifics extends Component {
                     <p>ETD {this.state.etd ? this.state.etd.format('DD/MM/YYYY').toString() : null}</p>
                     <p style={{marginTop: 15}}><a>Click here</a> to submit a price.</p>
                     <p style={{marginTop: 15}}>{form.additionalInfo}</p>
-                    <p style={{marginTop: 15}}>Best Regards,</p>
-                    <p style={{marginTop: 15}}>Mike Ball</p>
-                    <p>Manager Bunkers</p>
-                    <p>Gearbulk (uk) Ltd., 1. London Bridge, Tooley Street. London SE1 9BG</p>
-                    <p>PHONE +44 20 79406909</p>
-                    <p>MOBILE +44 7775 822 957</p>
-                    <p>Skype mike.ball.gb</p>
-                    <p><a href="www.gearbulk.com">www.gearbulk.com</a></p> 
+                    <p style={{marginTop: 15}}>Regards,</p>
+                    <p style={{marginTop: 15}}>Richard Butler</p>
+                    <p>Teekay Fuel Services</p>
+                    <p>Tel:    +44 (0) 207 3891 418</p>
+                    <p>Mob:  +44 (0) 777 1389 250</p>
+                    <p>Email: richard.butler@teekay.com</p>
+                    <p>Skype: rwb2468</p>
+                    <p><a href="www.teekay.com">www.teekay.com</a></p> 
                   </div>
     };
     return (

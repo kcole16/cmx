@@ -20,9 +20,17 @@ const validate = values => {
   if (!values.currency) {
     errors.currency = 'Required'
   }
-  if (!values.orders.length) {
-    errors.orders = 'Please add at least one order'
-  }
+  // if (!values.orders.length) {
+  //   errors.orders = 'Please add at least one order'
+  // }
+  errors.orders = values.orders.map((order) => {
+    if (!order.grade) {
+      return 'Please enter grade';
+    };
+    if (!order.quantity) {
+      return 'Please'
+    }
+  });
   return errors
 }
 
@@ -34,8 +42,7 @@ const initialValues = {
   portCallReason: null,
   agent: null,
   additionalInfo: null,
-  currency: 'USD',
-  'orders[].unit': 'MT'
+  currency: 'USD'
 };
 
 class QuoteForm extends Component {
@@ -51,7 +58,7 @@ class QuoteForm extends Component {
       orders.addField({
               grade: null,
               quantity: null,
-              unit: null,
+              unit: 'MT',
               specification: null,
               comments: null
             })
@@ -64,6 +71,8 @@ class QuoteForm extends Component {
       loaVal = '300';
       gtVal = '94300';
     };
+    console.log(orders[0].grade);
+    console.log(vessel);
     return (
       <div>
         <label className="title">Vessel Details</label>
@@ -127,9 +136,9 @@ class QuoteForm extends Component {
             <div className="form-data">
               <label>Currency</label>
               <select className="create-input" style={{height: 34, width: 343}} {...currency}>
-                <option value="usd">USD</option>
-                <option value="euro">Euro</option>
-                <option value="gbp">GBP</option>
+                <option value="USD">USD</option>
+                <option value="Euro">Euro</option>
+                <option value="GBP">GBP</option>
               </select>
             </div>
           </div>
@@ -151,7 +160,6 @@ class QuoteForm extends Component {
             </div>
           </div>
           <div className="orders">
-          {!orders.length && <div className="error">Please add at least one order</div>}
           {orders.map((order, index) => 
             <div className="order" key={index}>
               <div className="detail">
@@ -162,9 +170,9 @@ class QuoteForm extends Component {
               </div>
               <div className="detail">
                 <select className="create-input" {...order.unit}>
-                  <option value="mt">MT</option>
-                  <option value="m3">M3</option>
-                  <option value="l">L</option>
+                  <option value="MT">MT</option>
+                  <option value="M3">M3</option>
+                  <option value="L">L</option>
                 </select>
               </div>
               <div className="detail">
@@ -175,11 +183,12 @@ class QuoteForm extends Component {
               </div>
             </div>)}
           </div>
+          {orders.error && <div className="error">Please enter grade, quantity, units, and specifications</div>}
           <div className="add-order" onClick={() => {
               orders.addField({
                 grade: null,
                 quantity: null,
-                unit: null,
+                unit: 'MT',
                 specification: null,
                 comments: null
               })
