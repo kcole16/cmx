@@ -19,10 +19,12 @@ class Login extends Component {
   }
 
   render() {
+    const {state} = this.props;
     return (
       <div className="login-container">
         <LoginForm 
-          onSubmit={this.handleSubmit} />
+          onSubmit={this.handleSubmit}
+          incorrectLogin={state.user.incorrectLogin} />
       </div>
     );
   }

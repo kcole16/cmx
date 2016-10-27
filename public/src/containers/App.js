@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { Link } from 'react-router'
 import Suppliers from '../layouts/Suppliers/Suppliers';
-import Logo from '../assets/img/cxlogo.png';
+import Logo from '../assets/img/main-logo.png';
 import Login from './Login';
 
 class App extends Component {
