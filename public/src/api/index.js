@@ -3,7 +3,7 @@ import {configureStore} from '../store/configureStore';
 const env = process.env.NODE_ENV;
 let app_url = 'http://localhost:5000';
 if (env === 'production') {
-  app_url = 'http://commodityx.5634.flynnhub.com';
+  app_url = 'https://oilfront.com';
 };
 
 export const url_base = app_url;
