@@ -71,8 +71,6 @@ class QuoteForm extends Component {
       loaVal = '300';
       gtVal = '94300';
     };
-    console.log(orders[0].grade);
-    console.log(vessel);
     return (
       <div>
         <label className="title">Vessel Details</label>

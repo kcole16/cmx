@@ -3,7 +3,6 @@ export const STORE_USER = 'STORE_USER';
 export const INCORRECT_LOGIN = 'INCORRECT_LOGIN';
 
 export function storeUser(access_token) {
-  console.log("weird");
   return {
     type: STORE_USER,
     access_token: access_token.access_token
