@@ -75,7 +75,7 @@ class ViewQuotes extends Component {
     const deal = state.deals.deal;
     let quote = this.state.quoteSelected;
     let email = null;
-    if (quote) {
+    if (quote.orders) {
       const orders = quote.orders.map((order, index) => {
         return (
             <div key={index} className="order">
@@ -95,7 +95,7 @@ class ViewQuotes extends Component {
                 <p>{order.delivery}</p>
               </div>
               <div className="detail">
-                <p>{order.price} {state.deals.deal.orders[0].currency}</p>
+                <p>{order.price} {state.deals.deal.currency}</p>
               </div>
             </div>
           );
@@ -114,17 +114,29 @@ class ViewQuotes extends Component {
                 <p style={{marginTop: 15}}>Vessel: {deal.vessel}</p>
                 <p>Port: {deal.port}</p>
                 <p>ETA: {deal.eta}</p>
-                <div className="order-titles">
-                  <p>Grade</p>
-                  <p>Quantity</p>
-                  <p>Specification</p>
-                  <p>Terms</p>
-                  <p>Delivery</p>
-                  <p>Price</p>
+                <div className="order" style={{marginTop: 15}}>
+                  <div className="detail">
+                    <p>Grade:</p>
+                  </div>
+                  <div className="detail">
+                    <p>Quantity:</p>
+                  </div>
+                  <div className="detail">
+                    <p>Specification:</p>
+                  </div>
+                  <div className="detail">
+                    <p>Payment Terms:</p>
+                  </div>
+                  <div className="detail">
+                    <p>Delivery:</p>
+                  </div>
+                  <div className="detail">
+                    <p>Price:</p>
+                  </div>
                 </div>
                 {orders}
                 <p style={{marginTop: 15}}>Physical: {quote.name}</p>
-                <p style={{marginTop: 15}}>Agent: John Doe</p>
+                <p style={{marginTop: 15}}>Agent: {deal.agent ? deal.agent : 'TBC'}</p>
                 <p style={{marginTop: 15}}>Add Remarks:</p>
                 {comments}
                 <p style={{marginTop: 15}}>Remarks:</p>
@@ -148,7 +160,7 @@ class ViewQuotes extends Component {
       };
       return (
             <Quote 
-              key={index} 
+              key={supplier.name} 
               index={index}
               quote={supplier} 
               eta={state.deals.deal.eta}

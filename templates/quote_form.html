@@ -99,15 +99,11 @@
 					  	<option name="L" value="L">L</option>
 					  </select>
 					</div>
-					<div class="form-data">
-					  <label>Specifications</label>
-					  <input class="create-input" name="spec{{order.number}}" value="{{order.spec}}"/>
-					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-data">
-					  <label>Comments</label>
-					  <input class="create-input" name="comments{{order.number}}" value="{{order.comments}}"/>
+					  <label>Specifications</label>
+					  <input class="create-input" name="spec{{order.number}}" value="{{order.spec}}"/>
 					</div>
 					<div class="form-data">
 					  <label>Price</label>
@@ -117,9 +113,19 @@
 					  <label>Terms</label>
 					  <input class="create-input" name="terms{{order.number}}" />
 					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Physical Supplier</label>
+					  <input class="create-input" name="physical{{order.number}}"/>
+					</div>
 					<div class="form-data">
 					  <label>Delivery</label>
 					  <input class="create-input" name="delivery{{order.number}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Comments</label>
+					  <input class="create-input" name="comments{{order.number}}" value="{{order.comments}}"/>
 					</div>
 				</div>
 			</div>
@@ -155,7 +161,7 @@
 			<input type="text" name="supplier_id" value="{{supplier_id}}" hidden />
 			<input type="text" name="deal_id" value="{{deal_id}}" hidden />
 			<div class="request-button">
-				<button type="submit">Request Quotes</button>
+				<button type="submit">Send Offer</button>
 			</div>
 	    </form>
 	</div>

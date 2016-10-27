@@ -27,6 +27,9 @@ export default class Quote extends Component {
 						<p>{order.terms}</p>
 					</div>
 					<div className="detail">
+						<p>{order.physical}</p>
+					</div>
+					<div className="detail">
 						<p>{order.delivery}</p>
 					</div>
 					<div className="detail">
@@ -55,6 +58,9 @@ export default class Quote extends Component {
 						</div>
 						<div className="detail">
 							<label>Terms</label>
+						</div>
+						<div className="detail">
+							<label>Physical</label>
 						</div>
 						<div className="detail">
 							<label>Delivery</label>

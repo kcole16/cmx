@@ -44,24 +44,22 @@ class QuoteSpecifics extends Component {
     const form = getValues(state.form.quote);
     form.port = deal.port;
     form.suppliers = deal.suppliers;
-    if (confirm("Clicking OK will send this request to "+deal.suppliers.length.toString()+" suppliers")) {
-      if (!this.state.etd) {
-        form.etd = null;
-      } else {
-        form.etd = this.state.etd.format('DD/MM/YYYY').toString();
-      };
-      try {
-        form.eta = this.state.eta.format('DD/MM/YYYY').toString();
-        form.imo = '9732606';
-        form.loa = '300';
-        form.grossTonnage = '94300';
-        actions.setDeal(form);
-        actions.fetchCreateQuotes(form);
-        browserHistory.push('/viewQuotes');
-      } catch(err) {
-        alert('Please enter ETA');
-      }
+    if (!this.state.etd) {
+      form.etd = null;
+    } else {
+      form.etd = this.state.etd.format('DD/MM/YYYY').toString();
     };
+    try {
+      form.eta = this.state.eta.format('DD/MM/YYYY').toString();
+      form.imo = '9732606';
+      form.loa = '300';
+      form.grossTonnage = '94300';
+      actions.setDeal(form);
+      actions.fetchCreateQuotes(form);
+      browserHistory.push('/viewQuotes');
+    } catch(err) {
+      alert('Please enter ETA');
+    }
   }
 
   onEtaChange(date) {

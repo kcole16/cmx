@@ -107,7 +107,8 @@ def send_quote():
                 'comments': data['comments%s' % count],
                 'price': data['price%s' % count],
                 'terms': data['terms%s' % count],
-                'delivery': data['delivery%s' % count]
+                'delivery': data['delivery%s' % count],
+                'physical': data['physical%s' % count]
             }
             order_list.append(order)
             count += 1
