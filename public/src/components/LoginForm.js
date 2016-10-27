@@ -5,7 +5,6 @@ const fields = ['email','password'];
 class LoginForm extends Component {
   render() {
     const {fields: {email, password}, handleSubmit, incorrectLogin} = this.props;
-    console.log(incorrectLogin);
     return (
       <div className="login">
         <form onSubmit={handleSubmit}>
