@@ -20,7 +20,6 @@ $break-large: 1200px;
 
 .form-row {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   flex: 1;
@@ -33,7 +32,6 @@ $break-large: 1200px;
 
   .form-data {
     display: flex;
-    display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     flex: 1;
@@ -58,7 +56,6 @@ $break-large: 1200px;
 
 .request-button {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   flex: 1;
@@ -78,7 +75,6 @@ $break-large: 1200px;
 
 .titles {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   align-items: center;
@@ -88,7 +84,6 @@ $break-large: 1200px;
 
 .orders {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   flex-direction: column;
@@ -103,7 +98,6 @@ $break-large: 1200px;
 
   .order {
     display: flex;
-    display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     flex: 1;
@@ -115,7 +109,6 @@ $break-large: 1200px;
 
     .detail {
       display: flex;
-      display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
       flex: 1;
@@ -153,7 +146,6 @@ $break-large: 1200px;
 .add-order {
   cursor: pointer;
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   flex-direction: row;
@@ -170,7 +162,6 @@ $break-large: 1200px;
 
 .textarea {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   flex: 1;

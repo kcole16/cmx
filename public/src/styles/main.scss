@@ -29,7 +29,6 @@ body {
 
 .img-container {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   align-items: center;
@@ -79,7 +78,6 @@ footer {
 //Navbar
 .navbar {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   align-items: center;
@@ -95,7 +93,6 @@ footer {
 
 .main-bar {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   flex-direction: row;
@@ -108,7 +105,6 @@ footer {
 
   .nav-link {
     display: flex;
-    display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     padding: 10px;
@@ -136,7 +132,6 @@ footer {
 //General
 .header {
   display: flex;
-  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   width: 80%;
