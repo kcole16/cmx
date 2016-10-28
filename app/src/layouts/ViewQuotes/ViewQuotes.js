@@ -39,14 +39,15 @@ class ViewQuotes extends Component {
   }
 
   handleSubmit(index) {
-    const active = this.state.active;
-    const indexOf = active.indexOf(index);
-    if (indexOf > -1) {
-      active.splice(indexOf, 1);
-    } else {
-      active.push(index)
-    };
-    this.setState({active: active});
+    // const active = this.state.active;
+    // const indexOf = active.indexOf(index);
+    // if (indexOf > -1) {
+    //   active.splice(indexOf, 1);
+    // } else {
+    //   active.push(index)
+    // };
+    // this.setState({active: active});
+    this.closeModal();
   }
 
   openModal(quote) {
@@ -166,7 +167,8 @@ class ViewQuotes extends Component {
               eta={state.deals.deal.eta}
               etd={state.deals.deal.etd} 
               openModal={openModal} 
-              isActive={isActive}/>
+              isActive={isActive}
+              currency={state.deals.deal.currency}/>
         );
     });
     const quotes = <div>

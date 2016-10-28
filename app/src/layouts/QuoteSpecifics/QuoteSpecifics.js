@@ -104,7 +104,7 @@ class QuoteSpecifics extends Component {
     const {state, actions} = this.props;
     const suppliers = state.deals.deal.suppliers.map(function(supplier, index) {
       return (
-          <p key={index}>{supplier}</p>
+          <p key={index}>{supplier}  demo@test.com</p>
         );
     });
     const form = getValues(state.form.quote);

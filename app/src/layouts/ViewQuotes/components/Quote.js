@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 export default class Quote extends Component {
   render() {
-	const {index, quote, openModal, eta, etd, isActive} = this.props;
+	const {index, quote, openModal, eta, etd, isActive, currency} = this.props;
 	const skypeLink = "skype:"+quote.skype+"?chat";
 	const comments = quote.orders.map((order, index) => {
 		return (
@@ -33,7 +33,7 @@ export default class Quote extends Component {
 						<p>{order.delivery}</p>
 					</div>
 					<div className="detail">
-						<input type="text" placeholder={order.price} style={{marginLeft: 0}}/>
+						<p>{order.price} {currency}</p>
 					</div>
 				</div>
 			)
