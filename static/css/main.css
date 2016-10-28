@@ -10,7 +10,7 @@ $error-background: #FFCCCC;
 $error-red: #a94442;*/
 
 body {
-  width: 100%;
+  margin: 0px;
   background-color: white;
   font-family: 'Roboto script=all rev=1', sans-serif;
 }
@@ -48,7 +48,7 @@ body {
 }
 
 .navbar img {
-  width: 200px;
+  width: 150px;
 }
 
 .main-bar {
@@ -72,7 +72,7 @@ body {
 
 .title {
   margin: 10px;
-  margin-top: 40px;
+  margin-top: 30px;
   font-size: 18px;
   font-weight: 500;
   color: #2B4175;
@@ -124,6 +124,7 @@ body {
   align-items: flex-end;
   justify-content: flex-end;
   margin-top: 50px;
+  margin-bottom: 10px;
 }
 
 button {
@@ -153,13 +154,16 @@ button {
   justify-content: center;
 }
 
+.order {
+  height: 30px;
+}
+
 .attributes label {
   color: #5D6163;
 }
 
 .form-order {
-  margin-top: 10px;
-  border-bottom: 2px solid #2B4175;
+  margin-top: 40px;
 }
 
 .create-textarea {
@@ -201,3 +205,6 @@ button {
    width: 268px;
 }
 
+.general {
+  margin-top: 30px;
+}

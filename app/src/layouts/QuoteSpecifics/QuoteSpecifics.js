@@ -1,6 +1,7 @@
 require('../../styles/quoteSpecifics.scss');
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
@@ -30,6 +31,7 @@ class QuoteSpecifics extends Component {
 
   componentDidMount() {
     const {state} = this.props;
+    window.scrollTo(0, 0)
     if (state.deals.deal.suppliers.length <= 0) {
       browserHistory.push('/suppliers');
     };
@@ -63,11 +65,19 @@ class QuoteSpecifics extends Component {
   }
 
   onEtaChange(date) {
-    this.setState({eta:date})
+    if (this.state.eta || this.state.etd && this.state.etd < date) {
+      alert('ETD must be later than ETA');
+    } else {
+      this.setState({eta:date});
+    }
   }
 
   onEtdChange(date) {
-    this.setState({etd:date})
+    if (this.state.eta &&  this.state.eta > date) {
+      alert('ETD must be later than ETA');
+    } else {
+      this.setState({etd:date});
+    }
   }
 
   openModal() {

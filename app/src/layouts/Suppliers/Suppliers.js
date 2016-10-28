@@ -43,10 +43,10 @@ class Suppliers extends Component {
   render() {
     const {state} = this.props;
     const portList = [{
-      name: 'Singapore',
+      name: 'Gibraltar',
       id: 7
     },{
-      name: 'Rotterdam',
+      name: 'Malta',
       id: 8
     }];
     let supplierList = state.deals.suppliers;

@@ -4,6 +4,7 @@ from settings import APP_URL, MAILGUN_API_KEY, MAILGUN_APP
 def send_message(supplier, deal, orders):
 	subject = "Request for Quote from %s" % (deal.buyer)
 	link = "%s/send_quote?deal_id=%s&supplier_id=%s" % (APP_URL, deal.uuid, supplier.id)
+	print(link)
 	order_html = ''
 	ordered_by = ''
 	if deal.orderedBy:
@@ -15,7 +16,7 @@ def send_message(supplier, deal, orders):
 	return requests.post(
 		"https://api.mailgun.net/v3/%s/messages" % MAILGUN_APP,
 		auth=("api", MAILGUN_API_KEY),
-		data={"from": "CommodityX <mailgun@sandboxdf65ab935f4644c28e2f811710a08f02.mailgun.org>",
+		data={"from": "OilFront <mailgun@sandboxdf65ab935f4644c28e2f811710a08f02.mailgun.org>",
 			  "to": ['kcole16@gmail.com'],
 			  "subject": subject,
 			  "html": message})

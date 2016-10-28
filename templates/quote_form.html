@@ -3,20 +3,15 @@
   <head>
 	<meta charset="utf-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CommodityX</title>
+    <title>OilFront</title>
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- 	<script>
-	$( function() {
-		$( "#eta" ).datepicker();
-	} );
-	</script> -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
   </head>
   <body>
     <div class="navbar">
-      <img src="{{ url_for('static', filename='img/cxlogo.png') }}"/>
+      <img src="{{ url_for('static', filename='img/main-logo.png') }}"/>
     </div>
 	<div class="main-bar">
 		<label class="main-bar-label">Enquiry: {{deal.buyer}} {{deal.vessel}} {{deal.port}} {{deal.eta}}</label>
@@ -41,6 +36,12 @@
             <p>{{deal.etd}}</p>
           </div>
         </div>
+        <div class="attributes">
+          <div class="attribute">
+            <label>Additional Information</label>
+            <p>{{deal.additionalInfo}}</p>
+          </div>
+        </div>
 		<label class="title">Orders</label>
         <div class="attributes">
           <div class="attribute">
@@ -61,27 +62,27 @@
         </div>
 		{% for order in orders %}
         <div class="attributes">
-          <div class="attribute">
+          <div class="attribute order">
             <p>{{order.grade}}</p>
           </div>
-          <div class="attribute">
+          <div class="attribute order">
             <p>{{order.quantity}}</p>
           </div>
-          <div class="attribute">
+          <div class="attribute order">
             <p>{{order.unit}}</p>
           </div>
-          <div class="attribute">
+          <div class="attribute order">
             <p>{{order.spec}}</p>
           </div>
-          <div class="attribute">
+          <div class="attribute order">
             <p>{{order.comments}}</p>
           </div>
         </div>
         {% endfor %}
-		<label class="title">Enter Quotes</label>
 		<form method="post" action="/send_quote">
 			{% for order in orders %}
 			<div class="form-order">
+				<label class="title">{{order.grade}} Quote</label>
 				<div class="form-row">
 					<div class="form-data">
 					  <label>Grade</label>
@@ -107,7 +108,7 @@
 					</div>
 					<div class="form-data">
 					  <label>Price</label>
-					  <input class="create-input" name="price{{order.number}}" />
+					  <input type="number" class="create-input" name="price{{order.number}}" />
 					</div>
 					<div class="form-data">
 					  <label>Terms</label>
@@ -130,32 +131,33 @@
 				</div>
 			</div>
 	        {% endfor %}
-			<div class="form-row">
-				<div class="form-data">
-				  <label>Contact Number</label>
-				  <input type="text" name="phone" class="create-input"/>
+	        <div class="general">
+				<label class="title">General</label>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Contact Number</label>
+					  <input type="text" name="phone" class="create-input"/>
+					</div>
+					<div class="form-data">
+					  <label>Email</label>
+					  <input type="text" name="email" class="create-input"/>
+					</div>
+					<div class="form-data">
+					  <label>Skype ID</label>
+					  <input type="text" name="skype" class="create-input"/>
+					</div>
 				</div>
-				<div class="form-data">
-				  <label>Email</label>
-				  <input type="text" name="email" class="create-input"/>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Validity of Quote</label>
+					  <input type="text" name="expiration" class="create-input" placeholder="30 minutes"/>
+					</div>
 				</div>
-				<div class="form-data">
-				  <label>Skype ID</label>
-				  <input type="text" name="skype" class="create-input"/>
-				</div>
-				<div class="form-data">
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-data">
-				  <label>Validity of Quote</label>
-				  <input type="text" name="expiration" class="create-input" placeholder="30 minutes"/>
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-data">
-				  <label>Additional Information</label>
-				  <textarea rows="5" name="info" class="create-textarea"></textarea>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Additional Information</label>
+					  <textarea rows="5" name="info" class="create-textarea"></textarea>
+					</div>
 				</div>
 			</div>
 			<input type="text" name="supplier_id" value="{{supplier_id}}" hidden />
