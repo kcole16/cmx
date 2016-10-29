@@ -40,12 +40,15 @@ jwt = JWT(application, authenticate, identity)
 static = WhiteNoise(application, root='./static/')
 
 @application.route('/', methods=['GET'])
+def home():
+    return render_template('home.html')
+
 @application.route('/login', methods=['GET'])
 @application.route('/suppliers', methods=['GET'])
 @application.route('/quoteSpecifics', methods=['GET'])
 @application.route('/viewQuotes', methods=['GET'])
-def home():
-    return render_template('index.html')
+def app():
+    return render_template('index.html');
 
 # @application.route('/suppliers', methods=['GET'])
 # @application.route('/quoteSpecifics', methods=['GET'])
