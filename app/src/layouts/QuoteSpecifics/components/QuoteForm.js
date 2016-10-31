@@ -51,7 +51,7 @@ class QuoteForm extends Component {
   }
 
   render() {
-    const {state, actions, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd} = this.props;
+    const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd} = this.props;
     const {fields: {vessel, buyer, orderedBy, portCallReason, 
       agent, currency, orders, additionalInfo}} = this.props;
     if (!orders.length) {
@@ -210,6 +210,10 @@ class QuoteForm extends Component {
 export default QuoteForm = reduxForm({ 
   form: 'quote',                      
   fields,
-  validate,
-  initialValues
-})(QuoteForm);
+  validate},
+  (state) => {
+    return {
+      initialValues: state.deals.deal ? state.deals.deal : initialValues
+    }
+  } 
+)(QuoteForm);
