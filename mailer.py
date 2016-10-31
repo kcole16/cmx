@@ -22,7 +22,7 @@ def send_message(supplier, deal, orders):
 			  "html": message})
 
 def new_signup(email):
-	message = "%s signed up"
+	message = "%s signed up" % email
 	return requests.post(
 		"https://api.mailgun.net/v3/%s/messages" % MAILGUN_APP,
 		auth=("api", MAILGUN_API_KEY),
