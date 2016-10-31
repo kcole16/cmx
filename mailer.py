@@ -27,7 +27,7 @@ def new_signup(email):
 		"https://api.mailgun.net/v3/%s/messages" % MAILGUN_APP,
 		auth=("api", MAILGUN_API_KEY),
 		data={"from": "OilFront <mailgun@sandboxdf65ab935f4644c28e2f811710a08f02.mailgun.org>",
-			  "to": ['kendall@oilfront.com', 'danny@oilfront.com'],
+			  "to": ['kendall@oilfront.com'],
 			  "subject": "New Signup",
 			  "html": message})
 

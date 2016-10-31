@@ -24,6 +24,7 @@ const initialState = {
     agent: null,
     currency: 'USD',
     location: 'Anchorage',
+    additionalInfo: null,
     orders: [],
     quotes: []
   },
