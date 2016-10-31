@@ -40,7 +40,7 @@ class QuoteForm extends Component {
   }
 
   render() {
-    const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd} = this.props;
+    const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd, selectPort, port} = this.props;
     const {fields: {vessel, buyer, orderedBy, portCallReason, 
       agent, currency, orders, additionalInfo}} = this.props;
     if (!orders.length && !deal.orders.length) {
@@ -60,6 +60,18 @@ class QuoteForm extends Component {
       loaVal = '300';
       gtVal = '94300';
     };
+    const portList = [{
+      name: 'Gibraltar',
+      id: 7
+    },{
+      name: 'Malta',
+      id: 8
+    }];
+    const ports = portList.map(function(port, index) {
+      return (
+            <option key={index} id={port.id} value={port.name}>{port.name}</option>
+        );
+    });
     return (
       <div>
         <label className="title">Vessel Details</label>
@@ -98,7 +110,9 @@ class QuoteForm extends Component {
           <div className="form-row">
             <div className="form-data">
               <label>Port</label>
-              <input type="text" className="create-input" value={deal.port}/>
+              <select className="create-input" style={{height: 34, width: 343}} onChange={selectPort} value={port}>
+                {ports}
+              </select>
             </div>
             <div className="form-data">
               <label>Location in Port</label>

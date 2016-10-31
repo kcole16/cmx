@@ -115,6 +115,10 @@ class Suppliers extends Component {
             </div>
           </div>
         </Modal>
+        <div className="port-select">
+          <label>Port</label>
+          <p>{state.deals.deal.port}</p>
+        </div>
         <div className="titles">
           <div className="title">
             <label>Company</label>

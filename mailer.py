@@ -21,6 +21,16 @@ def send_message(supplier, deal, orders):
 			  "subject": subject,
 			  "html": message})
 
+def new_signup(email):
+	message = "%s signed up"
+	return requests.post(
+		"https://api.mailgun.net/v3/%s/messages" % MAILGUN_APP,
+		auth=("api", MAILGUN_API_KEY),
+		data={"from": "OilFront <mailgun@sandboxdf65ab935f4644c28e2f811710a08f02.mailgun.org>",
+			  "to": ['kendall@oilfront.com', 'danny@oilfront.com'],
+			  "subject": "New Signup",
+			  "html": message})
+
 def send_supplier_emails(suppliers, deal, orders):
 	print(orders)
 	for supplier in suppliers:

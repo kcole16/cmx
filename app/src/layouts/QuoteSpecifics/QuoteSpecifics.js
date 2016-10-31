@@ -83,28 +83,12 @@ class QuoteSpecifics extends Component {
 
   render() {
     const {state, actions} = this.props;
-    const portList = [{
-      name: 'Gibraltar',
-      id: 7
-    },{
-      name: 'Malta',
-      id: 8
-    }];
-    const ports = portList.map(function(port, index) {
-      return (
-            <option key={index} id={port.id} value={port.name}>{port.name}</option>
-        );
-    });
     return (
       <div className="layout-container">
-        <div className="port-select">
-          <label>Select Port</label>
-          <select className="styled-select" onChange={this.selectPort} value={state.deals.deal.port}>
-            {ports}
-          </select>
-        </div>
         <QuoteForm 
           onSubmit={this.handleSubmit} 
+          selectPort={this.selectPort}
+          port={state.deals.deal.port}
           onEtdChange={this.onEtdChange} 
           onEtaChange={this.onEtaChange} 
           eta={this.state.eta}

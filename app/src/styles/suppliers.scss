@@ -113,6 +113,12 @@ $break-large: 1200px;
   margin-bottom: 40px;
   margin-left: 10px;
 
+  p {
+    margin:0px;
+    font-size: 18px;
+    color: $dark-gray;
+  }
+
   label {
     margin-bottom: 10px;
     font-size: 18px;

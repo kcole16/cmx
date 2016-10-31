@@ -114,10 +114,15 @@
               Streamline your bunker enquiry process.
             </p> -->
             <div class="trial branding-buttons" style="margin-top: 60px;">
-              <form action="" method="POST">
+              <form action="/" method="POST">
                 <input name="email" placeholder="Email" type="email"> 
                 <button type="submit" class="btn btn-primary btn-shadow w-md btn-rounded">Try it for free</button> 
               </form>
+              {% if submitted %}
+              <div class="submitted">
+                <p>Request Submitted</p>
+              </div>
+              {% endif %}
             </div>
           </div><!-- home wrapper -->
 

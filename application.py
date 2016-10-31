@@ -8,7 +8,7 @@ from passlib.hash import sha256_crypt
 from whitenoise import WhiteNoise
 
 from models import application, db, User, Supplier, Deal, Order
-from mailer import send_supplier_emails
+from mailer import send_supplier_emails, new_signup
 
 import pusher
 
@@ -39,9 +39,15 @@ cors = CORS(application)
 jwt = JWT(application, authenticate, identity)
 static = WhiteNoise(application, root='./static/')
 
-@application.route('/', methods=['GET'])
+@application.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    if request.method == 'GET':
+        submitted = False
+    elif request.method == 'POST':
+        email = request.form['email']
+        new_signup(email)
+        submitted = True
+    return render_template('home.html', submitted=submitted)
 
 @application.route('/login', methods=['GET'])
 @application.route('/suppliers', methods=['GET'])

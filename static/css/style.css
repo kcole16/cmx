@@ -1296,3 +1296,7 @@ input {
     background-color: #ededed;
   }
 }
+
+.submitted p {
+  color: white;
+}
