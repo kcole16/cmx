@@ -4,11 +4,13 @@ import {
   ADD_SUPPLIER,
   SET_DEAL,
   ADD_QUOTE,
-  GET_SUPPLIERS
+  GET_SUPPLIERS,
+  SEND_DEAL
 } from '../actions/index';
 
 const initialState = {
   deal: {
+    sent: false,
     port: 'Gibraltar',
     suppliers: [],
     vessel: null,
@@ -77,6 +79,12 @@ export default function deals(state = initialState, action={}) {
       ...state,
       suppliers: action.suppliers
     };
+  case SEND_DEAL:
+    deal.sent = true;
+    return {
+      ...state, 
+      deal: deal
+    }
   default:
     return state;
   }

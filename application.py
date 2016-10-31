@@ -13,21 +13,24 @@ from mailer import send_supplier_emails, new_signup
 import pusher
 
 pusher_client = pusher.Pusher(
-  app_id='259911',
-  key='213331f62067dec74527',
-  secret='d4cdf1c15264540b31d1',
-  ssl=True
+    app_id='259911',
+    key='213331f62067dec74527',
+    secret='d4cdf1c15264540b31d1',
+    ssl=True
 )
+
 
 def authenticate(email, password):
     user = User.query.filter_by(email=email).first()
     if user and sha256_crypt.verify(password, user.password):
         return user
 
+
 def identity(payload):
     user_id = payload['identity']
     user = User.query.filter_by(id=user_id).first()
     return user
+
 
 application.debug = True
 application.config['SECRET_KEY'] = 'super-secret'
@@ -39,6 +42,7 @@ cors = CORS(application)
 jwt = JWT(application, authenticate, identity)
 static = WhiteNoise(application, root='./static/')
 
+
 @application.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
@@ -49,12 +53,14 @@ def home():
         submitted = True
     return render_template('home.html', submitted=submitted)
 
+
 @application.route('/login', methods=['GET'])
 @application.route('/suppliers', methods=['GET'])
 @application.route('/quoteSpecifics', methods=['GET'])
 @application.route('/viewQuotes', methods=['GET'])
 def app():
     return render_template('index.html');
+
 
 # @application.route('/suppliers', methods=['GET'])
 # @application.route('/quoteSpecifics', methods=['GET'])
@@ -64,15 +70,19 @@ def request_quotes():
     data = request.get_json()
     suppliers = []
     for supplier in data['suppliers']:
-      supplier = Supplier.query.filter_by(name=supplier).first()
-      suppliers.append(supplier)
+        supplier = Supplier.query.filter_by(name=supplier).first()
+        suppliers.append(supplier)
     print(data)
-    deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['loa'], data['buyer'],
-        data['orderedBy'], data['grossTonnage'], data['additionalInfo'], data['eta'],data['etd'], 
-        data['portCallReason'], data['agent'], data['currency'], data['location'])
+    deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['loa'],
+                data['buyer'],
+                data['orderedBy'], data['grossTonnage'], data['additionalInfo'],
+                data['eta'], data['etd'],
+                data['portCallReason'], data['agent'], data['currency'],
+                data['location'])
     for order in data['orders']:
-        new_order = Order(order['grade'], order['quantity'], order['specification'], 
-            order['unit'], order['comments'], deal)
+        new_order = Order(order['grade'], order['quantity'],
+                          order['specification'],
+                          order['unit'], order['comments'], deal)
         db.session.add(new_order)
     db.session.add(deal)
     db.session.commit()
@@ -81,16 +91,19 @@ def request_quotes():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+
 @application.route('/getSuppliers', methods=['GET'])
 @jwt_required()
 def get_suppliers():
     port = request.args['port']
-    suppliers = [{'name': supplier.name} for supplier in Supplier.query.filter_by(port=port)]
+    suppliers = [{'name': supplier.name} for supplier in
+                 Supplier.query.filter_by(port=port)]
     response = jsonify({'suppliers': suppliers})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-@application.route('/send_quote', methods=['GET','POST'])
+
+@application.route('/send_quote', methods=['GET', 'POST'])
 def send_quote():
     order_list = []
     count = 0
@@ -100,12 +113,12 @@ def send_quote():
         deal = Deal.query.filter_by(uuid=data['deal_id']).first()
         orders = Order.query.filter_by(deal_id=deal.id)
         quote = {
-        'name': supplier.name,
-        'expiration': data['expiration'],
-        'info': data['info'],
-        'phone': data['phone'],
-        'email': data['email'],
-        'skype': data['skype']
+            'name': supplier.name,
+            'expiration': data['expiration'],
+            'info': data['info'],
+            'phone': data['phone'],
+            'email': data['email'],
+            'skype': data['skype']
         }
         for order in orders:
             order = {
@@ -140,7 +153,10 @@ def send_quote():
             order['number'] = count
             order_list.append(order)
             count += 1
-        return render_template('quote_form.html', deal_id=deal_id, supplier_id=supplier_id, deal=deal, orders=order_list)
+        return render_template('quote_form.html', deal_id=deal_id,
+                               supplier_id=supplier_id, deal=deal,
+                               orders=order_list)
+
 
 if __name__ == "__main__":
     application.debug = True

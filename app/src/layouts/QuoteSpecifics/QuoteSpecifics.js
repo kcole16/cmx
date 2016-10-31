@@ -32,9 +32,9 @@ class QuoteSpecifics extends Component {
   componentDidMount() {
     const {state} = this.props;
     window.scrollTo(0, 0)
-    // if (state.deals.deal.orders.length > 0) {
-    //   browserHistory.push('/viewQuotes');
-    // };
+    if (state.deals.deal.sent) {
+      browserHistory.push('/viewQuotes');
+    };
   }
 
   handleSubmit() {

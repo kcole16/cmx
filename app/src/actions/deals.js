@@ -6,6 +6,7 @@ export const SET_DEAL = 'SET_DEAL';
 export const ADD_QUOTE = 'ADD_QUOTE';
 export const GET_SUPPLIERS = 'GET_SUPPLIERS';
 export const REMOVE_USER = 'REMOVE_USER';
+export const SEND_DEAL = 'SEND_DEAL';
 
 export function selectPort(port) {
   return {
@@ -49,6 +50,12 @@ export function removeUser() {
   };
 }
 
+export function sendDeal() {
+  return {
+    type: SEND_DEAL
+  };
+}
+
 export function fetchCreateQuotes(deal) {
   const route = '/requestQuotes'
   const req = generateRequest('POST', route, deal);
@@ -62,6 +69,7 @@ export function fetchCreateQuotes(deal) {
           return res.json();
         };
       })
+      .then(() => dispatch(sendDeal()))
       .catch(err => console.log(err))
   }
 }

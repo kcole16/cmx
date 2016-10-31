@@ -11,6 +11,7 @@ application.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
@@ -42,8 +43,9 @@ class Deal(db.Model):
     currency = db.Column(db.String(120), unique=False)
     location = db.Column(db.String(120), unique=False)
 
-    def __init__(self, uuid, port, vessel, imo, loa, buyer, orderedBy, 
-    	grossTonnage, additionalInfo, eta, etd, portCallReason, agent, currency, location):
+    def __init__(self, uuid, port, vessel, imo, loa, buyer, orderedBy,
+                 grossTonnage, additionalInfo, eta, etd, portCallReason, agent,
+                 currency, location):
         self.uuid = uuid
         self.port = port
         self.vessel = vessel
@@ -88,7 +90,7 @@ class Order(db.Model):
     comments = db.Column(db.String(120), unique=False)
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship('Deal',
-        backref=db.backref('orders', lazy='dynamic'))
+                           backref=db.backref('orders', lazy='dynamic'))
 
     def __init__(self, grade, quantity, spec, unit, comments, deal):
         self.grade = grade
@@ -110,10 +112,10 @@ class Quote(db.Model):
     expiration = db.Column(db.String(120), unique=False)
     supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.id'))
     supplier = db.relationship('Supplier',
-        backref=db.backref('quotes', lazy='dynamic'))
+                               backref=db.backref('quotes', lazy='dynamic'))
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship('Deal',
-        backref=db.backref('quotes', lazy='dynamic'))
+                           backref=db.backref('quotes', lazy='dynamic'))
 
     def __init__(self, price, dates, terms, expiration, supplier, deal):
         self.price = price
