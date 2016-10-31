@@ -111,10 +111,12 @@ $break-large: 1200px;
   flex-direction: column;
   margin-top: 10px;
   margin-bottom: 40px;
+  margin-left: 10px;
 
   label {
     margin-bottom: 10px;
     font-size: 18px;
+    font-weight: 100;
     color: $main-blue;
   }
 

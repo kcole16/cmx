@@ -113,7 +113,7 @@ class ViewQuotes extends Component {
       email = <div className="email">
                 <p>{deal.broker ? <p>deal.broker, acting in accordance with instructions received from</p>: null} {deal.buyer}, (hereafter referred to as "Buyers") have placed the following Bunker nomination with {quote.name} (hereafter referred to as "Sellers"):</p>
                 <p style={{marginTop: 15}}>Vessel: {deal.vessel}</p>
-                <p>Port: {deal.port}</p>
+                <p>Port: {deal.port} ({deal.location})</p>
                 <p>ETA: {deal.eta}</p>
                 <div className="order" style={{marginTop: 15}}>
                   <div className="detail">

@@ -40,9 +40,10 @@ class Deal(db.Model):
     portCallReason = db.Column(db.String(120), unique=False)
     agent = db.Column(db.String(120), unique=False)
     currency = db.Column(db.String(120), unique=False)
+    location = db.Column(db.String(120), unique=False)
 
     def __init__(self, uuid, port, vessel, imo, loa, buyer, orderedBy, 
-    	grossTonnage, additionalInfo, eta, etd, portCallReason, agent, currency):
+    	grossTonnage, additionalInfo, eta, etd, portCallReason, agent, currency, location):
         self.uuid = uuid
         self.port = port
         self.vessel = vessel
@@ -57,6 +58,7 @@ class Deal(db.Model):
         self.portCallReason = portCallReason
         self.agent = agent
         self.currency = currency
+        self.location = location
 
     def __str__(self):
         return "Deal(id='%s')" % self.id

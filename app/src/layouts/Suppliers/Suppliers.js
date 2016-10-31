@@ -84,7 +84,7 @@ class Suppliers extends Component {
                     <div>
                       {orders}
                     </div>
-                    <p style={{marginTop: 15}}>@ {state.deals.deal.port}</p>
+                    <p style={{marginTop: 15}}>@ {state.deals.deal.port} ({state.deals.deal.location})</p>
                     <p>ETA {deal.eta ? deal.eta : null}</p>
                     <p>ETD {deal.etd ? deal.etd: null}</p>
                     <p style={{marginTop: 15}}><a>Click here</a> to submit a price.</p>

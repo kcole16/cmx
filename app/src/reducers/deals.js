@@ -22,7 +22,8 @@ const initialState = {
     etd: null,
     portCallReason: null,
     agent: null,
-    currency: null,
+    currency: 'USD',
+    location: 'Anchorage',
     orders: [],
     quotes: []
   },

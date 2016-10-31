@@ -6,7 +6,7 @@ import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../../assets/img/add-plus-button.png';
 
 export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
-    'agent', 'eta', 'etd', 'currency', 'orders[].grade',
+    'agent', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
     'orders[].quantity', 'orders[].unit', 'orders[].specification', 'orders[].comments', 'additionalInfo'];
 
 const validate = values => {
@@ -34,17 +34,6 @@ const validate = values => {
   return errors
 }
 
-const initialValues = {
-  imo: null,
-  loa: null,
-  grossTonnage: null,
-  orderedBy: null,
-  portCallReason: null,
-  agent: null,
-  additionalInfo: null,
-  currency: 'USD'
-};
-
 class QuoteForm extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +43,7 @@ class QuoteForm extends Component {
     const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd} = this.props;
     const {fields: {vessel, buyer, orderedBy, portCallReason, 
       agent, currency, orders, additionalInfo}} = this.props;
-    if (!orders.length) {
+    if (!orders.length && !deal.orders.length) {
       orders.addField({
               grade: null,
               quantity: null,
@@ -106,6 +95,20 @@ class QuoteForm extends Component {
             </div>
           </div>
           <label className="title">Requirements</label>
+          <div className="form-row">
+            <div className="form-data">
+              <label>Port</label>
+              <input type="text" className="create-input" value={deal.port}/>
+            </div>
+            <div className="form-data">
+              <label>Location in Port</label>
+              <select className="create-input" style={{height: 34, width: 343}} {...location}>
+                <option value="Anchorage">Anchorage</option>
+              </select>
+            </div>
+            <div className="form-data">
+            </div>
+          </div>
           <div className="form-row">
             <div className="form-data calendar">
               <label>ETA</label>
@@ -199,7 +202,7 @@ class QuoteForm extends Component {
             <textarea rows={4} {...additionalInfo}/>
           </div>
           <div className="request-button">
-            <button type="submit" disabled={submitting}>Request Quotes</button>
+            <button type="submit" disabled={submitting}>Save Enquiry</button>
           </div>
         </form>
       </div>
@@ -213,7 +216,7 @@ export default QuoteForm = reduxForm({
   validate},
   (state) => {
     return {
-      initialValues: state.deals.deal ? state.deals.deal : initialValues
+      initialValues: state.deals.deal
     }
   } 
 )(QuoteForm);

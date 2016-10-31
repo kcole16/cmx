@@ -63,7 +63,7 @@ def request_quotes():
     print(data)
     deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['loa'], data['buyer'],
         data['orderedBy'], data['grossTonnage'], data['additionalInfo'], data['eta'],data['etd'], 
-        data['portCallReason'], data['agent'], data['currency'])
+        data['portCallReason'], data['agent'], data['currency'], data['location'])
     for order in data['orders']:
         new_order = Order(order['grade'], order['quantity'], order['specification'], 
             order['unit'], order['comments'], deal)

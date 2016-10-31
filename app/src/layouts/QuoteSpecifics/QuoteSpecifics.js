@@ -12,6 +12,7 @@ import FormMessages from 'redux-form-validation';
 import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../assets/img/add-plus-button.png';
 import QuoteForm from './components/QuoteForm';
+import moment from 'moment';
 
 class QuoteSpecifics extends Component {
   constructor(props) {
@@ -20,9 +21,11 @@ class QuoteSpecifics extends Component {
     this.onEtaChange = this.onEtaChange.bind(this);
     this.onEtdChange = this.onEtdChange.bind(this);
     this.selectPort = this.selectPort.bind(this);
+    let eta = this.props.state.deals.deal.eta ? moment(this.props.state.deals.deal.eta) : null;
+    let etd = this.props.state.deals.deal.etd ? moment(this.props.state.deals.deal.etd) : null;
     this.state = {
-      eta: null,
-      etd: null
+      eta: eta,
+      etd: etd
     }
   }
 
