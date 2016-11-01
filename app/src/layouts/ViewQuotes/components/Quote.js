@@ -54,7 +54,7 @@ export default class Quote extends Component {
 							<label>Quantity</label>
 						</div>
 						<div className="detail">
-							<label>Specifications</label>
+							<label>Specs</label>
 						</div>
 						<div className="detail">
 							<label>Terms</label>
@@ -92,9 +92,9 @@ export default class Quote extends Component {
 						<label>Skype</label>
 						<p><a href={skypeLink}>{quote.skype}</a></p>
 					</div>
-					<div className="request-button">
-					  <button onClick={openModal.bind(this, quote)}>Select Quote</button>
-					</div>
+				</div>
+				<div className="request-button">
+				  <button onClick={openModal.bind(this, quote)}>Select Quote</button>
 				</div>
 			</div>
 		</div>

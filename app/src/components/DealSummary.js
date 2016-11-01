@@ -43,10 +43,10 @@ export default class DealSummary extends Component {
             <label>Unit</label>
           </div>
           <div className="title">
-            <label>Specification</label>
+            <label>Specs</label>
           </div>
           <div className="title">
-            <label>Additional Comments</label>
+            <label>Comments</label>
           </div>
         </div>
         <div className="orders">

@@ -26,9 +26,9 @@ class Suppliers extends Component {
     if (state.deals.deal.sent) {
       browserHistory.push('/viewQuotes');
     };
-    // if (state.deals.deal.suppliers.length > 0) {
-    //   browserHistory.push('/quoteSpecifics');
-    // };
+    if (!state.deals.deal.orders.length) {
+      browserHistory.push('/quoteSpecifics');
+    };
   }
 
   handleSubmit() {

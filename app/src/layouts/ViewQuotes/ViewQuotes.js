@@ -136,7 +136,7 @@ class ViewQuotes extends Component {
                   </div>
                 </div>
                 {orders}
-                <p style={{marginTop: 15}}>Physical: {quote.name}</p>
+                <p style={{marginTop: 15}}>Physical: {quote.orders[0].physical}</p>
                 <p style={{marginTop: 15}}>Agent: {deal.agent ? deal.agent : 'TBC'}</p>
                 <p style={{marginTop: 15}}>Add Remarks:</p>
                 {comments}

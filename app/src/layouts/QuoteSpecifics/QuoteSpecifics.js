@@ -46,10 +46,10 @@ class QuoteSpecifics extends Component {
     if (!this.state.etd) {
       form.etd = null;
     } else {
-      form.etd = this.state.etd.format('DD/MM/YYYY').toString();
+      form.etd = this.state.etd.format('YYYY-MM-DD').toString();
     };
     try {
-      form.eta = this.state.eta.format('DD/MM/YYYY').toString();
+      form.eta = this.state.eta.format('YYYY-MM-DD').toString();
       form.imo = '9732606';
       form.loa = '300';
       form.grossTonnage = '94300';
@@ -61,7 +61,7 @@ class QuoteSpecifics extends Component {
   }
 
   onEtaChange(date) {
-    if (this.state.eta || this.state.etd && this.state.etd < date) {
+    if (this.state.eta && this.state.etd && this.state.etd < date) {
       alert('ETD must be later than ETA');
     } else {
       this.setState({eta:date});
@@ -69,7 +69,7 @@ class QuoteSpecifics extends Component {
   }
 
   onEtdChange(date) {
-    if (this.state.eta &&  this.state.eta > date) {
+    if (this.state.eta &&  this.state.eta > date && date) {
       alert('ETD must be later than ETA');
     } else {
       this.setState({etd:date});
