@@ -9,6 +9,7 @@ from whitenoise import WhiteNoise
 
 from models import application, db, User, Supplier, Deal, Order
 from mailer import send_supplier_emails, new_signup
+from settings import PRODUCTION
 
 import pusher
 
@@ -96,7 +97,7 @@ def request_quotes():
 @jwt_required()
 def get_suppliers():
     port = request.args['port']
-    suppliers = [{'name': supplier.name} for supplier in
+    suppliers = [{'name': supplier.name, 'email': supplier.email} for supplier in
                  Supplier.query.filter_by(port=port)]
     response = jsonify({'suppliers': suppliers})
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -159,5 +160,7 @@ def send_quote():
 
 
 if __name__ == "__main__":
-    application.debug = True
+    application.debug = False
+    if PRODUCTION:
+        application.debug = True
     application.run()

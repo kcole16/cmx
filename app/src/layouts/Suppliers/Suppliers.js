@@ -23,9 +23,9 @@ class Suppliers extends Component {
   componentWillMount() {
     const {state, actions} = this.props;
     actions.fetchGetSuppliers(state.deals.deal.port);
-    if (state.deals.deal.sent) {
-      browserHistory.push('/viewQuotes');
-    };
+    // if (state.deals.deal.sent) {
+    //   browserHistory.push('/viewQuotes');
+    // };
     if (!state.deals.deal.orders.length) {
       browserHistory.push('/quoteSpecifics');
     };
@@ -58,8 +58,12 @@ class Suppliers extends Component {
     };
     const handleCheck = this.handleCheck;
     const suppliers = supplierList.map(function(supplier, index) {
+      let background = '#FFF';
+      if (index%2 === 0) {
+        background = '#F9F9F9';
+      };
       return (
-            <Supplier key={index} supplier={supplier} handleCheck={handleCheck}/>
+            <Supplier key={index} supplier={supplier} handleCheck={handleCheck} background={background}/>
         );
     });
     const selectedSuppliers = state.deals.deal.suppliers.map(function(supplier, index) {
@@ -90,13 +94,13 @@ class Suppliers extends Component {
                     <p style={{marginTop: 15}}><a>Click here</a> to submit a price.</p>
                     <p style={{marginTop: 15}}>{deal.additionalInfo}</p>
                     <p style={{marginTop: 15}}>Regards,</p>
-                    <p style={{marginTop: 15}}>Richard Butler</p>
-                    <p>Teekay Fuel Services</p>
-                    <p>Tel:    +44 (0) 207 3891 418</p>
-                    <p>Mob:  +44 (0) 777 1389 250</p>
-                    <p>Email: richard.butler@teekay.com</p>
-                    <p>Skype: rwb2468</p>
-                    <p><a href="www.teekay.com">www.teekay.com</a></p> 
+                    <p style={{marginTop: 15}}>John Smith</p>
+                    <p>OilFront Services</p>
+                    <p>Tel: +44 5555555555</p>
+                    <p>Mob: +44 555555555</p>
+                    <p>Email: info@oilfront.com</p>
+                    <p>Skype: oilfront</p>
+                    <p><a href="www.oilfront.com">www.oilfront.com</a></p> 
                   </div>
     };
     return (
@@ -122,6 +126,9 @@ class Suppliers extends Component {
         <div className="titles">
           <div className="title">
             <label>Company</label>
+          </div>
+          <div className="title">
+            <label>Email</label>
           </div>
           <div className="title">
             <label>Select</label>

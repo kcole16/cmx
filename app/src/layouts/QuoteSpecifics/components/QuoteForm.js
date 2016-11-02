@@ -83,8 +83,8 @@ class QuoteForm extends Component {
               {vessel.touched && vessel.error && <div className="error">{vessel.error}</div>}
             </div>
             <div className="form-data">
-              <label>Buyer Name</label>
-              <input type="text" placeholder="Full Legal Style" className={buyer.touched && buyer.error ? "error-input" : "create-input"} {...buyer}/>
+              <label>Buyer [Full Legal Style]</label>
+              <input type="text" className={buyer.touched && buyer.error ? "error-input" : "create-input"} {...buyer}/>
               {buyer.touched && buyer.error && <div className="error">{buyer.error}</div>}
             </div>
             <div className="form-data">
@@ -117,6 +117,11 @@ class QuoteForm extends Component {
             <div className="form-data">
               <label>Location in Port</label>
               <select className="create-input" style={{height: 34, width: 343}} {...location}>
+                <option value="Alongside">Alongside</option>
+                <option value="Ex Barge">Ex Barge</option>
+                <option value="Ex Wharf">Ex Wharf</option>
+                <option value="Ex Pipe">Ex Pipe</option>
+                <option value="Road Tanker Wagon">Road Tanker Wagon</option>
                 <option value="Anchorage">Anchorage</option>
               </select>
             </div>
@@ -146,7 +151,10 @@ class QuoteForm extends Component {
             </div>
             <div className="form-data">
               <label>Port Call Reason</label>
-              <input type="text" className="create-input" {...portCallReason}/>
+              <select className="create-input" style={{height: 34, width: 343}} {...portCallReason}>
+                <option value="Cargo">Cargo</option>
+                <option value="Bunkering">Bunkering</option>
+              </select>
             </div>
             <div className="form-data">
               <label>Currency</label>
@@ -194,7 +202,7 @@ class QuoteForm extends Component {
                 <input className="create-input" placeholder="Specification" {...order.specification}/>
               </div>
               <div className="detail">
-                <input className="create-input" placeholder="Comments" {...order.comments}/>
+                <input className="create-input" placeholder="Comments on this parcel" {...order.comments}/>
               </div>
             </div>)}
           </div>
@@ -208,8 +216,9 @@ class QuoteForm extends Component {
                 comments: null
               })
             }}>
-            <img src={PlusImg}/>
-            <p>Add Order</p>
+            <div className="add-button">
+              <button>+ Add Grade</button>
+            </div>
           </div>
           <div className="textarea">
             <label>Additional Info</label>

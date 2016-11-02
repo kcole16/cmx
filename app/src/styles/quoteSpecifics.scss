@@ -158,6 +158,34 @@ $break-large: 1200px;
     width: 15px;
     margin-right: 10px;
   }
+
+  .add-button {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex: 1;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-left: 10px;
+    margin-bottom: 30px;
+
+    button {
+      border: 2px solid $main-green;
+      height: 40px;
+      width: 150px;
+      background-color: transparent;
+      color: $main-green;
+      font-size: 16px;
+      border-radius: 3px;
+
+      @media screen and (max-width: $break-small) {
+        width: 270px;
+      }
+    }
+  }
+
+  @media screen and (max-width: $break-small) {
+  }  
 }
 
 .textarea {
