@@ -7,6 +7,8 @@ export const ADD_QUOTE = 'ADD_QUOTE';
 export const GET_SUPPLIERS = 'GET_SUPPLIERS';
 export const REMOVE_USER = 'REMOVE_USER';
 export const SEND_DEAL = 'SEND_DEAL';
+export const GET_DEALS = 'GET_DEALS';
+export const CREATE_DEAL = 'CREATE_DEAL';
 
 export function selectPort(port) {
   return {
@@ -56,6 +58,20 @@ export function sendDeal() {
   };
 }
 
+export function getDeals(deals) {
+  console.log(deals);
+  return {
+    type: GET_DEALS,
+    deals: deals
+  };
+}
+
+export function createDeal() {
+  return {
+    type: CREATE_DEAL
+  };
+}
+
 export function fetchCreateQuotes(deal) {
   const route = '/requestQuotes'
   const req = generateRequest('POST', route, deal);
@@ -89,6 +105,24 @@ export function fetchGetSuppliers(port) {
       })      
       .then(json => dispatch(getSuppliers(json)))
       .then(() => dispatch(selectPort(port)))
+      .catch(err => console.log(err))
+  }
+}
+
+export function fetchGetDeals(port) {
+  const route = '/getDeals';
+  const req = generateRequest('GET', route);
+  return dispatch => {
+    return fetch(req.url, req.obj)
+      .then((res) => {
+        if (res.status >= 400) {
+          dispatch(removeUser());
+          throw new Error("Not Logged In");
+        } else {
+          return res.json();
+        };
+      })      
+      .then(json => dispatch(getDeals(json)))
       .catch(err => console.log(err))
   }
 }

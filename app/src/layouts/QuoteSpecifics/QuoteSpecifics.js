@@ -12,6 +12,7 @@ import FormMessages from 'redux-form-validation';
 import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../assets/img/add-plus-button.png';
 import QuoteForm from './components/QuoteForm';
+import EnquiryBar from '../../components/EnquiryBar';
 import moment from 'moment';
 
 class QuoteSpecifics extends Component {
@@ -21,8 +22,8 @@ class QuoteSpecifics extends Component {
     this.onEtaChange = this.onEtaChange.bind(this);
     this.onEtdChange = this.onEtdChange.bind(this);
     this.selectPort = this.selectPort.bind(this);
-    let eta = this.props.state.deals.deal.eta ? moment(this.props.state.deals.deal.eta) : null;
-    let etd = this.props.state.deals.deal.etd ? moment(this.props.state.deals.deal.etd) : null;
+    let eta = this.props.state.deals.active.deal.eta ? moment(this.props.state.deals.active.deal.eta) : null;
+    let etd = this.props.state.deals.active.deal.etd ? moment(this.props.state.deals.active.deal.etd) : null;
     this.state = {
       eta: eta,
       etd: etd
@@ -32,14 +33,14 @@ class QuoteSpecifics extends Component {
   componentDidMount() {
     const {state} = this.props;
     window.scrollTo(0, 0)
-    if (state.deals.deal.sent) {
+    if (state.deals.active.deal.sent) {
       browserHistory.push('/viewQuotes');
     };
   }
 
   handleSubmit() {
     const {state, actions} = this.props;
-    const deal = state.deals.deal;
+    const deal = state.deals.active.deal;
     const form = getValues(state.form.quote);
     form.port = deal.port;
     form.suppliers = deal.suppliers;
@@ -84,16 +85,21 @@ class QuoteSpecifics extends Component {
   render() {
     const {state, actions} = this.props;
     return (
-      <div className="layout-container">
-        <QuoteForm 
-          onSubmit={this.handleSubmit} 
-          selectPort={this.selectPort}
-          port={state.deals.deal.port}
-          onEtdChange={this.onEtdChange} 
-          onEtaChange={this.onEtaChange} 
-          eta={this.state.eta}
-          etd={this.state.etd}
-          deal={state.deals.deal}/>
+      <div>
+        <EnquiryBar />
+        <div className="main-app-container">
+          <div className="layout-container">
+            <QuoteForm 
+              onSubmit={this.handleSubmit} 
+              selectPort={this.selectPort}
+              port={state.deals.active.deal.port}
+              onEtdChange={this.onEtdChange} 
+              onEtaChange={this.onEtaChange} 
+              eta={this.state.eta}
+              etd={this.state.etd}
+              deal={state.deals.active.deal}/>
+          </div>
+        </div>
       </div>
     );
   }

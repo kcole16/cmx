@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
 import { browserHistory } from 'react-router'
 import Supplier from './components/Supplier';
+import EnquiryBar from '../../components/EnquiryBar';
 import Modal from 'react-modal';
 
 class Suppliers extends Component {
@@ -22,18 +23,18 @@ class Suppliers extends Component {
 
   componentWillMount() {
     const {state, actions} = this.props;
-    actions.fetchGetSuppliers(state.deals.deal.port);
-    // if (state.deals.deal.sent) {
+    actions.fetchGetSuppliers(state.deals.active.deal.port);
+    // if (state.deals.active.deal.sent) {
     //   browserHistory.push('/viewQuotes');
     // };
-    if (!state.deals.deal.orders.length) {
+    if (!state.deals.active.deal.orders.length) {
       browserHistory.push('/quoteSpecifics');
     };
   }
 
   handleSubmit() {
     const {state, actions} = this.props;
-    actions.fetchCreateQuotes(state.deals.deal);
+    actions.fetchCreateQuotes(state.deals.active.deal);
     browserHistory.push('viewQuotes');
   }
 
@@ -52,7 +53,7 @@ class Suppliers extends Component {
 
   render() {
     const {state} = this.props;
-    let supplierList = state.deals.suppliers;
+    let supplierList = state.deals.active.suppliers;
     if (supplierList === undefined) {
       supplierList = [];
     };
@@ -66,14 +67,14 @@ class Suppliers extends Component {
             <Supplier key={index} supplier={supplier} handleCheck={handleCheck} background={background}/>
         );
     });
-    const selectedSuppliers = state.deals.deal.suppliers.map(function(supplier, index) {
+    const selectedSuppliers = state.deals.active.deal.suppliers.map(function(supplier, index) {
       return (
           <p key={index}>{supplier}  demo@test.com</p>
         );
     });
     let email = null;
     let orders = null;
-    const deal = state.deals.deal;
+    const deal = state.deals.active.deal;
     if (deal) {
       orders = deal.orders.map(function(order, index) {
         return (
@@ -88,7 +89,7 @@ class Suppliers extends Component {
                     <div>
                       {orders}
                     </div>
-                    <p style={{marginTop: 15}}>@ {state.deals.deal.port} ({state.deals.deal.location})</p>
+                    <p style={{marginTop: 15}}>@ {state.deals.active.deal.port} ({state.deals.active.deal.location})</p>
                     <p>ETA {deal.eta ? deal.eta : null}</p>
                     <p>ETD {deal.etd ? deal.etd: null}</p>
                     <p style={{marginTop: 15}}><a>Click here</a> to submit a price.</p>
@@ -104,41 +105,46 @@ class Suppliers extends Component {
                   </div>
     };
     return (
-      <div className="layout-container">
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Example Modal">
-          <div className="rfq-modal">
-            <p>Clicking "Submit" below will send an email to the following suppliers:</p>
-            {selectedSuppliers}
-            {email}
-            <div className="request-button" style={{marginTop: 20}}>
-              <button onClick={this.handleSubmit}>Request Quotes</button>
+      <div>
+        <EnquiryBar />
+        <div className="main-app-container">
+          <div className="layout-container">
+            <Modal
+              isOpen={this.state.modalIsOpen}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal">
+              <div className="rfq-modal">
+                <p>Clicking "Submit" below will send an email to the following suppliers:</p>
+                {selectedSuppliers}
+                {email}
+                <div className="request-button" style={{marginTop: 20}}>
+                  <button onClick={this.handleSubmit}>Request Quotes</button>
+                </div>
+              </div>
+            </Modal>
+            <div className="port-select">
+              <label>Port</label>
+              <p>{state.deals.active.deal.port}</p>
+            </div>
+            <div className="titles">
+              <div className="title">
+                <label>Company</label>
+              </div>
+              <div className="title">
+                <label>Email</label>
+              </div>
+              <div className="title">
+                <label>Select</label>
+              </div>
+            </div>
+            <div className="suppliers-select">
+              {suppliers}
+            </div>
+            <div className="request-button" id="suppliers">
+              <button onClick={this.openModal}>Request Quotes</button>
             </div>
           </div>
-        </Modal>
-        <div className="port-select">
-          <label>Port</label>
-          <p>{state.deals.deal.port}</p>
-        </div>
-        <div className="titles">
-          <div className="title">
-            <label>Company</label>
-          </div>
-          <div className="title">
-            <label>Email</label>
-          </div>
-          <div className="title">
-            <label>Select</label>
-          </div>
-        </div>
-        <div className="suppliers-select">
-          {suppliers}
-        </div>
-        <div className="request-button" id="suppliers">
-          <button onClick={this.openModal}>Request Quotes</button>
         </div>
       </div>
     );

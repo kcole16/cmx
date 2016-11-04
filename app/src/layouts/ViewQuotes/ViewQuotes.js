@@ -8,6 +8,7 @@ import {reduxForm, getValues} from 'redux-form';
 import { browserHistory } from 'react-router';
 import Quote from './components/Quote';
 import DealSummary from '../../components/DealSummary';
+import EnquiryBar from '../../components/EnquiryBar';
 import Modal from 'react-modal';
 import Pusher from 'pusher-js';
 
@@ -33,7 +34,7 @@ class ViewQuotes extends Component {
     this.channel.bind('my_event', function(data) {
       actions.addQuote(data);
     }, this);
-    if (state.deals.deal.orders.length <= 0) {
+    if (state.deals.active.deal.orders.length <= 0) {
       browserHistory.push('/quoteSpecifics');
     };
   }
@@ -48,6 +49,7 @@ class ViewQuotes extends Component {
     // };
     // this.setState({active: active});
     this.closeModal();
+    browserHistory.push('/documents');
   }
 
   openModal(quote) {
@@ -69,11 +71,11 @@ class ViewQuotes extends Component {
 
   render() {
     const {state, actions} = this.props;
-    const supplierList = state.deals.deal.quotes;
+    const supplierList = state.deals.active.deal.quotes;
     const handleSubmit = this.handleSubmit;
     const active = this.state.active;
     const openModal = this.openModal;
-    const deal = state.deals.deal;
+    const deal = state.deals.active.deal;
     let quote = this.state.quoteSelected;
     let email = null;
     if (quote.orders) {
@@ -96,12 +98,12 @@ class ViewQuotes extends Component {
                 <p>{order.delivery}</p>
               </div>
               <div className="detail">
-                <p>{order.price} {state.deals.deal.currency}</p>
+                <p>{order.price} {state.deals.active.deal.currency}</p>
               </div>
             </div>
           );
       })
-      const orderComments = state.deals.deal.orders.map((order, index) => {
+      const orderComments = state.deals.active.deal.orders.map((order, index) => {
         return (
             <p key={index}>{order.grade}</p>
           )
@@ -164,11 +166,11 @@ class ViewQuotes extends Component {
               key={supplier.name} 
               index={index}
               quote={supplier} 
-              eta={state.deals.deal.eta}
-              etd={state.deals.deal.etd} 
+              eta={state.deals.active.deal.eta}
+              etd={state.deals.active.deal.etd} 
               openModal={openModal} 
               isActive={isActive}
-              currency={state.deals.deal.currency}/>
+              currency={state.deals.active.deal.currency}/>
         );
     });
     const quotes = <div>
@@ -177,24 +179,29 @@ class ViewQuotes extends Component {
                     </div>
                   </div>;
     return (
-      <div className="layout-container">
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Example Modal">
-          <div className="rfq-modal">
-            <p>Clicking "Submit" below will generate and send the following recap to {quote.name}:</p>
-            {email}
-            <div className="request-button" style={{marginTop: 20}}>
-              <button onClick={this.handleSubmit}>Send Trade Recap</button>
-            </div>
+      <div>
+        <EnquiryBar />
+        <div className="main-app-container">
+          <div className="layout-container">
+            <Modal
+              isOpen={this.state.modalIsOpen}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal">
+              <div className="rfq-modal">
+                <p>Clicking "Submit" below will generate and send the following recap to {quote.name}:</p>
+                {email}
+                <div className="request-button" style={{marginTop: 20}}>
+                  <button onClick={this.handleSubmit}>Send Trade Recap</button>
+                </div>
+              </div>
+            </Modal>
+            {quoteList.length > 0 ? quotes : 
+              <DealSummary 
+              title="Your quotes will appear here!" 
+              deal={state.deals.active.deal} />}
           </div>
-        </Modal>
-        {quoteList.length > 0 ? quotes : 
-          <DealSummary 
-          title="Your quotes will appear here!" 
-          deal={state.deals.deal} />}
+        </div>
       </div>
     );
   }

@@ -239,7 +239,7 @@ export default QuoteForm = reduxForm({
   validate},
   (state) => {
     return {
-      initialValues: state.deals.deal
+      initialValues: state.deals.active.deal
     }
   } 
 )(QuoteForm);

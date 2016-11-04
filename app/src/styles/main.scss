@@ -87,7 +87,27 @@ footer {
   width: 100%;
 
   img {
+    margin-left: 3%;
     width: 150px;
+  }
+
+  .menu {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex: 1;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 6%;
+
+    p {
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 300;
+      margin-left: 15px;
+      color: white;
+    }
   }
 }
 
@@ -98,7 +118,7 @@ footer {
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
-  height: 150px;
+  height: 100px;
   width: 100%;
   background-color: $light-gray;
   border-bottom: 1px lightgray solid;
@@ -115,6 +135,7 @@ footer {
     justify-content: center;
     text-decoration: none;
     font-weight: 100;
+
     @media screen and (max-width: $break-small) {
       margin-right: 20px;
       margin-left: 20px;
@@ -126,6 +147,24 @@ footer {
     font-weight: 500;
     color: $main-blue;
     border-bottom: 3px solid $main-blue;
+  }
+
+  .title {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex: 1;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 5%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    label {
+      font-size: 28px;
+      font-weight: 100;
+      color: $main-blue;
+    }
   }
 }
 

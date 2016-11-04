@@ -1,0 +1,182 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+$main-bg-color: #fffff;
+$main-blue: #2B4175;
+$main-green: #2BC6A8;
+$light-gray: #F9F9F9;
+$dark-gray: #5D6163;
+$border-color: #E6E6E6;
+$error-background: #FFCCCC;
+$error-red: #a94442;
+
+$break-small: 450px;
+$break-large: 1200px;
+
+body {
+  background-color: $main-bg-color;
+  display: flex;
+  font-family: 'Roboto script=all rev=1', sans-serif;
+  margin: 0px;
+}
+
+.dashboard {
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  flex-direction: row;
+  height: 100px;
+  background-color: $main-blue;
+  border-top: 1px solid rgba(235,235,235, 0.3);
+
+  @media screen and (max-width: $break-small) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-link {
+    margin-right: 0px;
+    font-size: 15px;
+    color: white;
+  }
+
+  .active {
+    font-weight: 500;
+    border-bottom: 3px solid white;
+  }
+
+  .inactive {
+    color: $border-color;
+  }
+
+  .title {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex: 1;
+    @media screen and (max-width: $break-small) {
+      justify-content: column;
+      margin-left: 0px;
+    }
+
+    label {
+      color: white;
+    }
+  }
+
+  .new-project {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    margin-right: 8%;
+
+    @media screen and (max-width: $break-small) {
+      justify-content: center;
+      margin-right: 0px;
+    }
+
+    button {
+      border: none;
+      height: 50px;
+      width: 150px;
+      background: $main-green;
+      border-radius: 37px;
+      color: white;
+      font-size: 14px;
+
+      @media screen and (max-width: $break-small) {
+        width: 270px;
+      }
+    }
+  }
+}
+
+.enquiries {
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  flex-direction: column;
+
+  .title {
+    width: 100%;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 10px;
+
+    label {
+      font-size: 20px;
+      color: $main-blue;
+    }
+  }
+
+  .enquiry {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex: 1;
+    flex-direction: row;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    color: $dark-gray;
+    font-size: 18px;
+    font-weight: 200;
+    width: 100%;
+    min-height: 70px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+    border: 2px solid #DBD9D9;
+    box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.16);
+    border-radius: 2px;
+
+    @media screen and (max-width: $break-small) {
+      flex-direction: column;
+    }
+
+    .attribute {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        border: none;
+        height: 50px;
+        width: 150px;
+        background: $main-green;
+        border-radius: 4px;
+        color: white;
+        font-size: 14px;
+        @media screen and (max-width: $break-small) {
+          width: 270px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+        }  
+      }
+
+      p {
+          @media screen and (max-width: $break-small) {
+            margin: 10px;
+        }  
+      }
+    }
+
+    .grades {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex-direction: column;
+
+      p {
+        margin: 0px;
+      }
+    }
+  }
+}
+

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
 import Suppliers from '../layouts/Suppliers/Suppliers';
 import Logo from '../assets/img/main-logo.png';
 import Login from './Login';
@@ -17,20 +17,20 @@ class App extends Component {
     let content = <Login />;
     if (state.user.isAuthenticated) {
       content =  <div>
-                      <div className="main-bar">
-                        <Link className="nav-link" to="quoteSpecifics" activeClassName="active">Create Enquiry</Link>
-                        <Link className="nav-link" to="suppliers" activeClassName="active">Select Suppliers</Link>
-                        <Link className="nav-link" to="viewQuotes" activeClassName="active">View Quotes</Link>
-                      </div>
-                      <div className="main-app-container">
-                        {this.props.children}
-                      </div>
-                     </div>;
+                    {this.props.children}
+                 </div>;
     };
     return (
           <div className="container">
             <div className="navbar">
-              <img src={Logo} />
+              <img src={Logo} onClick={() => {browserHistory.push('/')}}/>
+              <div className="menu">
+                <p onClick={() => {browserHistory.push('/')}}>Home</p>
+                <p>Reports</p>
+                <p>Directory</p>
+                <p>Claims</p>
+                <p>Account</p>
+              </div>
             </div>
             {content}
           </div>
