@@ -7,7 +7,10 @@ import {
   GET_SUPPLIERS,
   SEND_DEAL,
   GET_DEALS,
-  CREATE_DEAL
+  CREATE_DEAL,
+  UPDATE_STATUS,
+  CHANGE_ACTIVE_DEAL,
+  GET_QUOTES
 } from '../actions/index';
 
 const initialState = {
@@ -35,9 +38,7 @@ const initialState = {
     },
     suppliers: []
   },
-  enquiries: [],
-  order: [],
-  done: []
+  deals: []
 };
 
 function isUndefined(param) {
@@ -50,6 +51,7 @@ function isUndefined(param) {
 
 export default function deals(state = initialState, action={}) {
   let active = state.active;
+  let index = null;
   switch (action.type) {
   case SELECT_PORT:
     active.deal.port = action.port
@@ -59,7 +61,7 @@ export default function deals(state = initialState, action={}) {
     };
   case ADD_SUPPLIER:
     const suppliers = active.deal.suppliers;
-    const index = suppliers.indexOf(action.supplier);
+    index = suppliers.indexOf(action.supplier);
     if (index < 0) {
       suppliers.push(action.supplier);
     } else {
@@ -98,12 +100,32 @@ export default function deals(state = initialState, action={}) {
   case GET_DEALS:
     return {
       ...state, 
-      enquiries: action.deals.deals
+      deals: action.deals.deals
     }
   case CREATE_DEAL:
     return {
-      ...state, 
       active: initialState.active
+    }
+  case UPDATE_STATUS:
+    index = state.deals.indexOf(action.deal);
+    let deals = state.deals;
+    deals[index].status = action.status;
+    return {
+      ...state, 
+      deals: deals
+    }
+  case CHANGE_ACTIVE_DEAL:
+    active.deal = action.deal;
+    active.suppliers = [];
+    return {
+      ...state,
+      active: active
+    }
+  case GET_QUOTES:
+    active.deal.quotes = action.quotes;
+    return {
+      ...state,
+      active: active
     }
   default:
     return state;

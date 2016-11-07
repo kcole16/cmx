@@ -68,6 +68,9 @@
             <label>Unit</label>
           </div>
           <div class="attribute">
+            <label>Max Sulphur</label>
+          </div>
+          <div class="attribute">
             <label>Specifications</label>
           </div>
           <div class="attribute">
@@ -84,6 +87,9 @@
           </div>
           <div class="attribute order">
             <p>{{order.unit}}</p>
+          </div>
+          <div class="attribute order">
+            <p>{{order.maxSulphur}}</p>
           </div>
           <div class="attribute order">
             <p>{{order.spec}}</p>
@@ -113,6 +119,10 @@
 					  	<option name="M3" value="M3">M<sub>3</sub></option>
 					  	<option name="L" value="L">L</option>
 					  </select>
+					</div>
+					<div class="form-data">
+					  <label>Max Sulphur</label>
+					  <input class="create-input" name="maxSulphur{{order.number}}" value="{{order.maxSulphur}}"/>
 					</div>
 				</div>
 				<div class="form-row">

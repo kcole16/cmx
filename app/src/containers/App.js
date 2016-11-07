@@ -23,9 +23,9 @@ class App extends Component {
     return (
           <div className="container">
             <div className="navbar">
-              <img src={Logo} onClick={() => {browserHistory.push('/')}}/>
+              <img src={Logo} onClick={() => {browserHistory.push('/app')}}/>
               <div className="menu">
-                <p onClick={() => {browserHistory.push('/')}}>Home</p>
+                <p onClick={() => {browserHistory.push('/app')}}>Home</p>
                 <p>Reports</p>
                 <p>Directory</p>
                 <p>Claims</p>

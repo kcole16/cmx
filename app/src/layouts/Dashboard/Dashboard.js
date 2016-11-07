@@ -12,6 +12,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.createEnquiry = this.createEnquiry.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillMount() {
@@ -21,8 +22,36 @@ class Dashboard extends Component {
 
   createEnquiry() {
     const {actions} = this.props;
-    actions.createDeal();
-    browserHistory.push('/quoteSpecifics');
+    const deal = {
+      sent: false,
+      port: 'Gibraltar',
+      suppliers: [],
+      vessel: null,
+      imo: null,
+      loa: null,
+      grossTonnage: null,
+      buyer: null,
+      orderedBy: null,
+      eta: null,
+      etd: null,
+      portCallReason: null,
+      agent: null,
+      currency: 'USD',
+      location: 'Anchorage',
+      additionalInfo: null,
+      orders: [],
+      quotes: [],
+      status: 'order'
+    };
+    actions.changeActiveDeal(deal);
+    browserHistory.push('/app/quoteSpecifics');
+  }
+
+  handleClick(deal) {
+    const {actions} = this.props;
+    actions.changeActiveDeal(deal);
+    actions.fetchQuotes(deal);
+    browserHistory.push('/app/quoteSpecifics');
   }
 
   render() {
@@ -49,16 +78,25 @@ class Dashboard extends Component {
     //       grade: 'MGO 380'
     //     }]
     // }];
-    const enquiryList = state.deals.enquiries;
-    const enquiries = enquiryList.map((enquiry, index) => {
-      if (enquiry.status === 'enquiry') {
+    const dealList = state.deals.deals ? state.deals.deals : [];
+    const handleClick = this.handleClick;
+    const enquiries = dealList.map((deal, index) => {
+      if (deal.status === 'enquiry') {
         return (
           <Enquiry 
             key={index} 
-            vessel={enquiry.vessel} 
-            port={enquiry.port} 
-            eta={enquiry.eta} 
-            orders={enquiry.orders} />
+            deal={deal} 
+            handleClick={handleClick} />
+        )
+      };
+    });
+    const done = dealList.map((deal, index) => {
+      if (deal.status === 'done') {
+        return (
+          <Enquiry 
+            key={index} 
+            deal={deal} 
+            handleClick={handleClick} />
         )
       };
     });
@@ -67,7 +105,7 @@ class Dashboard extends Component {
         <div className="main-bar dashboard">
           <label className="nav-link active">DASHBOARD</label>
           <label className="nav-link inactive">PRICES</label>
-          <label className="nav-link inactive">VIEW QUOTES</label>
+          <label className="nav-link inactive">PORT INFORMATION</label>
           <div className="new-project">
             <button onClick={this.createEnquiry}>+ Create Enquiry</button>
           </div>
@@ -85,6 +123,7 @@ class Dashboard extends Component {
               <div className="title">
                 <label>Deals (not Delivered)</label>
               </div>
+              {done}
             </div>
           </div>
         </div>

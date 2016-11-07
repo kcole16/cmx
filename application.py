@@ -7,19 +7,18 @@ from flask_cors import CORS
 from passlib.hash import sha256_crypt
 from whitenoise import WhiteNoise
 
-from server.models import application, db, User, Supplier, Deal, Order, Quote
+from server.models import application, db, User, Supplier, Deal, Order, Quote, Price
 from server.mailer import send_supplier_emails, new_signup
 from server.settings import PRODUCTION
 
 import pusher
 
 pusher_client = pusher.Pusher(
-    app_id='259911',
-    key='213331f62067dec74527',
-    secret='d4cdf1c15264540b31d1',
+    app_id='267433',
+    key='31409d0487a999b7a26c',
+    secret='82983e1e986f82e187da',
     ssl=True
 )
-
 
 def authenticate(email, password):
     user = User.query.filter_by(email=email).first()
@@ -55,11 +54,12 @@ def home():
     return render_template('home.html', submitted=submitted)
 
 
-@application.route('/login', methods=['GET'])
-@application.route('/suppliers', methods=['GET'])
-@application.route('/quoteSpecifics', methods=['GET'])
-@application.route('/viewQuotes', methods=['GET'])
+@application.route('/app', methods=['GET'])
+@application.route('/app/suppliers', methods=['GET'])
+@application.route('/app/quoteSpecifics', methods=['GET'])
+@application.route('/app/viewQuotes', methods=['GET'])
 def app():
+    print('Here')
     return render_template('index.html');
 
 
@@ -72,7 +72,8 @@ def request_quotes():
         supplier = Supplier.query.filter_by(name=supplier).first()
         suppliers.append(supplier)
     print(data)
-    deal = Deal(uuid4(), data['port'], data['vessel'], data['imo'], data['loa'],
+    uuid = data['vessel']+data['port']+data['eta']+data['buyer']
+    deal = Deal(uuid, data['port'], data['vessel'], data['imo'], data['loa'],
                 data['buyer'],
                 data['orderedBy'], data['grossTonnage'], data['additionalInfo'],
                 data['eta'], data['etd'],
@@ -80,7 +81,7 @@ def request_quotes():
                 data['location'], data['status'])
     for order in data['orders']:
         new_order = Order(order['grade'], order['quantity'],
-                          order['specification'],
+                          order['specification'], order['maxSulphur'],
                           order['unit'], order['comments'], deal)
         db.session.add(new_order)
     db.session.add(deal)
@@ -119,10 +120,16 @@ def send_quote():
             'email': data['email'],
             'skype': data['skype']
         }
-        for order in orders:
-            order = {
+        new_quote = Quote(quote['expiration'], quote['email'],
+            quote['phone'], quote['skype'], quote['info'],
+            supplier, deal)
+        db.session.add(new_quote)
+        db.session.commit()
+        for o in orders:
+            order_data = {
                 'grade': data['grade%s' % count],
                 'quantity': data['quantity%s' % count],
+                'maxSulphur': data['maxSulphur%s' % count],
                 'unit': data['unit%s' % count],
                 'specifications': data['spec%s' % count],
                 'comments': data['comments%s' % count],
@@ -131,7 +138,12 @@ def send_quote():
                 'delivery': data['delivery%s' % count],
                 'physical': data['physical%s' % count]
             }
-            order_list.append(order)
+            order = Order.query.filter_by(deal_id=deal.id, grade=order_data['grade']).first()
+            price = Price(order_data['price'], order_data['terms'], order_data['physical'],
+                order_data['delivery'], new_quote, order)
+            db.session.add(price)
+            db.session.commit()
+            order_list.append(order_data)
             count += 1
         quote['orders'] = order_list
         pusher_client.trigger('test_channel', 'my_event', quote)
@@ -146,6 +158,7 @@ def send_quote():
                 'grade': order.grade,
                 'quantity': order.quantity,
                 'unit': order.unit,
+                'maxSulphur': order.maxSulphur,
                 'spec': order.spec,
                 'comments': order.comments
             }
@@ -162,7 +175,7 @@ def send_quote():
 def get_deals():
     deals = []
     for d in Deal.query.all():
-        orders = [{'grade': o.grade, 'quantity': o.quantity, 'unit': o.unit, 'spec': o.spec, 'comments': o.comments} 
+        orders = [{'grade': o.grade, 'quantity': o.quantity, 'unit': o.unit, 'maxSulphur': o.maxSulphur, 'spec': o.spec, 'comments': o.comments} 
             for o in Order.query.filter_by(deal_id=d.id)]
         deal = {
             'port': d.port, 
@@ -185,6 +198,67 @@ def get_deals():
         }
         deals.append(deal)
     response = jsonify({'deals': deals})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+@application.route('/updateStatus', methods=['POST'])
+@jwt_required()
+def update_status():
+    data = request.get_json()
+    suppliers = []
+    uuid = data['deal']['vessel']+data['deal']['port']+data['deal']['eta']+data['deal']['buyer']
+    deal = Deal.query.filter_by(uuid=uuid).update(dict(status=data['status']))
+    db.session.commit()
+    response = jsonify({'deal': data['deal'], 'status': data['status']})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+@application.route('/getQuotes', methods=['POST'])
+@jwt_required()
+def get_quotes():
+    data = request.get_json()
+    quotes = []
+    uuid = data['deal']['vessel']+data['deal']['port']+data['deal']['eta']+data['deal']['buyer']
+    deal = Deal.query.filter_by(uuid=uuid).first()
+    quotes = Quote.query.filter_by(deal_id=deal.id)
+    orders = Order.query.filter_by(deal_id=deal.id)
+    order_list = []
+    for o in orders:
+        order = {
+            'id': o.id,
+            'grade': o.grade,
+            'quantity': o.quantity,
+            'unit': o.unit,
+            'maxSulphur': o.maxSulphur,
+            'spec': o.spec,
+            'comments': o.comments
+        }
+        order_list.append(order)
+    quote_list = []
+    for quote in quotes:
+        quote_order = []      
+        quote_data = {
+            'name': quote.supplier.name,
+            'expiration': quote.validity,
+            'info': quote.info,
+            'phone': quote.phone,
+            'email': quote.email,
+            'skype': quote.skype
+        }
+        for order in order_list:
+            price = Price.query.filter_by(order_id=order['id'], quote_id=quote.id).first()
+            order['price'] = price.price
+            order['terms'] = price.terms
+            order['delivery'] = price.delivery
+            order['physical'] = price.physical
+            quote_order.append(order)
+        quote_data['orders'] = quote_order
+        quote_list.append(quote_data)
+    
+    print(quote_list)
+    response = jsonify({'quotes': quote_list})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 

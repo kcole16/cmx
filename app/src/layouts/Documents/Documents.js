@@ -69,7 +69,7 @@ class Documents extends Component {
             <div className="document-nav">
               <div className="label">
                 <img src={Back} />
-                <label onClick={() => {browserHistory.push('')}}>Back to Enquiries</label>
+                <label onClick={() => {browserHistory.push('/app')}}>Back to Enquiries</label>
               </div>
               <div className="upload">
                 <button>+ Upload Document</button>

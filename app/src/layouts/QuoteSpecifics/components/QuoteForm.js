@@ -7,7 +7,7 @@ import PlusImg from '../../../assets/img/add-plus-button.png';
 
 export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
     'agent', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
-    'orders[].quantity', 'orders[].unit', 'orders[].specification', 'orders[].comments', 'additionalInfo'];
+    'orders[].quantity', 'orders[].unit', 'orders[].specification', 'orders[].maxSulphur', 'orders[].comments', 'additionalInfo'];
 
 const validate = values => {
   const errors = {}
@@ -48,6 +48,7 @@ class QuoteForm extends Component {
               grade: null,
               quantity: null,
               unit: 'MT',
+              maxSulphur: '0.1%',
               specification: null,
               comments: null
             })
@@ -176,6 +177,9 @@ class QuoteForm extends Component {
               <label>Unit</label>
             </div>
             <div className="title">
+              <label>Max Sulphur</label>
+            </div>
+            <div className="title">
               <label>Specification</label>
             </div>
             <div className="title">
@@ -199,6 +203,14 @@ class QuoteForm extends Component {
                 </select>
               </div>
               <div className="detail">
+                <select className="create-input" {...order.maxSulphur}>
+                  <option value="0.1%">0.1%</option>
+                  <option value="0.5%">0.5%</option>
+                  <option value="1%">1%</option>
+                  <option value="3%">3%</option>
+                </select>
+              </div>
+              <div className="detail">
                 <input className="create-input" placeholder="Specification" {...order.specification}/>
               </div>
               <div className="detail">
@@ -212,6 +224,7 @@ class QuoteForm extends Component {
                 grade: null,
                 quantity: null,
                 unit: 'MT',
+                maxSulphur: '0.1%',
                 specification: null,
                 comments: null
               })

@@ -1,9 +1,11 @@
+import datetime
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from passlib.hash import sha256_crypt
 
-from server.settings import DATABASE_URL
+from .settings import DATABASE_URL
 
 application = Flask(__name__)
 application.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
@@ -88,16 +90,18 @@ class Order(db.Model):
     grade = db.Column(db.String(120), unique=False)
     quantity = db.Column(db.String(120), unique=False)
     spec = db.Column(db.String(120), unique=False)
+    maxSulphur = db.Column(db.String(120), unique=False)
     unit = db.Column(db.String(120), unique=False)
     comments = db.Column(db.String(120), unique=False)
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship('Deal',
                            backref=db.backref('orders', lazy='dynamic'))
 
-    def __init__(self, grade, quantity, spec, unit, comments, deal):
+    def __init__(self, grade, quantity, spec, maxSulphur, unit, comments, deal):
         self.grade = grade
         self.quantity = quantity
         self.spec = spec
+        self.maxSulphur = maxSulphur
         self.unit = unit
         self.comments = comments
         self.deal = deal
@@ -108,10 +112,12 @@ class Order(db.Model):
 
 class Quote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    price = db.Column(db.String(120), unique=False)
-    dates = db.Column(db.String(120), unique=False)
-    terms = db.Column(db.String(120), unique=False)
-    expiration = db.Column(db.String(120), unique=False)
+    date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    validity = db.Column(db.String(120), unique=False)
+    email = db.Column(db.String(120), unique=False)
+    phone = db.Column(db.String(120), unique=False)
+    skype = db.Column(db.String(120), unique=False)
+    info = db.Column(db.String(240), unique=False)
     supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.id'))
     supplier = db.relationship('Supplier',
                                backref=db.backref('quotes', lazy='dynamic'))
@@ -119,13 +125,39 @@ class Quote(db.Model):
     deal = db.relationship('Deal',
                            backref=db.backref('quotes', lazy='dynamic'))
 
-    def __init__(self, price, dates, terms, expiration, supplier, deal):
-        self.price = price
-        self.dates = dates
-        self.terms = terms
-        self.expiration = expiration
+    def __init__(self, validity, email, phone, skype, info, supplier, deal):
+        self.validity = validity
+        self.email = email
+        self.phone = phone
+        self.skype = skype
+        self.info = info
         self.supplier = supplier
         self.deal = deal
 
     def __str__(self):
         return "Quote(id='%s')" % self.id
+
+
+class Price(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    price = db.Column(db.String(120), unique=False)
+    terms = db.Column(db.String(120), unique=False)
+    physical = db.Column(db.String(120), unique=False)
+    delivery = db.Column(db.String(120), unique=False)
+    quote_id = db.Column(db.Integer, db.ForeignKey('quote.id'))
+    quote = db.relationship('Quote',
+                           backref=db.backref('prices', lazy='dynamic'))
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
+    order = db.relationship('Order',
+                           backref=db.backref('prices', lazy='dynamic'))
+
+    def __init__(self, price, terms, physical, delivery, quote, order):
+        self.price = price
+        self.terms = terms
+        self.physical = physical
+        self.delivery = delivery
+        self.quote = quote
+        self.order = order
+
+    def __str__(self):
+        return "Price(id='%s')" % self.id

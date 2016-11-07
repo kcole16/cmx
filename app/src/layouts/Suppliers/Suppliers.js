@@ -28,14 +28,14 @@ class Suppliers extends Component {
     //   browserHistory.push('/viewQuotes');
     // };
     if (!state.deals.active.deal.orders.length) {
-      browserHistory.push('/quoteSpecifics');
+      browserHistory.push('/app/quoteSpecifics');
     };
   }
 
   handleSubmit() {
     const {state, actions} = this.props;
     actions.fetchCreateQuotes(state.deals.active.deal);
-    browserHistory.push('viewQuotes');
+    browserHistory.push('/app/viewQuotes');
   }
 
   handleCheck(event) {

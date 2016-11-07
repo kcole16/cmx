@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 export default class Enquiry extends Component {
   render() {
-	const {vessel, port, eta, orders} = this.props;
-	const grades = orders.map((order, index) => {
+	const {deal, handleClick} = this.props;
+	const grades = deal.orders.map((order, index) => {
 		return (
 				<p key={index}>{order.grade}</p>
 			)
@@ -11,19 +11,19 @@ export default class Enquiry extends Component {
 	return (
 		<div className="enquiry">
 			<div className="attribute">
-				<p>{vessel}</p>
+				<p>{deal.vessel}</p>
 			</div>
 			<div className="attribute">
-				<p>{port}</p>
+				<p>{deal.port}</p>
 			</div>
 			<div className="attribute">
-				<p>{eta}</p>
+				<p>{deal.eta}</p>
 			</div>
 			<div className="attribute grades">
 				{grades}
 			</div>
 			<div className="attribute">
-				<button>OPEN</button>
+				<button onClick={handleClick.bind(this, deal)}>OPEN</button>
 			</div>
 		</div>
 	);

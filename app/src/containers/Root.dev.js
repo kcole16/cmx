@@ -20,7 +20,7 @@ module.exports = class Root extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Route path="/" component={App}>
+          <Route path="/app" component={App}>
             <IndexRoute component={Dashboard} />
             <Route path="suppliers" component={Suppliers}/>
             <Route path="quoteSpecifics" component={QuoteSpecifics}/>
@@ -32,4 +32,3 @@ module.exports = class Root extends Component {
     );
   }
 };
-

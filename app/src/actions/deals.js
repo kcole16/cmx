@@ -9,6 +9,9 @@ export const REMOVE_USER = 'REMOVE_USER';
 export const SEND_DEAL = 'SEND_DEAL';
 export const GET_DEALS = 'GET_DEALS';
 export const CREATE_DEAL = 'CREATE_DEAL';
+export const UPDATE_STATUS = 'UPDATE_STATUS';
+export const CHANGE_ACTIVE_DEAL = 'CHANGE_ACTIVE_DEAL';
+export const GET_QUOTES = 'GET_QUOTES';
 
 export function selectPort(port) {
   return {
@@ -59,7 +62,6 @@ export function sendDeal() {
 }
 
 export function getDeals(deals) {
-  console.log(deals);
   return {
     type: GET_DEALS,
     deals: deals
@@ -69,6 +71,29 @@ export function getDeals(deals) {
 export function createDeal() {
   return {
     type: CREATE_DEAL
+  };
+}
+
+export function updateStatus(json) {
+  return {
+    type: UPDATE_STATUS,
+    deal: json.deal,
+    status: json.status
+  };
+}
+
+export function changeActiveDeal(deal) {
+  return {
+    type: CHANGE_ACTIVE_DEAL,
+    deal: deal
+  };
+}
+
+export function getQuotes(quotes) {
+  console.log(quotes);
+  return {
+    type: GET_QUOTES,
+    quotes: quotes.quotes
   };
 }
 
@@ -123,6 +148,49 @@ export function fetchGetDeals(port) {
         };
       })      
       .then(json => dispatch(getDeals(json)))
+      .catch(err => console.log(err))
+  }
+}
+
+export function fetchUpdateStatus(deal, status) {
+  const route = '/updateStatus';
+  const payload = {
+    deal: deal,
+    status: status
+  };
+  const req = generateRequest('POST', route, payload);
+  return dispatch => {
+    return fetch(req.url, req.obj)
+      .then((res) => {
+        if (res.status >= 400) {
+          dispatch(removeUser());
+          throw new Error("Not Logged In");
+        } else {
+          return res.json();
+        };
+      })      
+      .then(json => dispatch(updateStatus(json)))
+      .catch(err => console.log(err))
+  }
+}
+
+export function fetchQuotes(deal) {
+  const route = '/getQuotes';
+  const payload = {
+    deal: deal
+  };
+  const req = generateRequest('POST', route, payload);
+  return dispatch => {
+    return fetch(req.url, req.obj)
+      .then((res) => {
+        if (res.status >= 400) {
+          dispatch(removeUser());
+          throw new Error("Not Logged In");
+        } else {
+          return res.json();
+        };
+      })      
+      .then(json => dispatch(getQuotes(json)))
       .catch(err => console.log(err))
   }
 }

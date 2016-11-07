@@ -18,7 +18,7 @@ class ViewQuotes extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.pusher = new Pusher('213331f62067dec74527');
+    this.pusher = new Pusher('31409d0487a999b7a26c');
     this.channel = this.pusher.subscribe('test_channel');
     this.state = {
       active: [],
@@ -35,11 +35,13 @@ class ViewQuotes extends Component {
       actions.addQuote(data);
     }, this);
     if (state.deals.active.deal.orders.length <= 0) {
-      browserHistory.push('/quoteSpecifics');
+      browserHistory.push('/app/quoteSpecifics');
     };
   }
 
   handleSubmit(index) {
+    const { state, actions } = this.props;
+    const deal = state.deals.active.deal;
     // const active = this.state.active;
     // const indexOf = active.indexOf(index);
     // if (indexOf > -1) {
@@ -49,7 +51,8 @@ class ViewQuotes extends Component {
     // };
     // this.setState({active: active});
     this.closeModal();
-    browserHistory.push('/documents');
+    actions.fetchUpdateStatus(deal, 'done');
+    browserHistory.push('/app/documents');
   }
 
   openModal(quote) {

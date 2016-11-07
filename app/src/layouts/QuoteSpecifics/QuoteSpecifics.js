@@ -33,8 +33,11 @@ class QuoteSpecifics extends Component {
   componentDidMount() {
     const {state} = this.props;
     window.scrollTo(0, 0)
-    if (state.deals.active.deal.sent) {
-      browserHistory.push('/viewQuotes');
+    if (state.deals.active.deal.sent || state.deals.active.deal.status === 'enquiry') {
+      browserHistory.push('/app/viewQuotes');
+    };
+    if (state.deals.active.deal.status === 'done') {
+      browserHistory.push('/app/documents');
     };
   }
 
@@ -44,6 +47,7 @@ class QuoteSpecifics extends Component {
     const form = getValues(state.form.quote);
     form.port = deal.port;
     form.suppliers = deal.suppliers;
+    form.status = 'enquiry';
     if (!this.state.etd) {
       form.etd = null;
     } else {
@@ -55,7 +59,7 @@ class QuoteSpecifics extends Component {
       form.loa = '300';
       form.grossTonnage = '94300';
       actions.setDeal(form);
-      browserHistory.push('/suppliers');
+      browserHistory.push('/app/suppliers');
     } catch(err) {
       alert('Please enter ETA');
     }
