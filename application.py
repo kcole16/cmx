@@ -9,7 +9,6 @@ from whitenoise import WhiteNoise
 
 from models import application, db, User, Supplier, Deal, Order, Quote, Price
 from mailer import send_supplier_emails, new_signup
-from settings import PRODUCTION
 
 import pusher
 
@@ -264,7 +263,5 @@ def get_quotes():
 
 
 if __name__ == "__main__":
-    application.debug = False
-    if PRODUCTION:
-        application.debug = True
+    application.debug = True
     application.run()
