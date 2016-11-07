@@ -1,4 +1,4 @@
-from .settings import S3_ACCESS_KEY, S3_SECRET_KEY
+from settings import S3_ACCESS_KEY, S3_SECRET_KEY
 
 from boto.s3.connection import S3Connection
 import math, os
