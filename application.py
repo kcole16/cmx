@@ -7,8 +7,9 @@ from flask_cors import CORS
 from passlib.hash import sha256_crypt
 from whitenoise import WhiteNoise
 
-from models import application, db, User, Supplier, Deal, Order, Quote, Price
-from mailer import send_supplier_emails, new_signup
+from server.models import application, db, User, Supplier, Deal, Order, Quote, Price
+from server.mailer import send_supplier_emails, new_signup
+from server.settings import PRODUCTION
 
 import pusher
 
@@ -264,4 +265,6 @@ def get_quotes():
 
 if __name__ == "__main__":
     application.debug = True
+    if PRODUCTION:
+        application.debug = False
     application.run()

@@ -1,6 +1,6 @@
 import requests
 import json
-from settings import APP_URL, MAILGUN_API_KEY, MAILGUN_APP, SENDGRID_API_KEY
+from .settings import APP_URL, MAILGUN_API_KEY, MAILGUN_APP, SENDGRID_API_KEY
 
 def send_message(supplier, deal, orders):
     subject = "Request for Quote from %s" % (deal.buyer)

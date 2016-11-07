@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from passlib.hash import sha256_crypt
 
-from settings import DATABASE_URL
+from .settings import DATABASE_URL
 
 application = Flask(__name__)
 application.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
