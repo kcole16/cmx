@@ -118,8 +118,26 @@ body {
 }
 
 .doc {
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  width: 100%;
+  height: 35px;
+  margin: 0px;
+  justify-content: center;
+  border-bottom: 2px solid $main-blue;
   justify-content: flex-start;
   align-items: flex-start;
+
+  label {
+    font-size: 18px;
+    font-weight: 100;
+    color: $main-blue;
+    margin-bottom: 10px;
+    @media screen and (max-width: $break-small) {
+      font-size: 14px;
+    }
+  }
 }
 
 .upload {

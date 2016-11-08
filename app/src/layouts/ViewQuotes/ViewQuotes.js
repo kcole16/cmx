@@ -92,7 +92,7 @@ class ViewQuotes extends Component {
                 <p>{order.quantity}{order.unit}</p>
               </div>
               <div className="detail">
-                <p>{order.specifications}</p>
+                <p>{order.spec}</p>
               </div>
               <div className="detail">
                 <p>{order.terms}</p>

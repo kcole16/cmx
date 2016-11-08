@@ -126,10 +126,10 @@ body {
     font-size: 16px;
     font-weight: 200;
     width: 100%;
-    min-height: 70px;
+    min-height: 35px;
     margin-right: auto;
     margin-left: auto;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     border: 2px solid #DBD9D9;
     box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.16);
     border-radius: 2px;
@@ -148,7 +148,7 @@ body {
 
       button {
         border: none;
-        height: 50px;
+        height: 40px;
         width: 150px;
         background: $main-green;
         border-radius: 4px;

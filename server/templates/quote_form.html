@@ -136,7 +136,7 @@
 					</div>
 					<div class="form-data">
 					  <label>Terms</label>
-					  <input class="create-input" name="terms{{order.number}}" />
+					  <input class="create-input" name="terms{{order.number}}" value="30"/>
 					</div>
 				</div>
 				<div class="form-row">
@@ -146,7 +146,14 @@
 					</div>
 					<div class="form-data">
 					  <label>Delivery</label>
-					  <input class="create-input" name="delivery{{order.number}}"/>
+					  <select class="styled-select" name="delivery{{order.number}}">
+					  	<option name="ExBarge" value="ExBarge">Ex Barge</option>
+					  	<option name="expipe" value="expipe">Ex Pipe</option>
+					  	<option name="exwharf" value="exwharf">Ex Wharf</option>
+					  	<option name="road_tanker" value="road_tanker">Road Tanker</option>
+					  	<option name="wagon" value="wagon">Wagon</option>
+					  	<option name="other" value="other">Other (Specify in Comments)</option>
+					  </select>
 					</div>
 					<div class="form-data">
 					  <label>Comments</label>

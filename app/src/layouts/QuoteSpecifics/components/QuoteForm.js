@@ -57,9 +57,9 @@ class QuoteForm extends Component {
     let gtVal = null;
     let loaVal = null;
     if (buyer.touched) {
-      imoVal = '9732606';
-      loaVal = '300';
-      gtVal = '94300';
+      imoVal = '9681883';
+      loaVal = '180';
+      gtVal = '24785';
     };
     const portList = [{
       name: 'Gibraltar',
@@ -67,6 +67,9 @@ class QuoteForm extends Component {
     },{
       name: 'Malta',
       id: 8
+    },{
+      name: 'Singapore',
+      id: 9
     }];
     const ports = portList.map(function(port, index) {
       return (

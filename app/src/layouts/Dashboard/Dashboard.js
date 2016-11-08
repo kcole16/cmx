@@ -56,28 +56,23 @@ class Dashboard extends Component {
 
   render() {
     const {state} = this.props;
-    // const enquiryList = [{
-    //     vessel: 'Happy Camper',
-    //     port: 'Gibraltar',
-    //     eta: '15/12/2016',
-    //     orders: [{
-    //       grade: 'IFO 380'
-    //     }]
-    // }, {
-    //     vessel: 'Maple Soul',
-    //     port: 'Malta',
-    //     eta: '18/12/2016',
-    //     orders: [{
-    //       grade: 'MGO 380'
-    //     }]
-    // }, {
-    //     vessel: 'Maple Soul',
-    //     port: 'Malta',
-    //     eta: '18/12/2016',
-    //     orders: [{
-    //       grade: 'MGO 380'
-    //     }]
-    // }];
+    const orderList = [{
+        vessel: 'Wulin',
+        port: 'Singapore',
+        eta: '2016-12-02',
+        orders: [{
+          grade: 'IFO 380'
+        }]
+    }, {
+        vessel: 'Eredine',
+        port: 'Singapore',
+        eta: '2016-12-04',
+        orders: [{
+          grade: 'IFO 380'
+        }, {
+          grade: 'MGO'
+        }]
+    }];
     const dealList = state.deals.deals ? state.deals.deals : [];
     const handleClick = this.handleClick;
     const enquiries = dealList.map((deal, index) => {
@@ -100,6 +95,14 @@ class Dashboard extends Component {
         )
       };
     });
+    const orders = orderList.map((deal, index) => {
+      return (
+        <Enquiry 
+          key={index} 
+          deal={deal} 
+          handleClick={handleClick} />
+      )
+    });
     return (
       <div>
         <div className="main-bar dashboard">
@@ -107,7 +110,7 @@ class Dashboard extends Component {
           <label className="nav-link inactive">PRICES</label>
           <label className="nav-link inactive">PORT INFORMATION</label>
           <div className="new-project">
-            <button onClick={this.createEnquiry}>+ Create Enquiry</button>
+            <button onClick={this.createEnquiry}>+ Create Order</button>
           </div>
         </div>
         <div className="main-app-container">
@@ -120,8 +123,9 @@ class Dashboard extends Component {
               <div className="title">
                 <label>Orders</label>
               </div>
+              {orders}
               <div className="title">
-                <label>Deals (not Delivered)</label>
+                <label>Done (not Delivered)</label>
               </div>
               {done}
             </div>

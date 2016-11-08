@@ -77,10 +77,10 @@ class Documents extends Component {
             </div>
             <div className="documents">
               <div className="titles">
-                <div className="title doc">
+                <div className="doc">
                   <label>Name</label>
                 </div>
-                <div className="title doc">
+                <div className="doc">
                   <label>Modified</label>
                 </div>
               </div>

@@ -55,9 +55,9 @@ class QuoteSpecifics extends Component {
     };
     try {
       form.eta = this.state.eta.format('YYYY-MM-DD').toString();
-      form.imo = '9732606';
-      form.loa = '300';
-      form.grossTonnage = '94300';
+      form.imo = '9681883';
+      form.loa = '180';
+      form.grossTonnage = '24785';
       actions.setDeal(form);
       browserHistory.push('/app/suppliers');
     } catch(err) {
