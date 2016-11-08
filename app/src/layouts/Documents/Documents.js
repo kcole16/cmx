@@ -43,6 +43,7 @@ class Documents extends Component {
 
   render() {
     const {state, actions} = this.props;
+    const active = state.deals.active.deal;
     const docList = [{
       name: 'Contract',
       date: '27/11/2016',
@@ -61,7 +62,7 @@ class Documents extends Component {
       <div>
         <div className="main-bar">
           <div className="title">
-            <label>Deal Documents</label>
+            <label>{active.vessel} / {active.port} / {active.eta} / {active.orders[0].grade}</label>
           </div>
         </div>
         <div className="main-app-container">

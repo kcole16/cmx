@@ -97,7 +97,7 @@ def request_quotes():
 def get_suppliers():
     port = request.args['port']
     suppliers = [{'name': supplier.name, 'email': supplier.email} for supplier in
-                 Supplier.query.filter_by(port=port)]
+                 Supplier.query.filter_by(port=port).limit(10)]
     response = jsonify({'suppliers': suppliers})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

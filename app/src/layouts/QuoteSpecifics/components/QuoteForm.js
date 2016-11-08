@@ -210,7 +210,7 @@ class QuoteForm extends Component {
                   <option value="0.1%">0.1%</option>
                   <option value="0.5%">0.5%</option>
                   <option value="1%">1%</option>
-                  <option value="3%">3%</option>
+                  <option value="3.5%">3.5%</option>
                 </select>
               </div>
               <div className="detail">
