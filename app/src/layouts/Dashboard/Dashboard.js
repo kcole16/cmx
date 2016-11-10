@@ -91,7 +91,7 @@ class Dashboard extends Component {
           <Enquiry 
             key={index} 
             deal={deal} 
-            handleClick={handleClick} />
+            handleClick={() => {browserHistory.push('/app/actualize')}} />
         )
       };
     });

@@ -68,10 +68,6 @@ def app():
 def request_quotes():
     data = request.get_json()
     suppliers = []
-    for supplier in data['suppliers']:
-        supplier = Supplier.query.filter_by(name=supplier).first()
-        suppliers.append(supplier)
-    print(data)
     uuid = data['vessel']+data['port']+data['eta']+data['buyer']
     deal = Deal(uuid, data['port'], data['vessel'], data['imo'], data['loa'],
                 data['buyer'],
@@ -85,6 +81,14 @@ def request_quotes():
                           order['unit'], order['comments'], deal)
         db.session.add(new_order)
     db.session.add(deal)
+    db.session.commit()
+    for supplier in data['suppliers']:
+        supplier = Supplier.query.filter_by(name=supplier).first()
+        suppliers.append(supplier)
+        new_quote = Quote(None, None,
+            None, None, None,
+            supplier, deal)
+        db.session.add(new_quote)
     db.session.commit()
     send_supplier_emails(suppliers, deal, data['orders'])
     response = jsonify({'user': current_identity.email})
@@ -120,10 +124,10 @@ def send_quote():
             'email': data['email'],
             'skype': data['skype']
         }
-        new_quote = Quote(quote['expiration'], quote['email'],
-            quote['phone'], quote['skype'], quote['info'],
-            supplier, deal)
-        db.session.add(new_quote)
+        new_quote = Quote.query.filter_by(deal_id=deal.id, supplier_id=supplier.id).update(
+            {'expiration':quote['expiration'], 'email': quote['email'],
+            'phone': quote['phone'], 'skype': quote['skype'], 'info': quote['info'],
+            'supplier': supplier, 'deal': deal})
         db.session.commit()
         for o in orders:
             order_data = {
@@ -215,6 +219,19 @@ def update_status():
     return response
 
 
+def get_orders(order_list, quote, count):
+    orders = []
+    for order in order_list:
+        price = Price.query.filter_by(order_id=order['id'], quote_id=quote.id).first()
+        if price:
+            order['price%s' % count] = price.price
+            order['terms%s' % count] = price.terms 
+            order['delivery%s' % count] = price.delivery
+            order['physical%s' % count] = price.physical 
+        orders.append(order)
+    return orders
+
+
 @application.route('/getQuotes', methods=['POST'])
 @jwt_required()
 def get_quotes():
@@ -237,28 +254,66 @@ def get_quotes():
         }
         order_list.append(order)
     quote_list = []
+    count = 0
     for quote in quotes:
-        quote_order = []      
         quote_data = {
+            'id': quote.id,
             'name': quote.supplier.name,
             'expiration': quote.validity,
             'info': quote.info,
             'phone': quote.phone,
             'email': quote.email,
-            'skype': quote.skype
+            'skype': quote.skype,
+            'validity': quote.validity,
+            'orders%s' % count: get_orders(order_list, quote, count),
+            'count': count
         }
-        for order in order_list:
-            price = Price.query.filter_by(order_id=order['id'], quote_id=quote.id).first()
-            order['price'] = price.price
-            order['terms'] = price.terms
-            order['delivery'] = price.delivery
-            order['physical'] = price.physical
-            quote_order.append(order)
-        quote_data['orders'] = quote_order
         quote_list.append(quote_data)
-    
-    print(quote_list)
+        count += 1
     response = jsonify({'quotes': quote_list})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+@application.route('/addQuote', methods=['POST'])
+@jwt_required()
+def add_quote():
+    data = request.get_json()['quote']
+    Quote.query.filter_by(id=data['id']).update(dict(phone=data['phone'], 
+        skype=data['skype'], email=data['email'], validity=data['validity']))
+    quote = Quote.query.filter_by(id=data['id']).first()
+    quote_data = {
+        'id': quote.id,
+        'name': quote.supplier.name,
+        'expiration': quote.validity,
+        'info': quote.info,
+        'phone': quote.phone,
+        'email': quote.email,
+        'skype': quote.skype
+    }
+    db.session.commit()
+    order_list = []
+    for o in data['orders']:
+        order_data = {
+            'grade': o['grade'],
+            'quantity': o['quantity'],
+            'maxSulphur': o['maxSulphur'],
+            'unit': o['unit'],
+            'specs': o['spec'],
+            'comments': o['comments'],
+            'price': o['price'],
+            'terms': o['terms'],
+            'physical': o['physical'],
+            'delivery': o['delivery']
+        }
+        order = Order.query.filter_by(deal_id=quote.deal_id, grade=order_data['grade']).first()
+        price = Price(order_data['price'], order_data['terms'], order_data['physical'],
+            order_data['delivery'], quote, order)
+        db.session.add(price)
+        db.session.commit()
+        order_list.append(order_data)
+    quote_data['orders'] = order_list
+    response = jsonify({'quote': quote_data})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 

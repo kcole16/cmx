@@ -12,6 +12,7 @@ import Suppliers from '../layouts/Suppliers/Suppliers';
 import QuoteSpecifics from '../layouts/QuoteSpecifics/QuoteSpecifics';
 import ViewQuotes from '../layouts/ViewQuotes/ViewQuotes';
 import Documents from '../layouts/Documents/Documents';
+import Actualize from '../layouts/Actualize/Actualize';
 
 module.exports = class Root extends Component {
   render() {
@@ -26,6 +27,7 @@ module.exports = class Root extends Component {
             <Route path="quoteSpecifics" component={QuoteSpecifics}/>
             <Route path="viewQuotes" component={ViewQuotes}/>
             <Route path="documents" component={Documents}/>
+            <Route path="actualize" component={Actualize}/>
           </Route>
         </Router>
       </Provider>

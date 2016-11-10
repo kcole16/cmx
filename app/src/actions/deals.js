@@ -12,6 +12,7 @@ export const CREATE_DEAL = 'CREATE_DEAL';
 export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const CHANGE_ACTIVE_DEAL = 'CHANGE_ACTIVE_DEAL';
 export const GET_QUOTES = 'GET_QUOTES';
+export const QUOTE_ADD_MODE = 'QUOTE_ADD_MODE';
 
 export function selectPort(port) {
   return {
@@ -90,10 +91,16 @@ export function changeActiveDeal(deal) {
 }
 
 export function getQuotes(quotes) {
-  console.log(quotes);
   return {
     type: GET_QUOTES,
     quotes: quotes.quotes
+  };
+}
+
+export function quoteAddMode(quote) {
+  return {
+    type: QUOTE_ADD_MODE,
+    quote: quote
   };
 }
 
@@ -194,3 +201,25 @@ export function fetchQuotes(deal) {
       .catch(err => console.log(err))
   }
 }
+
+export function fetchAddQuote(quote) {
+  const route = '/addQuote';
+  const payload = {
+    quote: quote
+  };
+  const req = generateRequest('POST', route, payload);
+  return dispatch => {
+    return fetch(req.url, req.obj)
+      .then((res) => {
+        if (res.status >= 400) {
+          dispatch(removeUser());
+          throw new Error("Not Logged In");
+        } else {
+          return res.json();
+        };
+      })      
+      .then(json => dispatch(addQuote(json)))
+      .catch(err => console.log(err))
+  }
+}
+

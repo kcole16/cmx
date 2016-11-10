@@ -7,7 +7,8 @@ import PlusImg from '../../../assets/img/add-plus-button.png';
 
 export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
     'agent', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
-    'orders[].quantity', 'orders[].unit', 'orders[].specification', 'orders[].maxSulphur', 'orders[].comments', 'additionalInfo'];
+    'orders[].quantity', 'orders[].unit', 'orders[].specification', 
+    'orders[].maxSulphur', 'orders[].comments', 'additionalInfo'];
 
 const validate = values => {
   const errors = {}

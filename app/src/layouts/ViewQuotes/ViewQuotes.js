@@ -7,6 +7,8 @@ import * as actions from '../../actions/index';
 import {reduxForm, getValues} from 'redux-form';
 import { browserHistory } from 'react-router';
 import Quote from './components/Quote';
+import EmptyQuote from './components/EmptyQuote';
+import RecapEmail from './components/RecapEmail';
 import DealSummary from '../../components/DealSummary';
 import EnquiryBar from '../../components/EnquiryBar';
 import Modal from 'react-modal';
@@ -16,6 +18,8 @@ class ViewQuotes extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.addMode = this.addMode.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.pusher = new Pusher('31409d0487a999b7a26c');
@@ -42,17 +46,23 @@ class ViewQuotes extends Component {
   handleSubmit(index) {
     const { state, actions } = this.props;
     const deal = state.deals.active.deal;
-    // const active = this.state.active;
-    // const indexOf = active.indexOf(index);
-    // if (indexOf > -1) {
-    //   active.splice(indexOf, 1);
-    // } else {
-    //   active.push(index)
-    // };
-    // this.setState({active: active});
     this.closeModal();
     actions.fetchUpdateStatus(deal, 'done');
     browserHistory.push('/app/documents');
+  }
+
+  handleAdd() {
+    const {state, actions} = this.props;
+    const form = getValues(state.form.emptyQuote);
+    form.id = state.deals.add.id;
+    console.log(form);
+    console.log(state.deals.add);
+    actions.fetchAddQuote(form);
+  }
+
+  addMode(quote) {
+    const {actions} = this.props;
+    actions.quoteAddMode(quote);
   }
 
   openModal(quote) {
@@ -76,105 +86,43 @@ class ViewQuotes extends Component {
     const {state, actions} = this.props;
     const supplierList = state.deals.active.deal.quotes;
     const handleSubmit = this.handleSubmit;
+    const handleAdd = this.handleAdd;
+    const addMode = this.addMode;
     const active = this.state.active;
     const openModal = this.openModal;
     const deal = state.deals.active.deal;
     let quote = this.state.quoteSelected;
     let email = null;
-    if (quote.orders) {
-      const orders = quote.orders.map((order, index) => {
-        return (
-            <div key={index} className="order">
-              <div className="detail">
-                <p>{order.grade}</p>
-              </div>
-              <div className="detail">
-                <p>{order.quantity}{order.unit}</p>
-              </div>
-              <div className="detail">
-                <p>{order.spec}</p>
-              </div>
-              <div className="detail">
-                <p>{order.terms}</p>
-              </div>
-              <div className="detail">
-                <p>{order.delivery}</p>
-              </div>
-              <div className="detail">
-                <p>{order.price} {state.deals.active.deal.currency}</p>
-              </div>
-            </div>
-          );
-      })
-      const orderComments = state.deals.active.deal.orders.map((order, index) => {
-        return (
-            <p key={index}>{order.grade}</p>
-          )
-      });
-      const comments = <div className="comments">
-                         {orderComments}
-                         <p>{quote.info}</p>
-                       </div>;
-      email = <div className="email">
-                <p>{deal.broker ? <p>deal.broker, acting in accordance with instructions received from</p>: null} {deal.buyer}, (hereafter referred to as "Buyers") have placed the following Bunker nomination with {quote.name} (hereafter referred to as "Sellers"):</p>
-                <p style={{marginTop: 15}}>Vessel: {deal.vessel}</p>
-                <p>Port: {deal.port} ({deal.location})</p>
-                <p>ETA: {deal.eta}</p>
-                <div className="order" style={{marginTop: 15}}>
-                  <div className="detail">
-                    <p>Grade:</p>
-                  </div>
-                  <div className="detail">
-                    <p>Quantity:</p>
-                  </div>
-                  <div className="detail">
-                    <p>Specification:</p>
-                  </div>
-                  <div className="detail">
-                    <p>Payment Terms:</p>
-                  </div>
-                  <div className="detail">
-                    <p>Delivery:</p>
-                  </div>
-                  <div className="detail">
-                    <p>Price:</p>
-                  </div>
-                </div>
-                {orders}
-                <p style={{marginTop: 15}}>Physical: {quote.orders[0].physical}</p>
-                <p style={{marginTop: 15}}>Agent: {deal.agent ? deal.agent : 'TBC'}</p>
-                <p style={{marginTop: 15}}>Add Remarks:</p>
-                {comments}
-                <p style={{marginTop: 15}}>Remarks:</p>
-                <p>Fuels shall be a blend of hydrocarbons derived from petroleum refining.</p>
-                <p>This shall not preclude small amounts of additives intended to improve some aspects of performance.</p>
-                <p>The fuels shall be free of inorganic acids and should not include any added substance or chemical waste which:</p>
-                <p>·         jeopardizes the safety of ships or</p>
-                <p>·         adversely affects performance of machinery or</p>
-                <p>·         is harmful to personnel or</p>
-                <p>·         contributes overall to additional air pollution</p>
-                <p style={{marginTop: 15}}>This sale is subject to Sellers' General Terms and Conditions which, if not already held by the buyer, are available on
-                request to this office.</p>
-                <p style={{marginTop: 15}}>Please advise immediately if you feel any of the above terms are incorrect.</p>
-                <p style={{marginTop: 15}}>Best Regards,</p>
-              </div>;
-    };
     const quoteList = supplierList.map(function(supplier, index) {
       let isActive = false;
       if (active.indexOf(index) > -1) {
         isActive = true;
       };
-      return (
-            <Quote 
-              key={supplier.name} 
-              index={index}
-              quote={supplier} 
-              eta={state.deals.active.deal.eta}
-              etd={state.deals.active.deal.etd} 
-              openModal={openModal} 
-              isActive={isActive}
-              currency={state.deals.active.deal.currency}/>
+      if (supplier.expiration === null) {
+        return (
+              <EmptyQuote 
+                key={supplier.name} 
+                index={index}
+                quote={supplier} 
+                eta={state.deals.active.deal.eta}
+                etd={state.deals.active.deal.etd} 
+                currency={state.deals.active.deal.currency}
+                addMode={addMode}
+                onSubmit={handleAdd}/>
+          );
+      } else {
+        return (
+              <Quote 
+                key={supplier.name} 
+                index={index}
+                quote={supplier} 
+                eta={state.deals.active.deal.eta}
+                etd={state.deals.active.deal.etd} 
+                openModal={openModal} 
+                isActive={isActive}
+                currency={state.deals.active.deal.currency}/>
         );
+      };
     });
     const quotes = <div>
                     <div className="suppliers">
@@ -193,7 +141,7 @@ class ViewQuotes extends Component {
               contentLabel="Example Modal">
               <div className="rfq-modal">
                 <p>Clicking "Submit" below will generate and send the following recap to {quote.name}:</p>
-                {email}
+                <RecapEmail quote={quote} deal={deal} />
                 <div className="request-button" style={{marginTop: 20}}>
                   <button onClick={this.handleSubmit}>Send Trade Recap</button>
                 </div>

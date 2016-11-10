@@ -10,8 +10,10 @@ import {
   CREATE_DEAL,
   UPDATE_STATUS,
   CHANGE_ACTIVE_DEAL,
-  GET_QUOTES
+  GET_QUOTES,
+  QUOTE_ADD_MODE
 } from '../actions/index';
+import {cleanQuotes} from './utils.js';
 
 const initialState = {
   active: {
@@ -38,7 +40,8 @@ const initialState = {
     },
     suppliers: []
   },
-  deals: []
+  deals: [],
+  add: null
 };
 
 function isUndefined(param) {
@@ -104,6 +107,7 @@ export default function deals(state = initialState, action={}) {
     }
   case CREATE_DEAL:
     return {
+      ...state,
       active: initialState.active
     }
   case UPDATE_STATUS:
@@ -122,10 +126,15 @@ export default function deals(state = initialState, action={}) {
       active: active
     }
   case GET_QUOTES:
-    active.deal.quotes = action.quotes;
+    active.deal.quotes = cleanQuotes(action.quotes);
     return {
       ...state,
       active: active
+    }
+  case QUOTE_ADD_MODE:
+    return {
+      ...state,
+      add: action.quote
     }
   default:
     return state;
