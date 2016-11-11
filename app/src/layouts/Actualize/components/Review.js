@@ -4,7 +4,9 @@ import ThumbsDown from '../../../assets/img/thumb-down-button.png';
 
 export default class Review extends Component {
   render() {
-	const { handleSelect } = this.props;
+	const { handleSelect, positive, negative } = this.props;
+	const positiveStyle = positive ? {border: '3px solid green'} : null;
+	const negativeStyle = negative ? {border: '3px solid red'} : null;
 	return (
 		<div className="info-container">
           <div className="title">
@@ -15,14 +17,14 @@ export default class Review extends Component {
           		<label>How was your experience with Supplier A?</label>
           	</div>
           	<div className="select">
-          		<div className="option" onClick={this.handleSelect} >
-	          		<div className="select-box">
+          		<div className="option" onClick={handleSelect.bind(this, 'positive')}>
+	          		<div className="select-box" style={positiveStyle}>
 	          			<img src={ThumbsUp} />
 	          		</div>
 	          		<label style={{color: 'green'}}>Positive</label>
 	          	</div>
-          		<div className="option" onClick={this.handleSelect}>
-	          		<div className="select-box">
+          		<div className="option" onClick={handleSelect.bind(this, 'negative')}>
+	          		<div className="select-box" style={negativeStyle}>
 	          			<img src={ThumbsDown} />
 	          		</div>
 	          		<label style={{color: 'red'}}>Negative</label>

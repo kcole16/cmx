@@ -124,10 +124,10 @@ def send_quote():
             'email': data['email'],
             'skype': data['skype']
         }
-        new_quote = Quote.query.filter_by(deal_id=deal.id, supplier_id=supplier.id).update(
-            {'expiration':quote['expiration'], 'email': quote['email'],
-            'phone': quote['phone'], 'skype': quote['skype'], 'info': quote['info'],
-            'supplier': supplier, 'deal': deal})
+        Quote.query.filter_by(deal_id=deal.id, supplier_id=supplier.id).update(
+            dict(validity=quote['expiration'], email=quote['email'],
+            phone=quote['phone'], skype=quote['skype'], info=quote['info']))
+        new_quote = Quote.query.filter_by(deal_id=deal.id, supplier_id=supplier.id).first()
         db.session.commit()
         for o in orders:
             order_data = {
@@ -313,7 +313,46 @@ def add_quote():
         db.session.commit()
         order_list.append(order_data)
     quote_data['orders'] = order_list
-    response = jsonify({'quote': quote_data})
+    d = Deal.query.filter_by(id=quote.deal_id).first()
+    deal = {
+        'port': d.port, 
+        'vessel': d.vessel,
+        'imo': d.imo,
+        'loa': d.loa,
+        'grossTonnage': d.grossTonnage,
+        'buyer': d.buyer,
+        'orderedBy': d.orderedBy,
+        'eta': d.eta,
+        'etd': d.etd,
+    };
+    response = jsonify(deal)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+@application.route('/saveQuote', methods=['POST'])
+@jwt_required()
+def save_quote():
+    data = request.get_json()['quote']
+    quote = Quote.query.filter_by(id=data['id']).first()
+    for o in data['orders']:
+        order = Order.query.filter_by(deal_id=quote.deal_id, grade=o['grade']).first()
+        price = Price.query.filter_by(quote_id=quote.id, order_id=order.id).update(dict(
+            spec=o['spec'], terms=o['terms'], price=o['price'], physical=o['physical'], delivery=o['delivery']))
+        db.session.commit()
+    d = Deal.query.filter_by(id=quote.deal_id).first()
+    deal = {
+        'port': d.port, 
+        'vessel': d.vessel,
+        'imo': d.imo,
+        'loa': d.loa,
+        'grossTonnage': d.grossTonnage,
+        'buyer': d.buyer,
+        'orderedBy': d.orderedBy,
+        'eta': d.eta,
+        'etd': d.etd,
+    };
+    response = jsonify(deal)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 

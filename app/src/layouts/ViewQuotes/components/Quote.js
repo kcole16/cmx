@@ -4,8 +4,12 @@ export default class Quote extends Component {
   constructor(props) {
     super(props);
     this.toggleEdit = this.toggleEdit.bind(this);
+    this.editOrder = this.editOrder.bind(this);
+    this.saveEdit = this.saveEdit.bind(this);
+    const quote = this.props.quote;
     this.state = {
-    	edit: false
+    	edit: false,
+    	orders: quote.orders
     }
   }
 
@@ -18,6 +22,24 @@ export default class Quote extends Component {
   	}
   }
 
+  saveEdit() {
+  	const {quote, saveQuote} = this.props;
+  	quote.orders = this.state.orders;
+  	this.setState({edit: false});
+  	saveQuote(quote);
+  }
+
+  editOrder(event) {
+  	const attr = event.target.name.split('+')[0];
+  	const grade = event.target.name.split('+')[1];
+  	const order = this.state.orders.find(x => x.grade === grade);
+  	const index = this.state.orders.indexOf(order);
+  	order[attr] = event.target.value;
+  	const state = this.state;
+  	state.orders[index] = order;
+  	this.setState(state);
+  }
+
   render() {
 	const {index, quote, openModal, eta, etd, isActive, currency} = this.props;
 	const skypeLink = "skype:"+quote.skype+"?chat";
@@ -28,7 +50,7 @@ export default class Quote extends Component {
 	});
 	let orders = [];
 	if (this.state.edit) {
-		orders = quote.orders.map((order, index) => {
+		orders = this.state.orders.map((order, index) => {
 			return (
 					<div className="order">
 						<div className="detail">
@@ -38,19 +60,19 @@ export default class Quote extends Component {
 							<p>{order.quantity}{order.unit}</p>
 						</div>
 						<div className="detail">
-							<p>{order.spec}</p>
+							<input type="text" className="create-input" placeholder="Specs" name={'specs'+'+'+order.grade} value={order.spec} onChange={this.editOrder}/>
 						</div>
 						<div className="detail">
-							<p>{order.terms}</p>
+							<input type="text" className="create-input" placeholder="Terms" name={'terms'+'+'+order.grade} value={order.terms} onChange={this.editOrder}/>
 						</div>
 						<div className="detail">
-							<input type="text" className="create-input" placeholder="Physical"/>
+							<input type="text" className="create-input" placeholder="Physical" name={'physical'+'+'+order.grade} value={order.physical} onChange={this.editOrder}/>
 						</div>
 						<div className="detail">
-							<input type="text" className="create-input" placeholder="Delivery"/>
+							<input type="text" className="create-input" placeholder="Delivery" name={'delivery'+'+'+order.grade} value={order.delivery} onChange={this.editOrder}/>
 						</div>
 						<div className="detail">
-							<input type="text" className="create-input" placeholder="Price"/>
+							<input type="text" className="create-input" placeholder="Price" name={'price'+'+'+order.grade} value={order.price} onChange={this.editOrder}/>
 						</div>
 					</div>
 				)
@@ -90,7 +112,8 @@ export default class Quote extends Component {
 				<div className="order-banner">
 					<label>{quote.name}</label>
 					{this.state.edit ? 
-						<button onClick={this.toggleEdit}>Save</button> : <button onClick={this.toggleEdit}>Edit</button> }
+					<button onClick={this.toggleEdit}>Cancel</button>: 
+					<button onClick={this.toggleEdit}>Edit</button> }
 				</div>
 				<label className="title">Orders</label>
 				<div className="orders">
@@ -142,7 +165,10 @@ export default class Quote extends Component {
 					</div>
 				</div>
 				<div className="request-button">
-				  <button onClick={openModal.bind(this, quote)}>Select Quote</button>
+					{this.state.edit ?
+					<button onClick={this.saveEdit}>Save</button>:
+				  	<button onClick={openModal.bind(this, quote)}>Select Quote</button>
+					}
 				</div>
 			</div>
 		</div>

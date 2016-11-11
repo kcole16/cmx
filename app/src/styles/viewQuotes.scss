@@ -225,13 +225,33 @@ $break-large: 1200px;
     display: -ms-flexbox;
     height: 50px;
     background-color: $main-blue;
+    align-items: center;
 
     label {
       margin-left: 10px;
-      align-self: center;
       color: white;
       font-size: 16px;
       text-transform: uppercase;
+    }
+
+    button {
+      border: none;
+      height: 20px;
+      width: 80px;
+      background-color: $main-green;
+      color: white;
+      font-size: 14px;
+      font-weight: 200;
+      border-radius: 3px;
+      margin-right: 5px;
+      margin-left: 15px;
+      @media screen and (max-width: $break-medium) {
+        width: 270px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
   }
 
@@ -277,6 +297,7 @@ $break-large: 1200px;
         }
 
         input {
+          margin: 0px;
           width: 100px;
         }
       }

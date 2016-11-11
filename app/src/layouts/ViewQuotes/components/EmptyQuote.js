@@ -21,7 +21,6 @@ class EmptyQuote extends Component {
   	if (edit) {
   		this.setState({edit:false});
   	} else {
-  		console.log(quote);
   		addMode(quote);
   		this.setState({edit:true});
   	}

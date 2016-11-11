@@ -13,6 +13,7 @@ class Dashboard extends Component {
     super(props);
     this.createEnquiry = this.createEnquiry.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleActualize = this.handleActualize.bind(this);
   }
 
   componentWillMount() {
@@ -54,6 +55,12 @@ class Dashboard extends Component {
     browserHistory.push('/app/quoteSpecifics');
   }
 
+  handleActualize(deal) {
+    const {actions} = this.props;
+    actions.changeActiveDeal(deal);
+    browserHistory.push('/app/actualize');
+  }
+
   render() {
     const {state} = this.props;
     const orderList = [{
@@ -91,7 +98,7 @@ class Dashboard extends Component {
           <Enquiry 
             key={index} 
             deal={deal} 
-            handleClick={() => {browserHistory.push('/app/actualize')}} />
+            handleClick={this.handleActualize.bind(this, deal)}/>
         )
       };
     });

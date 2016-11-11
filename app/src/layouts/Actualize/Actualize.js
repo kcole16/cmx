@@ -12,21 +12,54 @@ import Review from './components/Review';
 class Actualize extends Component {
   constructor(props) {
     super(props);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.editOrder = this.editOrder.bind(this);
+    this.state = {
+      positive: false,
+      negative: false,
+      orders: this.props.state.deals.active.deal.orders
+    }
   }
 
   componentDidMount() {
     const {state, actions} = this.props;
+    window.scrollTo(0, 0);
+  }
+
+  handleSelect(type) {
+    if (type === 'positive') {
+      this.setState({positive: true, negative: false})
+    } else if (type === 'negative') {
+      this.setState({negative: true, positive: false})
+    }
+  }
+
+  editOrder(event) {
+    const attr = event.target.name.split('+')[0];
+    const grade = event.target.name.split('+')[1];
+    const order = this.state.orders.find(x => x.grade === grade);
+    const index = this.state.orders.indexOf(order);
+    order[attr] = event.target.value;
+    const state = this.state;
+    state.orders[index] = order;
+    this.setState(state);
   }
 
   render() {
     const {state, actions} = this.props;
     const active = state.deals.active.deal;
+    const editOrder = this.editOrder;
+    const orders = state.deals.active.deal.orders.map((order, index) => {
+      return (
+            <Order key={index} order={order} editOrder={editOrder}/>
+        )
+    });
     return (
       <div>
         <div className="main-bar">
           <div className="title">
             <label>Actualize Deal</label>
-            <label>{active.vessel} / {active.port} / {active.eta} / {active.orders[0].grade}</label>
+            <label className="tag">{active.vessel} / {active.port} / {active.eta} / {active.orders[0].grade}</label>
           </div>
         </div>
         <div className="main-app-container">
@@ -76,8 +109,8 @@ class Actualize extends Component {
                 </div>
               </div>
             </div>
-            <Order order={state.deals.active.deal.orders[0]} />
-            <Review />
+            {orders}
+            <Review handleSelect={this.handleSelect} positive={this.state.positive} negative={this.state.negative}/>
           </div>
         </div>
       </div>

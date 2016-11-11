@@ -22,6 +22,7 @@ class ViewQuotes extends Component {
     this.addMode = this.addMode.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.saveQuote = this.saveQuote.bind(this);
     this.pusher = new Pusher('31409d0487a999b7a26c');
     this.channel = this.pusher.subscribe('test_channel');
     this.state = {
@@ -35,8 +36,9 @@ class ViewQuotes extends Component {
 
   componentDidMount() {
     const {state, actions} = this.props;
+    actions.fetchQuotes(state.deals.active.deal);
     this.channel.bind('my_event', function(data) {
-      actions.addQuote(data);
+      actions.fetchQuotes(state.deals.active.deal);
     }, this);
     if (state.deals.active.deal.orders.length <= 0) {
       browserHistory.push('/app/quoteSpecifics');
@@ -55,14 +57,17 @@ class ViewQuotes extends Component {
     const {state, actions} = this.props;
     const form = getValues(state.form.emptyQuote);
     form.id = state.deals.add.id;
-    console.log(form);
-    console.log(state.deals.add);
     actions.fetchAddQuote(form);
   }
 
   addMode(quote) {
     const {actions} = this.props;
     actions.quoteAddMode(quote);
+  }
+
+  saveQuote(quote) {
+    const {actions} = this.props;
+    actions.fetchSaveQuote(quote);
   }
 
   openModal(quote) {
@@ -90,10 +95,31 @@ class ViewQuotes extends Component {
     const addMode = this.addMode;
     const active = this.state.active;
     const openModal = this.openModal;
+    const saveQuote = this.saveQuote;
     const deal = state.deals.active.deal;
     let quote = this.state.quoteSelected;
     let email = null;
-    const quoteList = supplierList.map(function(supplier, index) {
+    const filledQuotes = supplierList.map(function(supplier, index) {
+      let isActive = false;
+      if (active.indexOf(index) > -1) {
+        isActive = true;
+      };
+      if (supplier.expiration !== null) {
+        return (
+              <Quote 
+                key={supplier.name} 
+                index={index}
+                quote={supplier} 
+                eta={state.deals.active.deal.eta}
+                etd={state.deals.active.deal.etd} 
+                openModal={openModal} 
+                saveQuote={saveQuote}
+                isActive={isActive}
+                currency={state.deals.active.deal.currency}/>
+          )
+      }
+    }); 
+    const emptyQuotes = supplierList.map(function(supplier, index) {
       let isActive = false;
       if (active.indexOf(index) > -1) {
         isActive = true;
@@ -109,26 +135,9 @@ class ViewQuotes extends Component {
                 currency={state.deals.active.deal.currency}
                 addMode={addMode}
                 onSubmit={handleAdd}/>
-          );
-      } else {
-        return (
-              <Quote 
-                key={supplier.name} 
-                index={index}
-                quote={supplier} 
-                eta={state.deals.active.deal.eta}
-                etd={state.deals.active.deal.etd} 
-                openModal={openModal} 
-                isActive={isActive}
-                currency={state.deals.active.deal.currency}/>
-        );
-      };
+          )
+      }
     });
-    const quotes = <div>
-                    <div className="suppliers">
-                      {quoteList}
-                    </div>
-                  </div>;
     return (
       <div>
         <EnquiryBar />
@@ -147,10 +156,10 @@ class ViewQuotes extends Component {
                 </div>
               </div>
             </Modal>
-            {quoteList.length > 0 ? quotes : 
-              <DealSummary 
-              title="Your quotes will appear here!" 
-              deal={state.deals.active.deal} />}
+            <div className="suppliers">
+              {filledQuotes}
+              {emptyQuotes}
+            </div>
           </div>
         </div>
       </div>

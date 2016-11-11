@@ -218,7 +218,28 @@ export function fetchAddQuote(quote) {
           return res.json();
         };
       })      
-      .then(json => dispatch(addQuote(json)))
+      .then(json => dispatch(fetchQuotes(json)))
+      .catch(err => console.log(err))
+  }
+}
+
+export function fetchSaveQuote(quote) {
+  const route = '/saveQuote';
+  const payload = {
+    quote: quote
+  };
+  const req = generateRequest('POST', route, payload);
+  return dispatch => {
+    return fetch(req.url, req.obj)
+      .then((res) => {
+        if (res.status >= 400) {
+          dispatch(removeUser());
+          throw new Error("Not Logged In");
+        } else {
+          return res.json();
+        };
+      })      
+      .then(json => dispatch(fetchQuotes(json)))
       .catch(err => console.log(err))
   }
 }
