@@ -11,7 +11,8 @@ import {
   UPDATE_STATUS,
   CHANGE_ACTIVE_DEAL,
   GET_QUOTES,
-  QUOTE_ADD_MODE
+  QUOTE_ADD_MODE,
+  ACCEPT_QUOTE
 } from '../actions/index';
 import {cleanQuotes} from './utils.js';
 
@@ -55,6 +56,7 @@ function isUndefined(param) {
 export default function deals(state = initialState, action={}) {
   let active = state.active;
   let index = null;
+  let deals = state.deals;
   switch (action.type) {
   case SELECT_PORT:
     active.deal.port = action.port
@@ -112,7 +114,6 @@ export default function deals(state = initialState, action={}) {
     }
   case UPDATE_STATUS:
     index = state.deals.indexOf(action.deal);
-    let deals = state.deals;
     deals[index].status = action.status;
     return {
       ...state, 
@@ -135,6 +136,13 @@ export default function deals(state = initialState, action={}) {
     return {
       ...state,
       add: action.quote
+    }
+  case ACCEPT_QUOTE:
+    index = state.deals.indexOf(action.deal);
+    deals[index]= action.deal;
+    return {
+      ...state, 
+      deals: deals
     }
   default:
     return state;

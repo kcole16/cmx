@@ -96,6 +96,10 @@ class Order(db.Model):
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship('Deal',
                            backref=db.backref('orders', lazy='dynamic'))
+    # deliveryDate = db.Column(db.String(120), unique=False, default=None)
+    # volumeDelivered = db.Column(db.String(120), unique=False, default=None)
+    # declaredDensity = db.Column(db.String(120), unique=False, default=None)
+    # actualDensity = db.Column(db.String(120), unique=False, default=None)
 
     def __init__(self, grade, quantity, spec, maxSulphur, unit, comments, deal):
         self.grade = grade
@@ -124,6 +128,7 @@ class Quote(db.Model):
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship('Deal',
                            backref=db.backref('quotes', lazy='dynamic'))
+    accepted = db.Column(db.Boolean(), default=False)
 
     def __init__(self, validity, email, phone, skype, info, supplier, deal):
         self.validity = validity

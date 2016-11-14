@@ -48,8 +48,9 @@ class ViewQuotes extends Component {
   handleSubmit(index) {
     const { state, actions } = this.props;
     const deal = state.deals.active.deal;
+    const quote = this.state.quoteSelected;
     this.closeModal();
-    actions.fetchUpdateStatus(deal, 'done');
+    actions.fetchAcceptQuote(quote, deal);
     browserHistory.push('/app/documents');
   }
 
@@ -152,7 +153,7 @@ class ViewQuotes extends Component {
                 <p>Clicking "Submit" below will generate and send the following recap to {quote.name}:</p>
                 <RecapEmail quote={quote} deal={deal} />
                 <div className="request-button" style={{marginTop: 20}}>
-                  <button onClick={this.handleSubmit}>Send Trade Recap</button>
+                  <button onClick={this.handleSubmit.bind(this, quote)}>Send Trade Recap</button>
                 </div>
               </div>
             </Modal>
