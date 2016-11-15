@@ -86,13 +86,14 @@ class Dashboard extends Component {
         )
       };
     });
-    const orders = orderList.map((deal, index) => {
-      return (
-        <Enquiry 
-          key={index} 
-          deal={deal} 
-          handleClick={handleClick} />
-      )
+    const orders = dealList.map((deal, index) => {
+      if (deal.status === 'order') {
+        return (
+          <Enquiry 
+            key={index} 
+            deal={deal}  />
+        )
+      }
     });
     return (
       <div>

@@ -8,18 +8,13 @@ import PlusImg from '../../../assets/img/add-plus-button.png';
 export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
     'agent', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
     'orders[].quantity', 'orders[].unit', 'orders[].specification', 
-    'orders[].maxSulphur', 'orders[].comments', 'additionalInfo'];
+    'orders[].maxSulphur', 'orders[].comments', 'additionalInfo', 'voyage',
+    'trade'];
 
 const validate = values => {
   const errors = {}
   if (!values.vessel) {
     errors.vessel = 'Required'
-  }
-  if (!values.buyer) {
-    errors.buyer = 'Required'
-  }
-  if (!values.currency) {
-    errors.currency = 'Required'
   }
   // if (!values.orders.length) {
   //   errors.orders = 'Please add at least one order'
@@ -35,7 +30,7 @@ const validate = values => {
   return errors
 }
 
-class QuoteForm extends Component {
+class OperatorForm extends Component {
   constructor(props) {
     super(props);
   }
@@ -43,7 +38,7 @@ class QuoteForm extends Component {
   render() {
     const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd, selectPort, port} = this.props;
     const {fields: {vessel, buyer, orderedBy, portCallReason, 
-      agent, currency, orders, additionalInfo}} = this.props;
+      agent, currency, orders, additionalInfo, voyage, trade}} = this.props;
     if (!orders.length && !deal.orders.length) {
       orders.addField({
               grade: null,
@@ -79,7 +74,6 @@ class QuoteForm extends Component {
     });
     return (
       <div>
-        <label className="title">Vessel Details</label>
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-data">
@@ -88,39 +82,13 @@ class QuoteForm extends Component {
               {vessel.touched && vessel.error && <div className="error">{vessel.error}</div>}
             </div>
             <div className="form-data">
-              <label>Buyer [Full Legal Style]</label>
-              <input type="text" className={buyer.touched && buyer.error ? "error-input" : "create-input"} {...buyer}/>
-              {buyer.touched && buyer.error && <div className="error">{buyer.error}</div>}
-            </div>
-            <div className="form-data">
-              <label>Broker</label>
-              <input type="text" placeholder="(optional)" className="create-input" {...orderedBy}/>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-data">
-              <label>IMO</label>
-              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" value={imoVal}/>
-            </div>
-            <div className="form-data">
-              <label>Gross Tonnage (t)</label>
-              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" value={gtVal}/>
-            </div>
-            <div className="form-data">
-              <label>LOA (m)</label>
-              <input type="text" placeholder="Autopopulates from Vessel" className="create-input" value={loaVal}/>
-            </div>
-          </div>
-          <label className="title">Requirements</label>
-          <div className="form-row">
-            <div className="form-data">
               <label>Port<sup>*</sup></label>
               <select className="create-input" style={{height: 34, width: 343}} onChange={selectPort} value={port}>
                 {ports}
               </select>
             </div>
             <div className="form-data">
-              <label>Location in Port<sup>*</sup></label>
+              <label>Location in Port</label>
               <select className="create-input" style={{height: 34, width: 343}} {...location}>
                 <option value="Alongside">Alongside</option>
                 <option value="Ex Barge">Ex Barge</option>
@@ -129,8 +97,6 @@ class QuoteForm extends Component {
                 <option value="Road Tanker Wagon">Road Tanker Wagon</option>
                 <option value="Anchorage">Anchorage</option>
               </select>
-            </div>
-            <div className="form-data">
             </div>
           </div>
           <div className="form-row">
@@ -141,7 +107,7 @@ class QuoteForm extends Component {
                       onChange={onEtaChange} />
             </div>
             <div className="form-data calendar">
-              <label>ETD</label>
+              <label>ETS</label>
               <DatePicker
                       selected={etd}
                       onChange={onEtdChange} />
@@ -157,17 +123,13 @@ class QuoteForm extends Component {
             <div className="form-data">
               <label>Port Call Reason</label>
               <select className="create-input" style={{height: 34, width: 343}} {...portCallReason}>
-                <option value="Cargo">Cargo</option>
-                <option value="Bunkering">Bunkering</option>
+                <option value="Cargo">Working Cargo</option>
+                <option value="Bunkering">Bunkers Only</option>
+                <option value="High Seas">High Seas</option>
+                <option value="OPL">OPL</option>
               </select>
             </div>
             <div className="form-data">
-              <label>Currency</label>
-              <select className="create-input" style={{height: 34, width: 343}} {...currency}>
-                <option value="USD">USD</option>
-                <option value="Euro">Euro</option>
-                <option value="GBP">GBP</option>
-              </select>
             </div>
           </div>
           <div className="titles">
@@ -241,6 +203,18 @@ class QuoteForm extends Component {
             <label>Additional Info</label>
             <textarea rows={4} {...additionalInfo}/>
           </div>
+          <div className="form-row">
+            <div className="form-data">
+              <label>Voyage Number</label>
+              <input type="text" className="create-input" {...voyage}/>
+            </div>
+            <div className="form-data">
+              <label>Trade</label>
+              <input type="text" className="create-input" {...trade}/>
+            </div>
+            <div className="form-data">
+            </div>
+          </div>
           <div className="request-button">
             <button type="submit" disabled={submitting}>Save Enquiry</button>
           </div>
@@ -250,8 +224,8 @@ class QuoteForm extends Component {
   }
 }
 
-export default QuoteForm = reduxForm({ 
-  form: 'quote',                      
+export default OperatorForm = reduxForm({ 
+  form: 'operator',                      
   fields,
   validate},
   (state) => {
@@ -259,4 +233,4 @@ export default QuoteForm = reduxForm({
       initialValues: state.deals.active.deal
     }
   } 
-)(QuoteForm);
+)(OperatorForm);

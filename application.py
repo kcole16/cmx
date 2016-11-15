@@ -54,6 +54,18 @@ def home():
     return render_template('home.html', submitted=submitted)
 
 
+@application.route('/user', methods=['GET'])
+@jwt_required()
+def user():
+    user = {
+        'email': current_identity.email,
+        'role': current_identity.role
+    }
+    response = jsonify({'user': user})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
 @application.route('/app', methods=['GET'])
 @application.route('/app/suppliers', methods=['GET'])
 @application.route('/app/quoteSpecifics', methods=['GET'])
@@ -66,15 +78,17 @@ def app():
 @application.route('/requestQuotes', methods=['POST'])
 @jwt_required()
 def request_quotes():
+    user = current_identity
     data = request.get_json()
     suppliers = []
-    uuid = data['vessel']+data['port']+data['eta']+data['buyer']
-    deal = Deal(uuid, data['port'], data['vessel'], data['imo'], data['loa'],
+    uuid = data['vessel']+data['port']+data['eta']+current_identity.email
+    status = 'enquiry' if data['suppliers'] else 'order'
+    deal = Deal(user, uuid, data['port'], data['vessel'], data['imo'], data['loa'],
                 data['buyer'],
                 data['orderedBy'], data['grossTonnage'], data['additionalInfo'],
                 data['eta'], data['etd'],
                 data['portCallReason'], data['agent'], data['currency'],
-                data['location'], data['status'])
+                data['location'], status)
     for order in data['orders']:
         new_order = Order(order['grade'], order['quantity'],
                           order['specification'], order['maxSulphur'],
@@ -82,15 +96,16 @@ def request_quotes():
         db.session.add(new_order)
     db.session.add(deal)
     db.session.commit()
-    for supplier in data['suppliers']:
-        supplier = Supplier.query.filter_by(name=supplier).first()
-        suppliers.append(supplier)
-        new_quote = Quote(None, None,
-            None, None, None,
-            supplier, deal)
-        db.session.add(new_quote)
-    db.session.commit()
-    send_supplier_emails(suppliers, deal, data['orders'])
+    if data['suppliers']:
+        for supplier in data['suppliers']:
+            supplier = Supplier.query.filter_by(name=supplier).first()
+            suppliers.append(supplier)
+            new_quote = Quote(None, None,
+                None, None, None,
+                supplier, deal)
+            db.session.add(new_quote)
+        db.session.commit()
+        send_supplier_emails(suppliers, deal, data['orders'])
     response = jsonify({'user': current_identity.email})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -177,8 +192,9 @@ def send_quote():
 @application.route('/getDeals', methods=['GET'])
 @jwt_required()
 def get_deals():
+    user = current_identity
     deals = []
-    for d in Deal.query.all():
+    for d in Deal.query.filter_by(user_id=user.id):
         quotes = Quote.query.filter_by(deal_id=d.id)
         quote = None
         order_list = []

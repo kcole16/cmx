@@ -1,4 +1,5 @@
 import { 
+  STORE_TOKEN,
 	STORE_USER,
   REMOVE_USER,
   INCORRECT_LOGIN
@@ -21,12 +22,18 @@ function isUndefined(param) {
 
 export default function counter(state = initialState, action={}) {
   switch (action.type) {
-  case STORE_USER:
+  case STORE_TOKEN:
     return {
       ...state,
       access_token: action.access_token,
       isAuthenticated: true,
       incorrectLogin: false
+    };
+  case STORE_USER:
+    return {
+      ...state,
+      role: action.user.role,
+      email: action.user.email
     };
   case REMOVE_USER:
     return {

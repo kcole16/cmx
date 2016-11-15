@@ -37,7 +37,7 @@ body {
 
   .nav-link {
     margin-right: 0px;
-    font-size: 15px;
+    font-size: 12px;
     color: white;
   }
 
@@ -82,7 +82,7 @@ body {
 
     button {
       border: none;
-      height: 50px;
+      height: 40px;
       width: 150px;
       background: $main-green;
       border-radius: 37px;
@@ -106,9 +106,10 @@ body {
     width: 100%;
     border-bottom: 1px solid $border-color;
     padding-bottom: 10px;
+    margin-bottom: 0px;
 
     label {
-      font-size: 16px;
+      font-size: 14px;
       color: $main-blue;
     }
   }
@@ -123,15 +124,13 @@ body {
     align-items: center;
     justify-content: center;
     color: $dark-gray;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 200;
     width: 100%;
     min-height: 35px;
     margin-right: auto;
     margin-left: auto;
-    margin-bottom: 8px;
-    border: 2px solid #DBD9D9;
-    box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.16);
+    border-bottom: 1px solid $border-color;
     border-radius: 2px;
 
     @media screen and (max-width: $break-small) {
@@ -148,12 +147,12 @@ body {
 
       button {
         border: none;
-        height: 40px;
+        height: 30px;
         width: 150px;
         background: $main-green;
         border-radius: 4px;
         color: white;
-        font-size: 14px;
+        font-size: 12px;
         @media screen and (max-width: $break-small) {
           width: 270px;
           margin-top: 15px;

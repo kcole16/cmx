@@ -18,10 +18,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120), unique=True)
+    role = db.Column(db.String(120), unique=True)
 
-    def __init__(self, email, password):
+    def __init__(self, email, password, role):
         self.email = email
         self.password = sha256_crypt.encrypt(password)
+        self.role = role
 
     def __str__(self):
         return "User(id='%s')" % self.id
@@ -29,6 +31,9 @@ class User(db.Model):
 
 class Deal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User',
+                           backref=db.backref('users', lazy='dynamic'))
     uuid = db.Column(db.String(120), unique=True)
     port = db.Column(db.String(120), unique=False)
     vessel = db.Column(db.String(120), unique=False)
@@ -46,9 +51,10 @@ class Deal(db.Model):
     location = db.Column(db.String(120), unique=False)
     status = db.Column(db.String(120), unique=False)
 
-    def __init__(self, uuid, port, vessel, imo, loa, buyer, orderedBy,
+    def __init__(self, user, uuid, port, vessel, imo, loa, buyer, orderedBy,
                  grossTonnage, additionalInfo, eta, etd, portCallReason, agent,
                  currency, location, status):
+        self.user = user
         self.uuid = uuid
         self.port = port
         self.vessel = vessel

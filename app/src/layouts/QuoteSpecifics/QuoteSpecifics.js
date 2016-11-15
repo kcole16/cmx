@@ -12,7 +12,9 @@ import FormMessages from 'redux-form-validation';
 import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../assets/img/add-plus-button.png';
 import QuoteForm from './components/QuoteForm';
+import OperatorForm from './components/OperatorForm';
 import EnquiryBar from '../../components/EnquiryBar';
+import OperatorBar from '../../components/OperatorBar';
 import moment from 'moment';
 
 class QuoteSpecifics extends Component {
@@ -44,7 +46,7 @@ class QuoteSpecifics extends Component {
   handleSubmit() {
     const {state, actions} = this.props;
     const deal = state.deals.active.deal;
-    const form = getValues(state.form.quote);
+    let form = state.user.role === 'operator' ? getValues(state.form.operator) : getValues(state.form.quote);
     form.port = deal.port;
     form.suppliers = deal.suppliers;
     form.status = 'enquiry';
@@ -58,8 +60,13 @@ class QuoteSpecifics extends Component {
       form.imo = '9681883';
       form.loa = '180';
       form.grossTonnage = '24785';
-      actions.setDeal(form);
-      browserHistory.push('/app/suppliers');
+      if (state.user.role === 'buyer') {
+        actions.setDeal(form);
+        browserHistory.push('/app/suppliers');
+      } else {
+        actions.fetchCreateQuotes(form);
+        browserHistory.push('/app');
+      };
     } catch(err) {
       alert('Please enter ETA');
     }
@@ -88,20 +95,34 @@ class QuoteSpecifics extends Component {
 
   render() {
     const {state, actions} = this.props;
+    let navBar = <EnquiryBar />;
+    let form = <QuoteForm 
+                onSubmit={this.handleSubmit} 
+                selectPort={this.selectPort}
+                port={state.deals.active.deal.port}
+                onEtdChange={this.onEtdChange} 
+                onEtaChange={this.onEtaChange} 
+                eta={this.state.eta}
+                etd={this.state.etd}
+                deal={state.deals.active.deal}/>;
+    if (state.user.role === 'operator') {
+      navBar = <OperatorBar />;
+      form =  <OperatorForm 
+                onSubmit={this.handleSubmit} 
+                selectPort={this.selectPort}
+                port={state.deals.active.deal.port}
+                onEtdChange={this.onEtdChange} 
+                onEtaChange={this.onEtaChange} 
+                eta={this.state.eta}
+                etd={this.state.etd}
+                deal={state.deals.active.deal}/>;
+    };
     return (
       <div>
-        <EnquiryBar />
+       {navBar}
         <div className="main-app-container">
           <div className="layout-container">
-            <QuoteForm 
-              onSubmit={this.handleSubmit} 
-              selectPort={this.selectPort}
-              port={state.deals.active.deal.port}
-              onEtdChange={this.onEtdChange} 
-              onEtaChange={this.onEtaChange} 
-              eta={this.state.eta}
-              etd={this.state.etd}
-              deal={state.deals.active.deal}/>
+            {form}
           </div>
         </div>
       </div>

@@ -22,9 +22,10 @@ export default class Enquiry extends Component {
 			<div className="attribute grades">
 				{grades}
 			</div>
+			{ handleClick ? 
 			<div className="attribute">
 				<button onClick={handleClick.bind(this, deal)}>OPEN</button>
-			</div>
+			</div> : null }
 		</div>
 	);
   }

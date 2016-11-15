@@ -10,7 +10,7 @@ export default class Review extends Component {
 	return (
 		<div className="info-container">
           <div className="title">
-            <label>REVIEW SELLER</label>
+            <label>SELLER FEEDBACK</label>
           </div>
           <div className="review">
           	<div className="label">
