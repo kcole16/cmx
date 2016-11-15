@@ -96,10 +96,10 @@ class Order(db.Model):
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship('Deal',
                            backref=db.backref('orders', lazy='dynamic'))
-    # deliveryDate = db.Column(db.String(120), unique=False, default=None)
-    # volumeDelivered = db.Column(db.String(120), unique=False, default=None)
-    # declaredDensity = db.Column(db.String(120), unique=False, default=None)
-    # actualDensity = db.Column(db.String(120), unique=False, default=None)
+    delivery_date = db.Column(db.String(120), unique=False, default=None)
+    volume_delivered = db.Column(db.String(120), unique=False, default=None)
+    declared_density = db.Column(db.String(120), unique=False, default=None)
+    actual_density = db.Column(db.String(120), unique=False, default=None)
 
     def __init__(self, grade, quantity, spec, maxSulphur, unit, comments, deal):
         self.grade = grade

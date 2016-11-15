@@ -149,7 +149,7 @@ export function fetchGetSuppliers(port) {
   }
 }
 
-export function fetchGetDeals(port) {
+export function fetchGetDeals() {
   const route = '/getDeals';
   const req = generateRequest('GET', route);
   return dispatch => {
@@ -270,6 +270,28 @@ export function fetchAcceptQuote(quote, deal) {
         };
       })      
       .then(json => dispatch(acceptQuote(json)))
+      .catch(err => console.log(err))
+  }
+}
+
+export function fetchActualize(deal, orders) {
+  const route = '/actualizeDeal';
+  const payload = {
+    deal: deal,
+    orders: orders
+  };
+  const req = generateRequest('POST', route, payload);
+  return dispatch => {
+    return fetch(req.url, req.obj)
+      .then((res) => {
+        if (res.status >= 400) {
+          dispatch(removeUser());
+          throw new Error("Not Logged In");
+        } else {
+          return res.json();
+        };
+      })      
+      .then(json => dispatch(fetchGetDeals()))
       .catch(err => console.log(err))
   }
 }

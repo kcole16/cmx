@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import DatePicker from 'react-datepicker';
 
 export default class Order extends Component {
   render() {
-	const {order, editOrder} = this.props;
+	const {order, editOrder, editDate} = this.props;
 	return (
 		<div className="info-container">
           <div className="title">
@@ -29,11 +30,14 @@ export default class Order extends Component {
 	      <div className="row">
 	        <div className="attribute">
 	          <label>Date of Delivery</label>
-	          <input className="create-input" name={'deliveryDate'+'+'+order.grade} value={order.deliveryDate} onChange={editOrder}/>
+              <DatePicker
+                      selected={order.deliveryDate}
+                      onChange={editDate.bind(this, order.grade)} 
+                      className="create-input" />
 	        </div>
 	        <div className="attribute">
 	          <label>Volume Delivered (MT)</label>
-	          <input className="create-input" name={'volumeDeliverd'+'+'+order.grade} value={order.volumeDelivered} onChange={editOrder}/>
+	          <input className="create-input" name={'volumeDelivered'+'+'+order.grade} value={order.volumeDelivered} onChange={editOrder}/>
 	        </div>
 	        <div className="attribute">
 	          <label>Declared Density</label>

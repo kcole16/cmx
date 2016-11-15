@@ -8,12 +8,15 @@ import {reduxForm, getValues} from 'redux-form';
 import { browserHistory } from 'react-router';
 import Order from './components/Order';
 import Review from './components/Review';
+import DatePicker from 'react-datepicker';
 
 class Actualize extends Component {
   constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
     this.editOrder = this.editOrder.bind(this);
+    this.editDate = this.editDate.bind(this);
+    this.actualizeDeal = this.actualizeDeal.bind(this);
     this.state = {
       positive: false,
       negative: false,
@@ -45,13 +48,32 @@ class Actualize extends Component {
     this.setState(state);
   }
 
+  editDate(grade, date) {
+    const order = this.state.orders.find(x => x.grade === grade);
+    const index = this.state.orders.indexOf(order);
+    order['deliveryDate'] = date;
+    const state = this.state;
+    state.orders[index] = order;
+    this.setState(state);
+  }
+
+  actualizeDeal() {
+    const { state, actions } = this.props;
+    const orders = this.state.orders;
+    orders.map(order => order.deliveryDate = order.deliveryDate.format('YYYY-MM-DD'));
+    const deal = state.deals.active.deal;
+    actions.fetchActualize(deal, orders);
+    browserHistory.push('/app/documents');
+  }
+
   render() {
     const {state, actions} = this.props;
     const active = state.deals.active.deal;
     const editOrder = this.editOrder;
+    const editDate = this.editDate;
     const orders = state.deals.active.deal.orders.map((order, index) => {
       return (
-            <Order key={index} order={order} editOrder={editOrder}/>
+            <Order key={index} order={order} editOrder={editOrder} editDate={editDate} />
         )
     });
     return (
@@ -112,6 +134,9 @@ class Actualize extends Component {
             {orders}
             <Review handleSelect={this.handleSelect} positive={this.state.positive} negative={this.state.negative}/>
           </div>
+        </div>
+        <div className="request-button" style={{marginRight: '4%'}}>
+          <button style={{width: 250}} onClick={this.actualizeDeal} >Actualize Deal</button>
         </div>
       </div>
     );

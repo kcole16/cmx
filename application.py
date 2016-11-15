@@ -398,6 +398,24 @@ def accept_quote():
     return response
 
 
+@application.route('/actualizeDeal', methods=['POST'])
+@jwt_required()
+def actualize_deal():
+    deal = request.get_json()['deal']
+    orders = request.get_json()['orders']
+    uuid = deal['vessel']+deal['port']+deal['eta']+deal['buyer']
+    Deal.query.filter_by(uuid=uuid).update(dict(status='actualized'))
+    deal = Deal.query.filter_by(uuid=uuid).first()
+    for order in orders:
+        Order.query.filter_by(deal_id=deal.id, grade=order['grade']).update(dict(
+            delivery_date=order['deliveryDate'], volume_delivered=order['volumeDelivered'],
+            declared_density=order['declaredDensity']))
+    db.session.commit()
+    response = jsonify({'status': 'Deal Actualized'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
 if __name__ == "__main__":
     application.debug = True
     if PRODUCTION:

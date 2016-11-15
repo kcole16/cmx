@@ -51,7 +51,7 @@ class ViewQuotes extends Component {
     const quote = this.state.quoteSelected;
     this.closeModal();
     actions.fetchAcceptQuote(quote, deal);
-    browserHistory.push('/app/documents');
+    browserHistory.push('/app/actualize');
   }
 
   handleAdd() {

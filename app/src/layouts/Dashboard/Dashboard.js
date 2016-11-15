@@ -63,23 +63,7 @@ class Dashboard extends Component {
 
   render() {
     const {state} = this.props;
-    const orderList = [{
-        vessel: 'Wulin',
-        port: 'Singapore',
-        eta: '2016-12-02',
-        orders: [{
-          grade: 'IFO 380'
-        }]
-    }, {
-        vessel: 'Eredine',
-        port: 'Singapore',
-        eta: '2016-12-04',
-        orders: [{
-          grade: 'IFO 380'
-        }, {
-          grade: 'MGO'
-        }]
-    }];
+    const orderList = [];
     const dealList = state.deals.deals ? state.deals.deals : [];
     const handleClick = this.handleClick;
     const enquiries = dealList.map((deal, index) => {
