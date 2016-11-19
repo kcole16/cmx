@@ -48,6 +48,9 @@ class Deal(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User',
                            backref=db.backref('deals', lazy='dynamic'))
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
+    company = db.relationship('Company',
+                           backref=db.backref('deals', lazy='dynamic'))
     uuid = db.Column(db.String(120), unique=True)
     port = db.Column(db.String(120), unique=False)
     vessel = db.Column(db.String(120), unique=False)
@@ -67,10 +70,11 @@ class Deal(db.Model):
     voyage = db.Column(db.String(120), default=None)
     trade = db.Column(db.String(120), default=None)
 
-    def __init__(self, user, uuid, port, vessel, imo, loa, buyer, orderedBy,
+    def __init__(self, user, company, uuid, port, vessel, imo, loa, buyer, orderedBy,
                  grossTonnage, additionalInfo, eta, etd, portCallReason, agent,
                  currency, location, status, voyage, trade):
         self.user = user
+        self.company = company
         self.uuid = uuid
         self.port = port
         self.vessel = vessel
