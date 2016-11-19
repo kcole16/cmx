@@ -128,8 +128,7 @@ export function fetchCreateQuotes(deal) {
           return res.json();
         };
       })
-      .then(json => dispatch(sendDeal(json)))
-      .then(() => browserHistory.push('/app/viewQuotes'))
+      .then(json => dispatch(changeActiveDeal(json.deal)))
       .catch(err => console.log(err))
   }
 }

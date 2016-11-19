@@ -73,7 +73,6 @@ def user():
 @application.route('/app/quoteSpecifics', methods=['GET'])
 @application.route('/app/viewQuotes', methods=['GET'])
 def app():
-    print('Here')
     return render_template('index.html');
 
 
@@ -81,12 +80,12 @@ def app():
 @jwt_required()
 def request_quotes():
     user = current_identity
+    company = Company.query.filter_by(id=current_identity.company_id).first()
     data = request.get_json()
-    print(data)
     suppliers = []
     uuid = uuid4()
     status = 'enquiry' if data['suppliers'] else 'order'
-    deal = Deal(user, uuid, data['port'], data['vessel'], data['imo'], data['loa'],
+    d = Deal(user.email, company, uuid, data['port'], data['vessel'], data['imo'], data['loa'],
                 data['buyer'],
                 data['orderedBy'], data['grossTonnage'], data['additionalInfo'],
                 data['eta'], data['etd'],
@@ -95,11 +94,33 @@ def request_quotes():
     for order in data['orders']:
         new_order = Order(order['grade'], order['quantity'],
                           order['specification'], order['maxSulphur'],
-                          order['unit'], order['comments'], deal)
+                          order['unit'], order['comments'], d)
         db.session.add(new_order)
-    db.session.add(deal)
+    db.session.add(d)
     db.session.commit()
-    response = jsonify({'deal': deal.id})
+    orders = [{'id':o.id, 'grade': o.grade, 'quantity': o.quantity, 'unit': o.unit, 'maxSulphur': o.maxSulphur, 'spec': o.spec, 'comments': o.comments} 
+        for o in Order.query.filter_by(deal_id=d.id)]
+    deal = {
+        'id': d.id,
+        'port': d.port, 
+        'vessel': d.vessel,
+        'imo': d.imo,
+        'loa': d.loa,
+        'grossTonnage': d.grossTonnage,
+        'buyer': d.buyer,
+        'orderedBy': d.orderedBy,
+        'eta': d.eta,
+        'etd': d.etd,
+        'portCallReason': d.portCallReason,
+        'agent': d.agent,
+        'currency': d.currency,
+        'location': d.location,
+        'additionalInfo': d.additionalInfo,
+        'quotes': [],
+        'orders': orders,
+        'status': d.status
+    }
+    response = jsonify({'deal': deal})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -209,8 +230,9 @@ def send_quote():
 @jwt_required()
 def get_deals():
     user = current_identity
+    company = Company.query.filter_by(id=user.company_id).first()
     deals = []
-    for d in Deal.query.filter_by(user_id=user.id):
+    for d in Deal.query.filter_by(company_id=company.id):
         quotes = Quote.query.filter_by(deal_id=d.id)
         quote = None
         order_list = []
