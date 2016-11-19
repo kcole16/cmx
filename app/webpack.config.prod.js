@@ -8,9 +8,9 @@ module.exports = {
     'whatwg-fetch'
   ],
   output: {
-    path: '../server/static/',
+    path: '../static/',
     filename: 'bundle.js',
-    publicPath: '../server/static/'
+    publicPath: '../static/'
   },
   plugins: [
     /**
