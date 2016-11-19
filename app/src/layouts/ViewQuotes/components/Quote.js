@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Countdown from 'react-count-down';
+import moment from 'moment';
 
 export default class Quote extends Component {
   constructor(props) {
@@ -43,7 +45,11 @@ export default class Quote extends Component {
   render() {
 	const {index, quote, openModal, eta, etd, isActive, currency} = this.props;
 	const skypeLink = "skype:"+quote.skype+"?chat";
-	const comments = quote.orders.map((order, index) => {
+	let commentsExist = false;
+	const commentList = quote.orders.map((order, index) => {
+		if (order.comments) {
+			commentsExist = true;
+		};
 		return (
 				<p key={index}>{order.grade}: {order.comments}</p>
 			)
@@ -57,7 +63,10 @@ export default class Quote extends Component {
 							<p>{order.grade}</p>
 						</div>
 						<div className="detail">
-							<p>{order.quantity}{order.unit}</p>
+							<p>{order.quantity} {order.unit}</p>
+						</div>
+						<div className="detail">
+							<p>{order.maxSulphur}</p>
 						</div>
 						<div className="detail">
 							<input type="text" className="create-input" placeholder="Specs" name={'specs'+'+'+order.grade} value={order.spec} onChange={this.editOrder}/>
@@ -85,7 +94,10 @@ export default class Quote extends Component {
 							<p>{order.grade}</p>
 						</div>
 						<div className="detail">
-							<p>{order.quantity}{order.unit}</p>
+							<p>{order.quantity} {order.unit}</p>
+						</div>
+						<div className="detail">
+							<p>{order.maxSulphur}</p>
 						</div>
 						<div className="detail">
 							<p>{order.spec}</p>
@@ -106,6 +118,8 @@ export default class Quote extends Component {
 				)
 		});
 	};
+	let validity = moment().add(50, 'minutes').format('MM/DD/YYYY HH:MM A');
+    let OPTIONS = { endDate: '11/18/2016 4:30 PM'};
 	return (
 		<div className="supplier">
 			<div className="order-details">
@@ -115,7 +129,10 @@ export default class Quote extends Component {
 					<button onClick={this.toggleEdit}>Cancel</button>: 
 					<button onClick={this.toggleEdit}>Edit</button> }
 				</div>
-				<label className="title">Orders</label>
+				<div className="order-header">
+					<label className="title">Orders</label>
+					<Countdown options={OPTIONS} style={{alignSelf: 'flex-end'}}/>
+				</div>
 				<div className="orders">
 					<div className="order">
 						<div className="detail">
@@ -123,6 +140,9 @@ export default class Quote extends Component {
 						</div>
 						<div className="detail">
 							<label>Quantity</label>
+						</div>
+						<div className="detail">
+							<label>Max Sulphur</label>
 						</div>
 						<div className="detail">
 							<label>Specs</label>
@@ -142,13 +162,16 @@ export default class Quote extends Component {
 					</div>
 					{orders}
 				</div>
-				<label className="title">Comments</label>
-				<div className="comments">
-					{comments}
-					<div className="additional-comments">
-						<p>{quote.info ? quote.info : null}</p>
-					</div>
-				</div>
+				{ commentsExist && quote.info ?
+					<div>
+					<label className="title">Comments</label>
+					<div className="comments">
+						{comments}
+						<div className="additional-comments">
+							<p>{quote.info ? quote.info : null}</p>
+						</div>
+					</div></div> : null
+				}
 				<label className="title">Contact</label>
 				<div className="contact">
 					<div className="detail">
@@ -163,12 +186,12 @@ export default class Quote extends Component {
 						<label>Skype</label>
 						<p><a href={skypeLink}>{quote.skype}</a></p>
 					</div>
-				</div>
-				<div className="request-button">
-					{this.state.edit ?
-					<button onClick={this.saveEdit}>Save</button>:
-				  	<button onClick={openModal.bind(this, quote)}>Select Quote</button>
-					}
+					<div className="request-button">
+						{this.state.edit ?
+						<button onClick={this.saveEdit}>Save</button>:
+					  	<button onClick={openModal.bind(this, quote)}>Select Quote</button>
+						}
+					</div>
 				</div>
 			</div>
 		</div>

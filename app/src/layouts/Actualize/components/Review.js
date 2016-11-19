@@ -4,7 +4,7 @@ import ThumbsDown from '../../../assets/img/thumb-down-button.png';
 
 export default class Review extends Component {
   render() {
-	const { handleSelect, positive, negative } = this.props;
+	const { handleSelect, positive, negative, ratingComment, ratingReason, updateReview } = this.props;
 	const positiveStyle = positive ? {border: '3px solid green'} : null;
 	const negativeStyle = negative ? {border: '3px solid red'} : null;
 	return (
@@ -29,6 +29,19 @@ export default class Review extends Component {
 	          		</div>
 	          		<label style={{color: 'red'}}>Negative</label>
 	          	</div>
+	          	{negative ? 
+		          	<div className="feedback-details">
+		          		<label>Please select the main issue:</label>
+			          	<select value={ratingReason} name="ratingReason" onChange={updateReview}>
+			          		<option value="quality">Quality</option>
+			          		<option value="quantity">Quantity</option>
+			          		<option value="tardiness">Tardiness</option>
+			          		<option value="dishonesty">Dishonesty</option>
+			          		<option value="unprofessional">Unprofessional</option>
+			          	</select>
+			          	<textarea rows={3} value={ratingComment} name="ratingComment" placeholder="Additional details" onChange={updateReview}/>
+			        </div>
+	          		: null}
 	         </div>
 	       </div>
 		</div>

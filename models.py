@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from passlib.hash import sha256_crypt
 
-from .settings import DATABASE_URL
+from server.settings import DATABASE_URL
 
 application = Flask(__name__)
 application.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
@@ -13,17 +13,31 @@ application.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)
 
+class Company(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True)
+
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return "Company(id='%s')" % self.id  
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120), unique=True)
-    role = db.Column(db.String(120), unique=True)
+    role = db.Column(db.String(120), unique=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
+    company = db.relationship('Company',
+                           backref=db.backref('companies', lazy='dynamic'))
 
-    def __init__(self, email, password, role):
+    def __init__(self, email, password, role, company):
         self.email = email
         self.password = sha256_crypt.encrypt(password)
         self.role = role
+        self.company = company
 
     def __str__(self):
         return "User(id='%s')" % self.id
@@ -33,7 +47,7 @@ class Deal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User',
-                           backref=db.backref('users', lazy='dynamic'))
+                           backref=db.backref('deals', lazy='dynamic'))
     uuid = db.Column(db.String(120), unique=True)
     port = db.Column(db.String(120), unique=False)
     vessel = db.Column(db.String(120), unique=False)
@@ -50,10 +64,12 @@ class Deal(db.Model):
     currency = db.Column(db.String(120), unique=False)
     location = db.Column(db.String(120), unique=False)
     status = db.Column(db.String(120), unique=False)
+    voyage = db.Column(db.String(120), default=None)
+    trade = db.Column(db.String(120), default=None)
 
     def __init__(self, user, uuid, port, vessel, imo, loa, buyer, orderedBy,
                  grossTonnage, additionalInfo, eta, etd, portCallReason, agent,
-                 currency, location, status):
+                 currency, location, status, voyage, trade):
         self.user = user
         self.uuid = uuid
         self.port = port
@@ -71,6 +87,8 @@ class Deal(db.Model):
         self.currency = currency
         self.location = location
         self.status = status
+        self.voyage = voyage
+        self.trade = trade
 
     def __str__(self):
         return "Deal(id='%s')" % self.id
@@ -106,6 +124,7 @@ class Order(db.Model):
     volume_delivered = db.Column(db.String(120), unique=False, default=None)
     declared_density = db.Column(db.String(120), unique=False, default=None)
     actual_density = db.Column(db.String(120), unique=False, default=None)
+    sulphur_delivered = db.Column(db.String(120), unique=False, default=None)
 
     def __init__(self, grade, quantity, spec, maxSulphur, unit, comments, deal):
         self.grade = grade
@@ -135,6 +154,10 @@ class Quote(db.Model):
     deal = db.relationship('Deal',
                            backref=db.backref('quotes', lazy='dynamic'))
     accepted = db.Column(db.Boolean(), default=False)
+    voyage = db.Column(db.String(120), default=None)
+    rating = db.Column(db.String(120), default=None)
+    rating_reason = db.Column(db.String(120), default=None)
+    rating_comment = db.Column(db.String(120), default=None)
 
     def __init__(self, validity, email, phone, skype, info, supplier, deal):
         self.validity = validity

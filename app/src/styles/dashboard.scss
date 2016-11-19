@@ -35,33 +35,36 @@ body {
     height: 180px;
   }
 
-  .nav-link {
-    margin-right: 0px;
-    font-size: 12px;
-    color: white;
-  }
-
-  .active {
-    font-weight: 500;
-    border-bottom: 3px solid white;
-  }
-
-  .inactive {
-    color: $border-color;
-  }
-
-  .title {
-    display: flex;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    flex: 1;
-    @media screen and (max-width: $break-small) {
-      justify-content: column;
-      margin-left: 0px;
+  .links {
+    justify-content: flex-start;
+    .nav-link {
+      margin-right: 0px;
+      font-size: 12px;
+      color: white;
     }
 
-    label {
-      color: white;
+    .active {
+      font-weight: 500;
+      border-bottom: 3px solid white;
+    }
+
+    .inactive {
+      color: $border-color;
+    }
+
+    .title {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;
+      @media screen and (max-width: $break-small) {
+        justify-content: column;
+        margin-left: 0px;
+      }
+
+      label {
+        color: white;
+      }
     }
   }
 

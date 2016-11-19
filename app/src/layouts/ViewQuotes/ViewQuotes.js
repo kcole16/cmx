@@ -51,7 +51,7 @@ class ViewQuotes extends Component {
     const quote = this.state.quoteSelected;
     this.closeModal();
     actions.fetchAcceptQuote(quote, deal);
-    browserHistory.push('/app/actualize');
+    browserHistory.push('/app');
   }
 
   handleAdd() {
@@ -139,9 +139,12 @@ class ViewQuotes extends Component {
           )
       }
     });
+    const label = <div className="port-select">
+                    <p>{deal.vessel} / {deal.port} / {deal.eta}</p>
+                  </div>;
     return (
       <div>
-        <EnquiryBar />
+        <EnquiryBar label={label} />
         <div className="main-app-container">
           <div className="layout-container">
             <Modal
@@ -151,7 +154,7 @@ class ViewQuotes extends Component {
               contentLabel="Example Modal">
               <div className="rfq-modal">
                 <p>Clicking "Submit" below will generate and send the following recap to {quote.name}:</p>
-                <RecapEmail quote={quote} deal={deal} />
+                <RecapEmail quote={quote} deal={deal} user={state.user}/>
                 <div className="request-button" style={{marginTop: 20}}>
                   <button onClick={this.handleSubmit.bind(this, quote)}>Send Trade Recap</button>
                 </div>

@@ -33,8 +33,10 @@ const initialState = {
       portCallReason: null,
       agent: null,
       currency: 'USD',
-      location: 'Anchorage',
+      location: null,
       additionalInfo: null,
+      voyage: null,
+      trade: null,
       orders: [],
       quotes: [],
       status: 'order'
@@ -98,6 +100,7 @@ export default function deals(state = initialState, action={}) {
     };
   case SEND_DEAL:
     active.deal.sent = true;
+    active.deal.id = action.deal_id;
     return {
       ...state, 
       active: active

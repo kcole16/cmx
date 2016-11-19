@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   render() {
-    const {state} = this.props;
+    const {state, actions} = this.props;
     let content = <Login />;
     if (state.user.isAuthenticated) {
       content =  <div>
@@ -24,13 +24,14 @@ class App extends Component {
           <div className="container">
             <div className="navbar">
               <img src={Logo} onClick={() => {browserHistory.push('/app')}}/>
-              <div className="menu">
-                <p onClick={() => {browserHistory.push('/app')}}>Home</p>
-                <p>Reports</p>
-                <p>Directory</p>
-                <p>Claims</p>
-                <p>Account</p>
-              </div>
+              {state.user.isAuthenticated ? 
+                <div className="menu">
+                  <p onClick={() => {browserHistory.push('/app')}}>Home</p>
+                  <p>Reports</p>
+                  <p>Directory</p>
+                  <p>Claims</p>
+                  <p onClick={actions.logout}>Logout</p>
+                </div> : null}
             </div>
             {content}
           </div>

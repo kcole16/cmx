@@ -1,4 +1,5 @@
 import { generateRequest } from '../api';
+import { browserHistory } from 'react-router'
 
 export const SELECT_PORT = 'SELECT_PORT';
 export const ADD_SUPPLIER = 'ADD_SUPPLIER';
@@ -57,9 +58,10 @@ export function removeUser() {
   };
 }
 
-export function sendDeal() {
+export function sendDeal(deal) {
   return {
-    type: SEND_DEAL
+    type: SEND_DEAL,
+    deal_id: deal.deal
   };
 }
 
@@ -85,6 +87,7 @@ export function updateStatus(json) {
 }
 
 export function changeActiveDeal(deal) {
+  deal.suppliers = [];
   return {
     type: CHANGE_ACTIVE_DEAL,
     deal: deal
@@ -125,7 +128,8 @@ export function fetchCreateQuotes(deal) {
           return res.json();
         };
       })
-      .then(() => dispatch(sendDeal()))
+      .then(json => dispatch(sendDeal(json)))
+      .then(() => browserHistory.push('/app/viewQuotes'))
       .catch(err => console.log(err))
   }
 }
@@ -145,6 +149,27 @@ export function fetchGetSuppliers(port) {
       })      
       .then(json => dispatch(getSuppliers(json)))
       .then(() => dispatch(selectPort(port)))
+      .catch(err => console.log(err))
+  }
+}
+
+export function fetchSetSuppliers(deal) {
+  const route = '/setSuppliers';
+  const payload = {
+    deal: deal
+  };
+  const req = generateRequest('POST', route, payload);
+  return dispatch => {
+    return fetch(req.url, req.obj)
+      .then((res) => {
+        if (res.status >= 400) {
+          dispatch(removeUser());
+          throw new Error("Not Logged In");
+        } else {
+          return res.json();
+        };
+      })      
+      .then(json => dispatch(fetchGetDeals()))
       .catch(err => console.log(err))
   }
 }

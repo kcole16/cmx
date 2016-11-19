@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class RecapEmail extends Component {
   render() {
-	const {quote, deal} = this.props;
+	const {quote, deal, user} = this.props;
 	let orderComments = null;
 	let orders = null;
 	if (quote.orders) {
@@ -42,7 +42,7 @@ export default class RecapEmail extends Component {
 	               </div>;
 	return (
 			<div className="email">
-                <p>{deal.broker ? <p>deal.broker, acting in accordance with instructions received from</p>: null} {deal.buyer}, (hereafter referred to as "Buyers") have placed the following Bunker nomination with {quote.name} (hereafter referred to as "Sellers"):</p>
+                <p>{deal.broker ? <p>deal.broker, acting in accordance with instructions received from</p>: null} {user.companyName}, (hereafter referred to as "Buyers") have placed the following Bunker nomination with {quote.name} (hereafter referred to as "Sellers"):</p>
                 <p style={{marginTop: 15}}>Vessel: {deal.vessel}</p>
                 <p>Port: {deal.port} ({deal.location})</p>
                 <p>ETA: {deal.eta}</p>

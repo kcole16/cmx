@@ -73,7 +73,8 @@ class Documents extends Component {
                 <label onClick={() => {browserHistory.push('/app')}}>Back to Enquiries</label>
               </div>
               <div className="upload">
-                <button>+ Upload Document</button>
+                <button style={{marginRight: 10}}>+ Upload Document</button>
+                <button onClick={() => {browserHistory.push('/app/actualize')}}>Actualize Deal</button>
               </div>
             </div>
             <div className="documents">

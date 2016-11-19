@@ -111,62 +111,7 @@ class EmptyQuote extends Component {
 					</div>
 				</form>;
 	} else {
-		ordersList = quote.orders.map((order, index) => {
-			return (
-					<div className="order">
-						<div className="detail">
-							<p>{order.grade}</p>
-						</div>
-						<div className="detail">
-							<p>{order.quantity}{order.unit}</p>
-						</div>
-						<div className="detail">
-							<p>{order.spec}</p>
-						</div>
-						<div className="detail">
-							<p>{order.terms}</p>
-						</div>
-						<div className="detail">
-							<p>{order.physical}</p>
-						</div>
-						<div className="detail">
-							<p>{order.delivery}</p>
-						</div>
-						<div className="detail">
-							<p>{order.price} {currency}</p>
-						</div>
-					</div>
-				)
-		});
-		content = <div>
-					<label className="title">Orders</label>
-					<div className="orders">
-						<div className="order">
-							<div className="detail">
-								<label>Grade</label>
-							</div>
-							<div className="detail">
-								<label>Quantity</label>
-							</div>
-							<div className="detail">
-								<label>Specs</label>
-							</div>
-							<div className="detail">
-								<label>Terms</label>
-							</div>
-							<div className="detail">
-								<label>Physical</label>
-							</div>
-							<div className="detail">
-								<label>Delivery</label>
-							</div>
-							<div className="detail">
-								<label>Price</label>
-							</div>
-						</div>
-						{ordersList}
-					</div>
-				</div>
+		content = null;
 	};
 	return (
 		<div className="supplier">

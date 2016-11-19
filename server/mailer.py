@@ -16,7 +16,7 @@ def send_message(supplier, deal, orders):
         ordered_by = '(Handled on behalf of operator by %s)' % deal.orderedBy
     for order in orders:
         order_html += '%s %s %s %s %s<br>' % (order['grade'], order['quantity'], 
-            order['unit'], order['specification'], order['comments'])
+            order['unit'], order['spec'], order['comments'])
     message = '<p>%s<br>Bunker Enquiry<br><br>Please Offer:<br>%s (IMO: %s) (LOA: %s m) (GT: %s MT)<br>%s<br>@ %s (%s)<br>ETA %s<br>ETD %s<br><br><a href=%s>Click here</a> to submit a price.<br><br>%s<br><br>%s<br><br>Best Regards,<br><br>John Smith<br>Bunkers<br>OilFront Limited<br>PHONE +44 5555555555 <br>MOBILE +44 5555555555<br>Skype oilfront<br><a href="www.oilfront.com">www.oilfront.com</a></p>' % (deal.buyer, deal.vessel, deal.imo, deal.loa, deal.grossTonnage, order_html, deal.port, deal.location, deal.eta, deal.etd, link, ordered_by, deal.additionalInfo)
     data = {
         'personalizations': [{

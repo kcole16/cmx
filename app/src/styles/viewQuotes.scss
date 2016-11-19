@@ -219,6 +219,31 @@ $break-large: 1200px;
   display: -ms-flexbox;
   flex-direction: column;
 
+  .order-header {
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+
+    label {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;  
+    }
+
+    .react-count-down {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;
+      justify-content: flex-end;
+      margin-right: 30px;
+    }
+  }
+
   .order-banner {
     display: flex;
     display: -webkit-flex;
@@ -342,9 +367,11 @@ $break-large: 1200px;
       display: -webkit-flex;
       display: -ms-flexbox;
       flex: 1;
-      flex-direction: column;
+      flex-direction: row;
 
       p {
+        margin:0px;
+        margin-left: 10px;
         font-weight: 100;
       }
     }
@@ -357,6 +384,8 @@ $break-large: 1200px;
   border: 1px solid $border-color;
   border-radius: 4px;
   padding: 20px;
+  overflow-y: scroll;
+  height: 350px;
   @media screen and (max-width: $break-medium) {
     font-size: 10px;
   }

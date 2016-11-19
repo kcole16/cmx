@@ -27,14 +27,14 @@ class Suppliers extends Component {
     // if (state.deals.active.deal.sent) {
     //   browserHistory.push('/viewQuotes');
     // };
-    if (!state.deals.active.deal.orders.length) {
-      browserHistory.push('/app/quoteSpecifics');
-    };
+    // if (!state.deals.active.deal.orders.length) {
+    //   browserHistory.push('/app/quoteSpecifics');
+    // };
   }
 
   handleSubmit() {
     const {state, actions} = this.props;
-    actions.fetchCreateQuotes(state.deals.active.deal);
+    actions.fetchSetSuppliers(state.deals.active.deal);
     browserHistory.push('/app/viewQuotes');
   }
 
@@ -53,10 +53,7 @@ class Suppliers extends Component {
 
   render() {
     const {state} = this.props;
-    let supplierList = state.deals.active.suppliers;
-    if (supplierList === undefined) {
-      supplierList = [];
-    };
+    const supplierList = state.deals.active.suppliers ? state.deals.active.suppliers : [];
     const handleCheck = this.handleCheck;
     const suppliers = supplierList.map(function(supplier, index) {
       let background = '#FFF';
@@ -67,7 +64,8 @@ class Suppliers extends Component {
             <Supplier key={index} supplier={supplier} handleCheck={handleCheck} background={background}/>
         );
     });
-    const selectedSuppliers = state.deals.active.deal.suppliers.map(function(supplier, index) {
+    const dealSuppliers = state.deals.active.deal.suppliers ? state.deals.active.deal.suppliers : [];
+    const selectedSuppliers = dealSuppliers.map(function(supplier, index) {
       return (
           <p key={index}>{supplier}  demo@test.com</p>
         );
@@ -85,13 +83,13 @@ class Suppliers extends Component {
                     <p>{deal.buyer}</p>
                     <p>Bunker Enquiry</p>
                     <p style={{marginTop: 15}}>Please Offer:</p>
-                    <p>{deal.vessel} (IMO: 9732606) (LOA:  300m) (GT:  94300MT)</p>
+                    <p>{deal.vessel}</p>
                     <div>
                       {orders}
                     </div>
                     <p style={{marginTop: 15}}>@ {state.deals.active.deal.port} ({state.deals.active.deal.location})</p>
                     <p>ETA {deal.eta ? deal.eta : null}</p>
-                    <p>ETD {deal.etd ? deal.etd: null}</p>
+                    {deal.etd ? <p>ETD {deal.etd}</p>: null}
                     <p style={{marginTop: 15}}><a>Click here</a> to submit a price.</p>
                     <p style={{marginTop: 15}}>{deal.additionalInfo}</p>
                     <p style={{marginTop: 15}}>Regards,</p>
@@ -104,9 +102,12 @@ class Suppliers extends Component {
                     <p><a href="www.oilfront.com">www.oilfront.com</a></p> 
                   </div>
     };
+    const label = <div className="port-select">
+                    <p>{deal.vessel} / {deal.port} / {deal.eta}</p>
+                  </div>;
     return (
       <div>
-        <EnquiryBar />
+        <EnquiryBar label={label}/>
         <div className="main-app-container">
           <div className="layout-container">
             <Modal
@@ -123,10 +124,6 @@ class Suppliers extends Component {
                 </div>
               </div>
             </Modal>
-            <div className="port-select">
-              <label>Port</label>
-              <p>{state.deals.active.deal.port}</p>
-            </div>
             <div className="titles">
               <div className="title">
                 <label>Company</label>

@@ -2,6 +2,7 @@ import { url_base } from '../api';
 export const STORE_TOKEN = 'STORE_TOKEN';
 export const STORE_USER = 'STORE_USER';
 export const INCORRECT_LOGIN = 'INCORRECT_LOGIN';
+export const LOGOUT = 'LOGOUT';
 
 export function storeToken(access_token) {
   return {
@@ -20,6 +21,12 @@ export function storeUser(user) {
 export function incorrectLogin() {
   return {
     type: INCORRECT_LOGIN
+  };
+}
+
+export function logout() {
+  return {
+    type: LOGOUT
   };
 }
 

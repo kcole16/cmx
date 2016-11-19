@@ -7,7 +7,7 @@ from flask_cors import CORS
 from passlib.hash import sha256_crypt
 from whitenoise import WhiteNoise
 
-from server.models import application, db, User, Supplier, Deal, Order, Quote, Price
+from models import application, db, User, Supplier, Deal, Order, Quote, Price, Company
 from server.mailer import send_supplier_emails, new_signup
 from server.settings import PRODUCTION
 
@@ -57,9 +57,11 @@ def home():
 @application.route('/user', methods=['GET'])
 @jwt_required()
 def user():
+    company = Company.query.filter_by(id=current_identity.company_id).first()
     user = {
         'email': current_identity.email,
-        'role': current_identity.role
+        'role': current_identity.role,
+        'company_name': company.name
     }
     response = jsonify({'user': user})
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -80,15 +82,16 @@ def app():
 def request_quotes():
     user = current_identity
     data = request.get_json()
+    print(data)
     suppliers = []
-    uuid = data['vessel']+data['port']+data['eta']+current_identity.email
+    uuid = uuid4()
     status = 'enquiry' if data['suppliers'] else 'order'
     deal = Deal(user, uuid, data['port'], data['vessel'], data['imo'], data['loa'],
                 data['buyer'],
                 data['orderedBy'], data['grossTonnage'], data['additionalInfo'],
                 data['eta'], data['etd'],
                 data['portCallReason'], data['agent'], data['currency'],
-                data['location'], status)
+                data['location'], status, data['voyage'], data['trade'])
     for order in data['orders']:
         new_order = Order(order['grade'], order['quantity'],
                           order['specification'], order['maxSulphur'],
@@ -96,6 +99,19 @@ def request_quotes():
         db.session.add(new_order)
     db.session.add(deal)
     db.session.commit()
+    response = jsonify({'deal': deal.id})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+@application.route('/setSuppliers', methods=['POST'])
+@jwt_required()
+def set_suppliers():
+    user = current_identity
+    data = request.get_json()['deal']
+    suppliers = []
+    Deal.query.filter_by(id=data['id']).update(dict(status='enquiry'))
+    deal = Deal.query.filter_by(id=data['id']).first()
     if data['suppliers']:
         for supplier in data['suppliers']:
             supplier = Supplier.query.filter_by(name=supplier).first()
@@ -106,7 +122,7 @@ def request_quotes():
             db.session.add(new_quote)
         db.session.commit()
         send_supplier_emails(suppliers, deal, data['orders'])
-    response = jsonify({'user': current_identity.email})
+    response = jsonify({'deal': deal.id})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -116,7 +132,7 @@ def request_quotes():
 def get_suppliers():
     port = request.args['port']
     suppliers = [{'name': supplier.name, 'email': supplier.email} for supplier in
-                 Supplier.query.filter_by(port=port).limit(10)]
+                 Supplier.query.filter_by(port=port)]
     response = jsonify({'suppliers': suppliers})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -212,6 +228,7 @@ def get_deals():
         if len(order_list) == 0:
             order_list = orders
         deal = {
+            'id': d.id,
             'port': d.port, 
             'vessel': d.vessel,
             'imo': d.imo,
@@ -241,8 +258,7 @@ def get_deals():
 def update_status():
     data = request.get_json()
     suppliers = []
-    uuid = data['deal']['vessel']+data['deal']['port']+data['deal']['eta']+data['deal']['buyer']
-    deal = Deal.query.filter_by(uuid=uuid).update(dict(status=data['status']))
+    deal = Deal.query.filter_by(id=data['deal']['id']).update(dict(status=data['status']))
     db.session.commit()
     response = jsonify({'deal': data['deal'], 'status': data['status']})
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -265,10 +281,10 @@ def get_orders(order_list, quote, count):
 @application.route('/getQuotes', methods=['POST'])
 @jwt_required()
 def get_quotes():
+    print(request.get_json())
     data = request.get_json()
     quotes = []
-    uuid = data['deal']['vessel']+data['deal']['port']+data['deal']['eta']+data['deal']['buyer']
-    deal = Deal.query.filter_by(uuid=uuid).first()
+    deal = Deal.query.filter_by(id=data['deal']['id']).first()
     quotes = Quote.query.filter_by(deal_id=deal.id)
     orders = Order.query.filter_by(deal_id=deal.id)
     order_list = []
@@ -345,6 +361,7 @@ def add_quote():
     quote_data['orders'] = order_list
     d = Deal.query.filter_by(id=quote.deal_id).first()
     deal = {
+        'id': d.id,
         'port': d.port, 
         'vessel': d.vessel,
         'imo': d.imo,
@@ -368,7 +385,7 @@ def save_quote():
     for o in data['orders']:
         order = Order.query.filter_by(deal_id=quote.deal_id, grade=o['grade']).first()
         price = Price.query.filter_by(quote_id=quote.id, order_id=order.id).update(dict(
-            spec=o['spec'], terms=o['terms'], price=o['price'], physical=o['physical'], delivery=o['delivery']))
+            terms=o['terms'], price=o['price'], physical=o['physical'], delivery=o['delivery']))
         db.session.commit()
     d = Deal.query.filter_by(id=quote.deal_id).first()
     deal = {
@@ -417,11 +434,13 @@ def accept_quote():
 @application.route('/actualizeDeal', methods=['POST'])
 @jwt_required()
 def actualize_deal():
-    deal = request.get_json()['deal']
+    deal_details = request.get_json()['deal']
     orders = request.get_json()['orders']
-    uuid = deal['vessel']+deal['port']+deal['eta']+deal['buyer']
-    Deal.query.filter_by(uuid=uuid).update(dict(status='actualized'))
-    deal = Deal.query.filter_by(uuid=uuid).first()
+    Deal.query.filter_by(id=deal_details['id']).update(dict(status='actualized'))
+    deal = Deal.query.filter_by(id=deal_details['id']).first()
+    rating = 'negative' if deal_details['ratingReason'] else 'positive'
+    quote = Quote.query.filter_by(deal_id=deal.id, accepted=True).update(dict(
+        rating=rating, rating_reason=deal_details['ratingReason'], rating_comment=deal_details['ratingComment']))
     for order in orders:
         Order.query.filter_by(deal_id=deal.id, grade=order['grade']).update(dict(
             delivery_date=order['deliveryDate'], volume_delivered=order['volumeDelivered'],

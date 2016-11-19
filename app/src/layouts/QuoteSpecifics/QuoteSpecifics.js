@@ -35,12 +35,12 @@ class QuoteSpecifics extends Component {
   componentDidMount() {
     const {state} = this.props;
     window.scrollTo(0, 0)
-    if (state.deals.active.deal.sent || state.deals.active.deal.status === 'enquiry') {
-      browserHistory.push('/app/viewQuotes');
-    };
-    if (state.deals.active.deal.status === 'done') {
-      browserHistory.push('/app/documents');
-    };
+    // if (state.deals.active.deal.sent || state.deals.active.deal.status === 'enquiry') {
+    //   browserHistory.push('/app/viewQuotes');
+    // };
+    // if (state.deals.active.deal.status === 'done') {
+    //   browserHistory.push('/app/documents');
+    // };
   }
 
   handleSubmit() {
@@ -60,8 +60,10 @@ class QuoteSpecifics extends Component {
       form.imo = '9681883';
       form.loa = '180';
       form.grossTonnage = '24785';
-      if (state.user.role === 'buyer') {
-        actions.setDeal(form);
+      if (state.user.role === 'buyer' && !deal.status) {
+        actions.fetchCreateQuotes(form);
+        browserHistory.push('/app/suppliers');
+      } else if (state.user.role === 'buyer') {
         browserHistory.push('/app/suppliers');
       } else {
         actions.fetchCreateQuotes(form);

@@ -114,38 +114,47 @@ footer {
   display: flex;
   display: -webkit-flex;
   display: -ms-flexbox;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
+  flex-direction: column;
   height: 100px;
   width: 100%;
   background-color: $light-gray;
   border-bottom: 1px lightgray solid;
 
-  .nav-link {
+  .links {
     display: flex;
     display: -webkit-flex;
     display: -ms-flexbox;
-    padding: 10px;
-    margin-right: 50px;
-    margin-left: 50px;
-    color: gray;
-    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    align-items: flex-end;
     justify-content: center;
-    text-decoration: none;
-    font-weight: 100;
 
-    @media screen and (max-width: $break-small) {
-      margin-right: 20px;
-      margin-left: 20px;
+    .nav-link {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      padding: 10px;
+      margin-right: 50px;
+      margin-left: 50px;
+      color: gray;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: 100;
+
+      @media screen and (max-width: $break-small) {
+        margin-right: 20px;
+        margin-left: 20px;
+      }
     }
-  }
 
-  .active {
-    padding-bottom: 8px;
-    font-weight: 500;
-    color: $main-blue;
-    border-bottom: 3px solid $main-blue;
+    .active {
+      padding-bottom: 8px;
+      font-weight: 500;
+      color: $main-blue;
+      border-bottom: 3px solid $main-blue;
+    }
   }
 
   .title {

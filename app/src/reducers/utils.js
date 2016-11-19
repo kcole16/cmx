@@ -8,7 +8,8 @@ function cleanOrders(quote) {
     var order = {
       grade: orders[o]['grade'],
       quantity: orders[o]['quantity'],
-      unit: orders[o]['unit'+count],
+      maxSulphur: orders[o]['maxSulphur'],
+      unit: orders[o]['unit'],
       spec: orders[o]['spec'],
       comments: orders[o]['comments'],
       price: orders[o]['price'+count],

@@ -38,27 +38,29 @@ class Dashboard extends Component {
       portCallReason: null,
       agent: null,
       currency: 'USD',
-      location: 'Anchorage',
+      location: null,
       additionalInfo: null,
       orders: [],
       quotes: [],
-      status: 'order'
+      status: null,
+      voyage: null,
+      trade: null
     };
     actions.changeActiveDeal(deal);
     browserHistory.push('/app/quoteSpecifics');
   }
 
-  handleClick(deal) {
+  handleClick(deal, location) {
     const {actions} = this.props;
     actions.changeActiveDeal(deal);
     actions.fetchQuotes(deal);
-    browserHistory.push('/app/quoteSpecifics');
+    browserHistory.push('/app/'+location);
   }
 
   handleActualize(deal) {
     const {actions} = this.props;
     actions.changeActiveDeal(deal);
-    browserHistory.push('/app/actualize');
+    browserHistory.push('/app/documents');
   }
 
   render() {
@@ -72,7 +74,7 @@ class Dashboard extends Component {
           <Enquiry 
             key={index} 
             deal={deal} 
-            handleClick={handleClick} />
+            handleClick={handleClick.bind(this, deal, 'viewQuotes')} />
         )
       };
     });
@@ -91,16 +93,19 @@ class Dashboard extends Component {
         return (
           <Enquiry 
             key={index} 
-            deal={deal}  />
+            deal={deal}
+            handleClick={handleClick.bind(this, deal, 'quoteSpecifics')}  />
         )
       }
     });
     return (
       <div>
         <div className="main-bar dashboard">
-          <label className="nav-link active">DASHBOARD</label>
-          <label className="nav-link inactive">PRICES</label>
-          <label className="nav-link inactive">PORT INFORMATION</label>
+          <div className="links">
+            <label className="nav-link active">DASHBOARD</label>
+            <label className="nav-link inactive">PRICES</label>
+            <label className="nav-link inactive">PORT INFORMATION</label>
+          </div>
           <div className="new-project">
             <button onClick={this.createEnquiry}>+ Create Order</button>
           </div>
@@ -109,7 +114,7 @@ class Dashboard extends Component {
           <div className="layout-container">
             <div className="enquiries">
               <div className="title">
-                <label>Working Enquiries</label>
+                <label>Open Enquiries</label>
               </div>
               {enquiries}
               <div className="title">
@@ -117,7 +122,7 @@ class Dashboard extends Component {
               </div>
               {orders}
               <div className="title">
-                <label>Done (not Delivered)</label>
+                <label>Stemmed</label>
               </div>
               {done}
             </div>

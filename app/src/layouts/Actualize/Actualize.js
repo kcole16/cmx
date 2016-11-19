@@ -17,10 +17,13 @@ class Actualize extends Component {
     this.editOrder = this.editOrder.bind(this);
     this.editDate = this.editDate.bind(this);
     this.actualizeDeal = this.actualizeDeal.bind(this);
+    this.updateReview = this.updateReview.bind(this);
     this.state = {
       positive: false,
       negative: false,
-      orders: this.props.state.deals.active.deal.orders
+      orders: this.props.state.deals.active.deal.orders,
+      ratingReason: null,
+      ratingComment: null
     }
   }
 
@@ -62,8 +65,18 @@ class Actualize extends Component {
     const orders = this.state.orders;
     orders.map(order => order.deliveryDate = order.deliveryDate.format('YYYY-MM-DD'));
     const deal = state.deals.active.deal;
+    deal.ratingComment = this.state.ratingComment;
+    deal.ratingReason = this.state.ratingReason;
     actions.fetchActualize(deal, orders);
-    browserHistory.push('/app/documents');
+    browserHistory.push('/app');
+  }
+
+  updateReview(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    const state = this.state;
+    state[name] = value;
+    this.setState(state);
   }
 
   render() {
@@ -92,7 +105,7 @@ class Actualize extends Component {
               </div>
               <div className="row">
                 <div className="attribute">
-                  <label>Vessel</label>
+                  <label>Vessel [IMO]</label>
                   <p>{active.vessel}</p>
                 </div>
                 <div className="attribute">
@@ -122,17 +135,21 @@ class Actualize extends Component {
                   <p>{active.broker}</p>
                 </div>
                 <div className="attribute">
-                  <label>IMO</label>
-                  <p>{active.imo}</p>
-                </div>
-                <div className="attribute">
                   <label>Voyage No.</label>
                   <p>123123</p>
+                </div>
+                <div className="attribute">
                 </div>
               </div>
             </div>
             {orders}
-            <Review handleSelect={this.handleSelect} positive={this.state.positive} negative={this.state.negative}/>
+            <Review 
+              handleSelect={this.handleSelect} 
+              positive={this.state.positive} 
+              negative={this.state.negative}
+              ratingComment={this.state.ratingComment}
+              ratingReason={this.state.ratingReason} 
+              updateReview={this.updateReview} />
           </div>
         </div>
         <div className="request-button" style={{marginRight: '4%'}}>

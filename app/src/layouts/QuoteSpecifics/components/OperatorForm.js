@@ -4,6 +4,8 @@ import DatePicker from 'react-datepicker';
 import FormMessages from 'redux-form-validation';
 import {generateValidation} from 'redux-form-validation';
 import PlusImg from '../../../assets/img/add-plus-button.png';
+import GradeSearch from './GradeSearch';
+import VesselSearch from './VesselSearch';
 
 export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
     'agent', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
@@ -76,11 +78,7 @@ class OperatorForm extends Component {
       <div>
         <form onSubmit={handleSubmit}>
           <div className="form-row">
-            <div className="form-data">
-              <label>Vessel<sup>*</sup></label>
-              <input type="text" placeholder="Search by Vessel" className={vessel.touched && vessel.error ? "error-input" : "create-input"} {...vessel}/>
-              {vessel.touched && vessel.error && <div className="error">{vessel.error}</div>}
-            </div>
+            <VesselSearch vessel={vessel} />
             <div className="form-data">
               <label>Port<sup>*</sup></label>
               <select className="create-input" style={{height: 34, width: 343}} onChange={selectPort} value={port}>
@@ -90,6 +88,7 @@ class OperatorForm extends Component {
             <div className="form-data">
               <label>Location in Port</label>
               <select className="create-input" style={{height: 34, width: 343}} {...location}>
+                <option value={null}>Select Location</option>
                 <option value="Alongside">Alongside</option>
                 <option value="Ex Barge">Ex Barge</option>
                 <option value="Ex Wharf">Ex Wharf</option>
@@ -123,8 +122,9 @@ class OperatorForm extends Component {
             <div className="form-data">
               <label>Port Call Reason</label>
               <select className="create-input" style={{height: 34, width: 343}} {...portCallReason}>
-                <option value="Cargo">Working Cargo</option>
-                <option value="Bunkering">Bunkers Only</option>
+                <option value={null}>Select Reason</option>
+                <option value="Working Cargo">Working Cargo</option>
+                <option value="Bunkers Only">Bunkers Only</option>
                 <option value="High Seas">High Seas</option>
                 <option value="OPL">OPL</option>
               </select>
@@ -134,19 +134,19 @@ class OperatorForm extends Component {
           </div>
           <div className="titles">
             <div className="title">
-              <label>Grade<sup>*</sup></label>
+              <label>Grade<sup style={{color: 'red'}}>*</sup></label>
             </div>
             <div className="title">
-              <label>Quantity<sup>*</sup></label>
+              <label>Quantity<sup style={{color: 'red'}}>*</sup></label>
             </div>
             <div className="title">
-              <label>Unit<sup>*</sup></label>
+              <label>Unit<sup style={{color: 'red'}}>*</sup></label>
             </div>
             <div className="title">
-              <label>Max Sulphur<sup>*</sup></label>
+              <label>Max Sulphur<sup style={{color: 'red'}}>*</sup></label>
             </div>
             <div className="title">
-              <label>Specification<sup>*</sup></label>
+              <label>Specification<sup style={{color: 'red'}}>*</sup></label>
             </div>
             <div className="title">
               <label>Comments</label>
@@ -155,9 +155,11 @@ class OperatorForm extends Component {
           <div className="orders">
           {orders.map((order, index) => 
             <div className="order" key={index}>
-              <div className="detail">
-                <input className="create-input" placeholder="Grade" {...order.grade}/>
-              </div>
+              <GradeSearch 
+                search={order.grade.value} 
+                onChange={order.grade.onChange} 
+                sulphur={order.maxSulphur.onChange} 
+                spec={order.specification.onChange} />
               <div className="detail">
                 <input className="create-input" placeholder="Quantity" {...order.quantity}/>
               </div>

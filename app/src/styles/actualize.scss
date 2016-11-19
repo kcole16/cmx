@@ -15,7 +15,7 @@ $break-large: 1200px;
 body {
   background-color: $main-bg-color;
   display: flex;
-  font-family: 'Roboto script=all rev=1', sans-serif;
+  font-family: 'Open Sans script=all rev=1', sans-serif;
   margin: 0px;
 }
 
@@ -150,6 +150,31 @@ body {
           img {
             width: 30px;
           }
+        }
+      }
+
+      .feedback-details {
+        display: flex;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        flex-direction: column;
+        margin-top: 10px;
+        margin-left: 10px;
+
+        label {
+          color: $dark-gray;
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+
+        select {
+          margin-bottom: 5px;
+        }
+
+        textarea {
+          border: 1px solid $border-color;
+          border-radius: 3px;
+          background-color: $light-gray;
         }
       }
     }

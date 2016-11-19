@@ -24,7 +24,7 @@ export default class Enquiry extends Component {
 			</div>
 			{ handleClick ? 
 			<div className="attribute">
-				<button onClick={handleClick.bind(this, deal)}>OPEN</button>
+				<button onClick={handleClick.bind(this, deal)}>VIEW</button>
 			</div> : null }
 		</div>
 	);
