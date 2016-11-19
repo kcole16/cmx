@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="OilFront">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-86574620-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+    <!-- Site Title -->
+    <title>OilFront</title>
+
+    <!-- Google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Animate -->
+    <link href="{{ url_for('static', filename='css/animate.css') }}" rel="stylesheet">
+    
+    <!-- Icon-font -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/material-design-iconic-font.min.css') }}">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <!-- Color css -->
+    <link href="{{ url_for('static', filename='css/colors/default.css') }}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+<body data-spy="scroll" data-target="#navbar-menu">
+
+  <div class="navbar navbar-custom navbar-fixed-top sticky" role="navigation">
+      <div class="container">
+
+        <!-- Navbar-header -->
+        <div class="navbar-header">
+          <!-- Responsive menu button -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <i class="zmdi zmdi-menu"></i>
+          </button>
+
+          <!-- LOGO -->
+          <img src="{{ url_for('static', filename='img/color-logo.png') }}" class="main-logo">
+
+        </div>
+        <!-- end navbar-header -->
+
+        <!-- menu -->
+        <div class="navbar-collapse collapse" id="navbar-menu">
+
+          <!-- Navbar left -->
+<!--           <ul class="nav navbar-nav nav-custom-left">
+            <li class="active">
+              <a href="#home">Home</a>
+            </li>
+            <li>
+              <a href="#features">Product</a>
+            </li>
+            <li>
+              <a href="#pricing">Pricing</a>
+            </li>
+            <li>
+              <a href="#team">Team</a>
+            </li>
+            <li>
+              <a href="#faq">FAQ</a>
+            </li>
+          </ul> -->
+
+          <!-- Navbar right -->
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/app">Login</a>
+            </li>
+            <li>
+              <a href="" class="btn btn-inverse btn-bordered navbar-btn">Signup</a>
+            </li>
+          </ul>
+
+        </div>
+        <!--/Menu -->
+      </div>
+      <!-- end container -->
+  </div>
+  <!-- End navbar-custom -->
+
+ 
+
+
+  <!-- HOME -->
+  <section class="home bg-img-1" id="home">
+    <div class="bg-overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+
+          <div class="home-wrapper text-center" style="padding-top: 130px;padding-bottom: 80px;">
+            <h2 class="animated fadeInDown wow text-white" data-wow-delay=".1s" style="font-size: 36px;">
+              Simplify your bunker enquiry process
+            </h2>
+<!--             <p class="animated fadeInDown wow text-light" data-wow-delay=".2s">
+              Streamline your bunker enquiry process.
+            </p> -->
+            <div class="trial branding-buttons" style="margin-top: 60px;">
+              <form action="/" method="POST">
+                <input name="email" placeholder="Email" type="email"> 
+                <button type="submit" class="btn btn-primary btn-shadow w-md btn-rounded">Try it for free</button> 
+              </form>
+              {% if submitted %}
+              <div class="submitted">
+                <p>Request Submitted</p>
+              </div>
+              {% endif %}
+            </div>
+          </div><!-- home wrapper -->
+
+        </div> <!-- end col -->
+      </div> <!-- end row -->
+      <div class="col-sm-6" style="float: right">
+        <img src="{{ url_for('static', filename='img/macbook.png') }}" class="img-responsive fadeIn animated wow" data-wow-delay=".2s">
+      </div>
+    </div> <!-- end container -->
+  </section>
+  <!-- END HOME -->
+
+  <section class="section" id="features" style="padding-bottom:50px">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-6 text-center" style="padding-top:50px">
+          <div class="title-box">
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">Create an Enquiry</h3>
+            <div class="border"></div>
+          </div>
+          <p class="detail">Generate enquiries quickly and easily. Enquiry particulars are tracked throughout the process, removing repetitive data entry. Vessel details auto-populate from Ship Name.
+          </p>
+        </div> 
+        <div class="col-sm-6 text-center">
+          <img class="screenshot" src="{{ url_for('static', filename='img/create-enquiry.png') }}">
+        </div> 
+      </div> <!-- end row -->
+
+    </div> <!-- end container -->
+  </section>
+
+  <section class="section bg-gray" id="features" style="padding-bottom:50px">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-6 text-center">
+          <img class="screenshot" src="{{ url_for('static', filename='img/select-suppliers.png') }}">
+        </div> 
+        <div class="col-sm-6 text-center" style="padding-top:50px">
+          <div class="title-box">
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">Select Suppliers</h3>
+            <div class="border"></div>
+          </div>
+          <p class="detail">Select suppliers and traders from our directory. Your choices are automatically saved for next time.
+          </p>
+        </div> 
+      </div> <!-- end row -->
+
+    </div> <!-- end container -->
+  </section>
+
+  <section class="section" id="features" style="padding-bottom:50px">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-6 text-center" style="padding-top:50px">
+          <div class="title-box">
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">View Quotes</h3>
+            <div class="border"></div>
+          </div>
+          <p class="detail">Keep track of your options in a single screen. Reach out to counterparties at the touch of a button. During negotiations, both parties can amend the quote, and changes are highlighted.
+          </p>
+        </div> 
+        <div class="col-sm-6 text-center">
+          <img class="screenshot" src="{{ url_for('static', filename='img/view-quotes.png') }}">
+        </div> 
+      </div> <!-- end row -->
+
+    </div> <!-- end container -->
+  </section>
+
+  <section class="section bg-gray" id="features" style="padding-bottom:50px">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-6 text-center">
+          <img class="screenshot" src="{{ url_for('static', filename='img/reporting.png') }}">
+        </div> 
+        <div class="col-sm-6 text-center" style="padding-top:50px">
+          <div class="title-box">
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">Analytics and Reporting</h3>
+            <div class="border"></div>
+          </div>
+          <p class="detail">Protect yourself with a clear audit trail. Generate custom reports to keep track of trends in your business. Segment volumes by counterparty, grade, ports, and vessel.
+          </p>
+        </div> 
+      </div> <!-- end row -->
+
+    </div> <!-- end container -->
+  </section>
+
+  <section class="section" id="features" style="padding-top:30px;padding-bottom:30px;">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-6 text-center" style="padding-top:50px">
+          <div class="title-box">
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">Mobile-Optimized and Secure</h3>
+            <div class="border"></div>
+          </div>
+          <p class="detail">Work securely while out of the office. Dataflows are secured via TLS/SSL using state-of-the-art encryption mechanisms.
+          </p>
+        </div> 
+        <div class="col-sm-6 text-center">
+          <img class="mobile" src="{{ url_for('static', filename='img/mobile.png') }}">
+        </div> 
+      </div> <!-- end row -->
+
+    </div> <!-- end container -->
+  </section>
+
+
+
+  <!-- FEATURES -->
+<!--   <section class="section bg-gray" id="features">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <div class="title-box">
+            <p class="title-alt">Services</p>
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">What We Offer</h3>
+            <div class="border"></div>
+          </div>
+        </div> 
+      </div>
+
+      <div class="row text-center">
+        <div class="col-sm-4">
+          <div class="service-item animated fadeInLeft wow" data-wow-delay=".1s">
+            <img src="images/icons/cup.svg" width="48" alt="img">
+            <div class="service-detail">
+              <h4>Strategy Solutions</h4>
+              <p>We put a lot of effort in design, as it’s the most important ingredient of successful website.Sed ut perspiciatis unde omnis iste natus error sit.</p>
+            </div> 
+          </div> 
+        </div> 
+
+        <div class="col-sm-4">
+          <div class="service-item animated fadeInDown wow" data-wow-delay=".3s">
+            <img src="images/icons/diploma.svg" width="48" alt="img">
+            <div class="service-detail">
+              <h4>Digital Design</h4>
+              <p>We put a lot of effort in design, as it’s the most important ingredient of successful website.Sed ut perspiciatis unde omnis iste.</p>
+            </div> 
+          </div> 
+        </div> 
+
+        <div class="col-sm-4">
+          <div class="service-item animated fadeInRight wow" data-wow-delay=".5s">
+            <img src="images/icons/combo_chart.svg" width="48" alt="img">
+            <div class="service-detail">
+              <h4>SEO</h4>
+              <p>We put a lot of effort in design, as it’s the most important ingredient of successful website.Sed ut perspiciatis unde omnis iste.</p>
+            </div> 
+          </div> 
+        </div>       
+      </div> 
+
+
+      <div class="row text-center">
+        <div class="col-sm-4">
+          <div class="service-item animated fadeInLeft wow" data-wow-delay=".1s">
+            <img src="images/icons/space-rocket.svg" width="48" alt="img">
+            <div class="service-detail">
+              <h4>Strategy Solutions</h4>
+              <p>We put a lot of effort in design, as it’s the most important ingredient of successful website.Sed ut perspiciatis unde omnis iste.</p>
+            </div> 
+          </div> 
+        </div> 
+
+        <div class="col-sm-4">
+          <div class="service-item animated fadeInDown wow" data-wow-delay=".3s">
+            <img src="images/icons/umbrella.svg" width="48" alt="img">
+            <div class="service-detail">
+              <h4>Digital Design</h4>
+              <p>We put a lot of effort in design, as it’s the most important ingredient of successful website.Sed ut perspiciatis unde omnis iste.</p>
+            </div> 
+          </div> 
+        </div> 
+
+        <div class="col-sm-4">
+          <div class="service-item animated fadeInRight wow" data-wow-delay=".5s">
+            <img src="images/icons/support.svg" width="48" alt="img">
+            <div class="service-detail">
+              <h4>Support</h4>
+              <p>We put a lot of effort in design, as it’s the most important ingredient of successful website.Sed ut perspiciatis unde omnis iste.</p>
+            </div> 
+          </div> 
+        </div>        
+      </div> 
+
+
+    </div>
+  </section> -->
+  <!-- END FEATURES -->
+
+
+  <!-- FEATURES-ALT -->
+<!--   <section class="section bg-gray" id="features">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="feature-detail">
+
+            <div class="title-box">
+              <p class="title-alt">Features</p>
+              <h3 class="fadeIn animated wow" data-wow-delay=".1s">Clean and Ultra Modern Design</h3>
+              <div class="border"></div>
+            </div>
+
+            <ul class="zmdi-hc-ul">
+              <li class="fadeIn animated wow" data-wow-delay=".1s"><i class="zmdi-hc-li zmdi zmdi-caret-right-circle text-colored"></i><span class="text-muted">Fully Responsive design.</span></li>
+
+              <li class="fadeIn animated wow" data-wow-delay=".2s"><i class="zmdi-hc-li zmdi zmdi-caret-right-circle text-colored"></i><span class="text-muted">Based on Bootstrap 3.3.6</span></li>
+
+              <li class="fadeIn animated wow" data-wow-delay=".3s"><i class="zmdi-hc-li zmdi zmdi-caret-right-circle text-colored"></i><span class="text-muted">Many variants to choose from</span></li>
+
+              <li class="fadeIn animated wow" data-wow-delay=".4s"><i class="zmdi-hc-li zmdi zmdi-caret-right-circle text-colored"></i><span class="text-muted">Built with HTML5 & CSS3</span></li>
+
+              <li class="fadeIn animated wow" data-wow-delay=".5s"><i class="zmdi-hc-li zmdi zmdi-caret-right-circle text-colored"></i><span class="text-muted">Commented and clean code</span></li>
+
+            </ul>
+
+            <a href="" class="btn btn-primary btn-shadow btn-rounded w-lg animated fadeInDown wow" data-wow-delay=".4s">Get Started</a>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <img src="images/macbook.png" class="img-responsive fadeIn animated wow" data-wow-delay=".2s">
+        </div>
+
+      </div>
+    </div>
+  </section> -->
+  <!-- END FEATURES-ALT -->
+
+
+
+<!--   <section class="section" id="pricing">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <div class="title-box">
+            <p class="title-alt fadeIn animated wow" data-wow-delay=".1s">Pricing</p>
+            <h3 class="fadeIn animated wow" data-wow-delay=".2s">Select a Plan</h3>
+            <div class="border"></div>
+          </div>
+        </div> 
+      </div> 
+
+      <div class="row">
+
+        <article class="pricing-column col-lg-3 col-sm-6">
+            <div class="inner-box fadeIn animated wow" data-wow-delay=".1s">
+                <div class="plan-header text-center">
+                    <h3 class="plan-title">Basic</h3>
+                    <h2 class="plan-price">$19</h2>
+                    <div class="plan-duration">Per Month</div>
+                </div>
+                <ul class="plan-stats list-unstyled text-center">
+                    <li>5 Projects</li>
+                    <li>1 GB Storage</li>
+                    <li>No Domain</li>
+                    <li>1 User</li>
+                    <li>24x7 Support</li>
+                </ul>
+
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary btn-shadow w-md btn-rounded">Buy Now</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="pricing-column col-lg-3 col-sm-6">
+            <div class="inner-box fadeIn animated wow" data-wow-delay=".2s">
+                <div class="plan-header text-center">
+                    <h3 class="plan-title">Premium</h3>
+                    <h2 class="plan-price">$29</h2>
+                    <div class="plan-duration">Per Month</div>
+                </div>
+                <ul class="plan-stats list-unstyled text-center">
+                    <li>5 Projects</li>
+                    <li>1 GB Storage</li>
+                    <li>No Domain</li>
+                    <li>1 User</li>
+                    <li>24x7 Support</li>
+                </ul>
+
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary btn-shadow w-md btn-rounded">Buy Now</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="pricing-column col-lg-3 col-sm-6">
+            <div class="inner-box fadeIn animated wow" data-wow-delay=".3s">
+                <div class="plan-header text-center">
+                    <h3 class="plan-title">Developer</h3>
+                    <h2 class="plan-price">$39</h2>
+                    <div class="plan-duration">Per Month</div>
+                </div>
+                <ul class="plan-stats list-unstyled text-center">
+                    <li>5 Projects</li>
+                    <li>1 GB Storage</li>
+                    <li>No Domain</li>
+                    <li>1 User</li>
+                    <li>24x7 Support</li>
+                </ul>
+
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary btn-shadow w-md btn-rounded">Buy Now</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="pricing-column col-lg-3 col-sm-6">
+            <div class="inner-box fadeIn animated wow" data-wow-delay=".4s">
+                <div class="plan-header text-center">
+                    <h3 class="plan-title">Business</h3>
+                    <h2 class="plan-price">$49</h2>
+                    <div class="plan-duration">Per Month</div>
+                </div>
+                <ul class="plan-stats list-unstyled text-center">
+                    <li>5 Projects</li>
+                    <li>1 GB Storage</li>
+                    <li>No Domain</li>
+                    <li>1 User</li>
+                    <li>24x7 Support</li>
+                </ul>
+
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary btn-shadow w-md btn-rounded">Buy Now</a>
+                </div>
+            </div>
+        </article>
+
+      </div>
+
+    </div> 
+  </section> -->
+  <!-- END PRICING -->
+
+
+
+  <!-- CLIENTS -->
+<!--   <section class="bg-img-2">
+    <div class="bg-overlay"></div>
+    <div class="container clients section">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <div class="title-box">
+            <p class="title-alt">Testimonials</p>
+            <h3 class="fadeIn animated wow text-white" data-wow-delay=".1s">Happy Clients</h3>
+            <div class="border"></div>
+          </div>
+        </div> 
+      </div> 
+
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <div class="">
+            <div class="brand-item animated fadeInLeft wow" data-wow-delay=".1s">
+              <a href="#"><img alt="01 brand" src="images/clients/01_brand.png"></a>
+            </div>
+            <div class="brand-item animated fadeInLeft wow" data-wow-delay=".2s">
+              <a href="#"><img alt="02 brand" src="images/clients/02_brand.png"></a>
+            </div>
+            <div class="brand-item animated fadeInLeft wow" data-wow-delay=".3s">
+              <a href="#"><img alt="03 brand" src="images/clients/03_brand.png"></a>
+            </div>
+            <div class="brand-item animated fadeInLeft wow" data-wow-delay=".4s">
+              <a href="#"><img alt="04 brand" src="images/clients/04_brand.png"></a>
+            </div>
+            <div class="brand-item animated fadeInLeft wow" data-wow-delay=".5s">
+              <a href="#"><img alt="05 brand" src="images/clients/05_brand.png"></a>
+            </div>
+            <div class="brand-item animated fadeInLeft wow" data-wow-delay=".6s">
+              <a href="#"><img alt="06 brand" src="images/clients/06_brand.png"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <!-- END CLIENTS -->
+
+
+
+  <!-- TEAM -->
+<!--   <section class="section bg-gray" id="team">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <div class="title-box">
+            <p class="title-alt">Team</p>
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">Who We Are</h3>
+            <div class="border"></div>
+          </div>
+        </div> 
+      </div> 
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="row team text-center">
+            <div class="col-sm-6">
+              <div class="team-member animated fadeInDown wow" data-wow-delay=".1s">
+                <img src="images/team/team-1.jpg" alt="team-member" class="img-responsive img-circle">
+                <h4>Danny Soos</h4>
+                <p class="text-muted">Product Designer & Founder</p>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="team-member animated fadeInDown wow" data-wow-delay=".3s">
+                <img src="images/team/team-2.jpg" alt="team-member" class="img-responsive img-circle">
+                <h4>Kendall Cole</h4>
+                <p class="text-muted">Developer & Co-founder</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section> -->
+  
+
+
+  <!-- FAQ -->
+<!--   <section class="section" id="faq">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <div class="title-box">
+            <p class="title-alt">Faq</p>
+            <h3 class="fadeIn animated wow" data-wow-delay=".1s">Simple Questions</h3>
+            <div class="border"></div>
+          </div>
+        </div> 
+      </div> 
+
+      <div class="row m-t-30">
+        <div class="col-md-5 col-md-offset-1">
+          <div class="question-q-box">Q.</div>
+          <div class="animated fadeInLeft wow" data-wow-delay=".1s">
+            <h4 class="question" data-wow-delay=".1s">What is Lorem Ipsum?</h4>
+            <p class="answer">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+          </div>
+
+          <div class="question-q-box">Q.</div>
+          <div class="animated fadeInLeft wow" data-wow-delay=".3s">
+            <h4 class="question">Why use Lorem Ipsum?</h4>
+            <p class="answer">Lorem ipsum dolor sit amet, in mea nonumes dissentias dissentiunt, pro te solet oratio iriure. Cu sit consetetur moderatius intellegam, ius decore accusamus te. Ne primis suavitate disputando nam. Mutat convenirete.</p>
+          </div>
+
+          <div class="question-q-box">Q.</div>
+          <div class="animated fadeInLeft wow" data-wow-delay=".5s">
+            <h4 class="question">How many variations exist?</h4>
+            <p class="answer">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+          </div>
+
+        </div>
+
+        <div class="col-md-5">
+          <div class="question-q-box">Q.</div>
+          <div class="animated fadeInRight wow" data-wow-delay=".2s">
+            <h4 class="question">Is safe use Lorem Ipsum?</h4>
+            <p class="answer">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+          </div>
+
+          <div class="question-q-box">Q.</div>
+          <div class="animated fadeInRight wow" data-wow-delay=".4s">
+            <h4 class="question">When can be used?</h4>
+            <p class="answer">Lorem ipsum dolor sit amet, in mea nonumes dissentias dissentiunt, pro te solet oratio iriure. Cu sit consetetur moderatius intellegam, ius decore accusamus te. Ne primis suavitate disputando nam. Mutat convenirete.</p>
+          </div>
+
+          <div class="question-q-box">Q.</div>
+          <div class="animated fadeInRight wow" data-wow-delay=".6s">
+            <h4 class="question">License &amp; Copyright</h4>
+            <p class="answer">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section> -->
+  <!-- END FAQ -->
+
+  
+  <!-- FOOTER -->
+  <footer class="section bg-gray footer">
+    <div class="container">
+      <div class="row">
+<!--         <div class="col-md-4 col-sm-6">
+          <h5>OilFront</h5>
+          <ul class="list-unstyled">
+            <li><a href="">Home</a></li>
+            <li><a href="">Product</a></li>
+            <li><a href="">Login</a></li>
+          </ul>
+        </div> -->
+
+<!--         <div class="col-md-3 col-sm-6">
+          <h5>Social</h5>
+          <ul class="list-unstyled">
+            <li><a href="">Facebook</a></li>
+            <li><a href="">Twitter</a></li>
+            <li><a href="">Behance</a></li>
+            <li><a href="">Dribbble</a></li>
+          </ul>
+        </div> -->
+
+        <div class="col-sm-6">
+          <a href="https://www.joinef.com" target="_blank"><img src="{{ url_for('static', filename='img/ef.png') }}" class="ef"></a>
+          <p class="ef-text">OilFront is backed by Entrepreneur First,<br>Europe's leading technology start-up accelerator.</p>
+        </div>
+
+        <div class="col-sm-6">
+          <h5>London Office</h5>
+          <address>
+            OilFront Limited<br>
+            Tower Bridge Business Complex, <br>
+            Clements Rd, <br>
+            London SE16 4DG<br>
+          </address>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="footer-alt">
+            <p class="pull-right text-muted m-b-0">2016 © OilFront</p>
+            <a class="navbar-brand logo" href="index.html">
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- END FOOTER -->
+
+
+  <!-- Back to top -->
+  <a href="#" class="back-to-top"> <i class="zmdi zmdi-chevron-up"> </i> </a>
+
+
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Jquery easing -->                                                      
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.easing.1.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+
+    <!--sticky header-->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
+        
+    <!--common script for all pages-->
+    <script src="{{ url_for('static', filename='js/jquery.app.js') }}"></script>
+    
+  </body>
+</html>

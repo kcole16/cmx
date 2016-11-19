@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OilFront</title>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-86574620-1', 'auto');
+      ga('send', 'Quote View');
+
+    </script>
+<!-- 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+  </head>
+  <body>
+    <div class="navbar">
+      <img src="{{ url_for('static', filename='img/main-logo.png') }}"/>
+    </div>
+	<div class="main-bar">
+		<label class="main-bar-label">Enquiry: {{deal.buyer}} {{deal.vessel}} {{deal.port}} {{deal.eta}}</label>
+	</div>
+	<div class="main-app-container">
+		<label class="title">Deal Details</label>
+        <div class="attributes">
+          <div class="attribute">
+            <label>Port</label>
+            <p>{{deal.port}}</p>
+          </div>
+          <div class="attribute">
+            <label>Location in Port</label>
+            <p>{{deal.location}}</p>
+          </div>
+          <div class="attribute">
+            <label>Vessel</label>
+            <p>{{deal.vessel}}</p>
+          </div>
+          <div class="attribute">
+            <label>ETA</label>
+            <p>{{deal.eta}}</p>
+          </div>
+          <div class="attribute">
+            <label>ETD</label>
+            <p>{{deal.etd}}</p>
+          </div>
+        </div>
+        <div class="attributes">
+          <div class="attribute">
+            <label>Additional Information</label>
+            <p>{{deal.additionalInfo}}</p>
+          </div>
+        </div>
+		<label class="title">Orders</label>
+        <div class="attributes">
+          <div class="attribute">
+            <label>Grade</label>
+          </div>
+          <div class="attribute">
+            <label>Quantity</label>
+          </div>
+          <div class="attribute">
+            <label>Unit</label>
+          </div>
+          <div class="attribute">
+            <label>Max Sulphur</label>
+          </div>
+          <div class="attribute">
+            <label>Specifications</label>
+          </div>
+          <div class="attribute">
+            <label>Comments</label>
+          </div>
+        </div>
+		{% for order in orders %}
+        <div class="attributes">
+          <div class="attribute order">
+            <p>{{order.grade}}</p>
+          </div>
+          <div class="attribute order">
+            <p>{{order.quantity}}</p>
+          </div>
+          <div class="attribute order">
+            <p>{{order.unit}}</p>
+          </div>
+          <div class="attribute order">
+            <p>{{order.maxSulphur}}</p>
+          </div>
+          <div class="attribute order">
+            <p>{{order.spec}}</p>
+          </div>
+          <div class="attribute order">
+            <p>{{order.comments}}</p>
+          </div>
+        </div>
+        {% endfor %}
+		<form method="post" action="/send_quote">
+			{% for order in orders %}
+			<div class="form-order">
+				<label class="title">{{order.grade}} Quote</label>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Grade</label>
+					  <input class="create-input" name="grade{{order.number}}" value="{{order.grade}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Quantity</label>
+					  <input class="create-input" name="quantity{{order.number}}" value="{{order.quantity}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Unit</label>
+					  <select class="styled-select" name="unit{{order.number}}" value="{{order.unit}}">
+					  	<option name="MT" value="MT">MT</option>
+					  	<option name="M3" value="M3">M<sub>3</sub></option>
+					  	<option name="L" value="L">L</option>
+					  </select>
+					</div>
+					<div class="form-data">
+					  <label>Max Sulphur</label>
+					  <input class="create-input" name="maxSulphur{{order.number}}" value="{{order.maxSulphur}}"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Specifications</label>
+					  <input class="create-input" name="spec{{order.number}}" value="{{order.spec}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Price (USD)</label>
+					  <input type="number" class="create-input" name="price{{order.number}}" />
+					</div>
+					<div class="form-data">
+					  <label>Terms</label>
+					  <input class="create-input" name="terms{{order.number}}" value="30"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Physical Supplier</label>
+					  <input class="create-input" name="physical{{order.number}}"/>
+					</div>
+					<div class="form-data">
+					  <label>Delivery</label>
+					  <select class="styled-select" name="delivery{{order.number}}">
+					  	<option name="ExBarge" value="ExBarge">Ex Barge</option>
+					  	<option name="expipe" value="expipe">Ex Pipe</option>
+					  	<option name="exwharf" value="exwharf">Ex Wharf</option>
+					  	<option name="road_tanker" value="road_tanker">Road Tanker</option>
+					  	<option name="wagon" value="wagon">Wagon</option>
+					  	<option name="other" value="other">Other (Specify in Comments)</option>
+					  </select>
+					</div>
+					<div class="form-data">
+					  <label>Comments</label>
+					  <input class="create-input" name="comments{{order.number}}"/>
+					</div>
+				</div>
+			</div>
+	        {% endfor %}
+	        <div class="general">
+				<label class="title">General</label>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Contact Number</label>
+					  <input type="text" name="phone" class="create-input"/>
+					</div>
+					<div class="form-data">
+					  <label>Email</label>
+					  <input type="text" name="email" class="create-input"/>
+					</div>
+					<div class="form-data">
+					  <label>Skype ID</label>
+					  <input type="text" name="skype" class="create-input"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Validity of Quote</label>
+					  <input type="text" name="expiration" class="create-input" placeholder="30 minutes"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-data">
+					  <label>Additional Information</label>
+					  <textarea rows="5" name="info" class="create-textarea"></textarea>
+					</div>
+				</div>
+			</div>
+			<input type="text" name="supplier_id" value="{{supplier_id}}" hidden />
+			<input type="text" name="deal_id" value="{{deal_id}}" hidden />
+			<div class="request-button">
+				<button type="submit">Send Offer</button>
+			</div>
+	    </form>
+	</div>
+  </body>
+</html>
