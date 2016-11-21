@@ -8,7 +8,7 @@ import GradeSearch from './GradeSearch';
 import VesselSearch from './VesselSearch';
 
 export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
-    'agent', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
+    'agent','port', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
     'orders[].quantity', 'orders[].unit', 'orders[].specification', 
     'orders[].maxSulphur', 'orders[].comments', 'additionalInfo', 'voyage', 'trade'];
 
@@ -17,22 +17,13 @@ const validate = values => {
   if (!values.vessel) {
     errors.vessel = 'Required'
   }
-  // if (!values.buyer) {
-  //   errors.buyer = 'Required'
-  // }
-  // if (!values.currency) {
-  //   errors.currency = 'Required'
-  // }
-  // if (!values.orders.length) {
-  //   errors.orders = 'Please add at least one order'
-  // }
-  errors.orders = values.orders.map((order) => {
+  errors.orders = values.orders.map((order, index) => {
     if (!order.grade) {
       return 'Please enter grade';
     };
     if (!order.quantity) {
       return 'Please'
-    }
+    };
   });
   return errors
 }
@@ -46,9 +37,9 @@ class QuoteForm extends Component {
   }
 
   render() {
-    const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd, selectPort, port} = this.props;
+    const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd, selectPort} = this.props;
     const {fields: {vessel, buyer, orderedBy, portCallReason, voyage, trade, location,
-      agent, currency, orders, additionalInfo}} = this.props;
+      agent, currency, orders, additionalInfo, port}} = this.props;
     if (!orders.length && !deal.orders.length) {
       orders.addField({
               grade: '',
@@ -90,7 +81,7 @@ class QuoteForm extends Component {
             <VesselSearch vessel={vessel} />
             <div className="form-data">
               <label>Port<sup>*</sup></label>
-              <select className="create-input" style={{height: 34, width: 343}} onChange={selectPort} value={port}>
+              <select className="create-input" style={{height: 34, width: 343}} {...port}>
                 {ports}
               </select>
             </div>

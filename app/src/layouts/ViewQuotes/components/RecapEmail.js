@@ -24,6 +24,9 @@ export default class RecapEmail extends Component {
 			      <div className="detail">
 			        <p>{order.delivery}</p>
 			      </div>
+            <div className="detail">
+              <p>{order.physical}</p>
+            </div>
 			      <div className="detail">
 			        <p>{order.price} {deal.currency}</p>
 			      </div>
@@ -65,11 +68,13 @@ export default class RecapEmail extends Component {
                     <p>Delivery:</p>
                   </div>
                   <div className="detail">
+                    <p>Physical:</p>
+                  </div>
+                  <div className="detail">
                     <p>Price:</p>
                   </div>
                 </div>
                 {orders}
-                <p style={{marginTop: 15}}>Physical: {quote.orders[0].physical}</p>
                 <p style={{marginTop: 15}}>Agent: {deal.agent ? deal.agent : 'TBC'}</p>
                 <p style={{marginTop: 15}}>Add Remarks:</p>
                 {comments}

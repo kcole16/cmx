@@ -47,7 +47,6 @@ class QuoteSpecifics extends Component {
     const {state, actions} = this.props;
     const deal = state.deals.active.deal;
     let form = state.user.role === 'operator' ? getValues(state.form.operator) : getValues(state.form.quote);
-    form.port = deal.port;
     form.suppliers = deal.suppliers;
     form.status = 'enquiry';
     if (!this.state.etd) {
@@ -61,9 +60,11 @@ class QuoteSpecifics extends Component {
       form.loa = '180';
       form.grossTonnage = '24785';
       if (state.user.role === 'buyer' && !deal.status) {
+        actions.fetchGetSuppliers(form.port);
         actions.fetchCreateQuotes(form);
         browserHistory.push('/app/suppliers');
       } else if (state.user.role === 'buyer') {
+        actions.fetchGetSuppliers(form.port);
         browserHistory.push('/app/suppliers');
       } else {
         actions.fetchCreateQuotes(form);

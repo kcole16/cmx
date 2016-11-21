@@ -47,7 +47,7 @@ export default class Quote extends Component {
 
   render() {
 	const {index, quote, openModal, eta, etd, isActive, currency} = this.props;
-	const skypeLink = "skype:"+quote.skype+"?chat";
+	const skypeLink = "skype:dannysoos?chat";
 	let commentsExist = false;
 	const commentList = quote.orders.map((order, index) => {
 		if (order.comments) {

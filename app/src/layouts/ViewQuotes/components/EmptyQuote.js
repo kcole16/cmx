@@ -8,16 +8,19 @@ export const fields = ['validity', 'orders[].grade',
 
 const validate = values => {
   const errors = {}
-  if (!values.validity) {
-    errors.validity = 'Required'
-  }
-  errors.orders = values.orders.map((order) => {
+  errors.orders = values.orders.map((order, index) => {
     if (!order.grade) {
       return 'Please enter grade';
     };
     if (!order.quantity) {
       return 'Please'
-    }
+    };
+    if (!order.terms) {
+      return 'Please enter grade';
+    };
+    if (!order.delivery) {
+      return 'Please enter grade';
+    };
   });
   return errors
 }
@@ -79,11 +82,10 @@ class EmptyQuote extends Component {
 		              <div className="detail">
 			              <select className="create-input" style={{height: 34, width: 125}} {...order.delivery}>
 							<option name="ExBarge" value="ExBarge">Ex Barge</option>
-							<option name="expipe" value="expipe">Ex Pipe</option>
-							<option name="exwharf" value="exwharf">Ex Wharf</option>
-							<option name="road_tanker" value="road_tanker">Road Tanker</option>
-							<option name="wagon" value="wagon">Wagon</option>
-							<option name="other" value="other">Other</option>
+							<option name="expipe" value="ExPipe">Ex Pipe</option>
+							<option name="exwharf" value="ExWharf">Ex Wharf</option>
+							<option name="road_tanker" value="RTW">RTW</option>
+							<option name="other" value="Other">Other</option>
 			              </select>			              
 			          </div>
 		              <div className="detail">
@@ -157,6 +159,15 @@ export default EmptyQuote = reduxForm({
   fields,
   validate},
   (state) => {
+  	const orders = state.deals.active.deal.orders;
+  	for (var order in orders) {
+  		if (!orders[order].terms) {
+  			orders[order].terms = 'Prepay';
+  		};
+  		if (!orders[order].delivery) {
+  			orders[order].delivery = 'ExBarge';
+  		};
+  	};
     return {
       initialValues: {orders: state.deals.active.deal.orders}
     }

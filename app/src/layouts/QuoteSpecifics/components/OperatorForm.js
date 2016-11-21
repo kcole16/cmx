@@ -9,7 +9,7 @@ import VesselSearch from './VesselSearch';
 
 export const fields = ['vessel', 'buyer', 'orderedBy', 'portCallReason', 
     'agent', 'eta', 'etd', 'currency', 'location', 'orders[].grade',
-    'orders[].quantity', 'orders[].unit', 'orders[].specification', 
+    'orders[].quantity', 'orders[].unit', 'orders[].specification', 'port',
     'orders[].maxSulphur', 'orders[].comments', 'additionalInfo', 'voyage',
     'trade'];
 
@@ -38,8 +38,8 @@ class OperatorForm extends Component {
   }
 
   render() {
-    const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd, selectPort, port} = this.props;
-    const {fields: {vessel, buyer, orderedBy, portCallReason, 
+    const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd, selectPort} = this.props;
+    const {fields: {vessel, buyer, orderedBy, portCallReason, port, 
       agent, currency, orders, additionalInfo, voyage, trade}} = this.props;
     if (!orders.length && !deal.orders.length) {
       orders.addField({
@@ -81,7 +81,7 @@ class OperatorForm extends Component {
             <VesselSearch vessel={vessel} />
             <div className="form-data">
               <label>Port<sup>*</sup></label>
-              <select className="create-input" style={{height: 34, width: 343}} onChange={selectPort} value={port}>
+              <select className="create-input" style={{height: 34, width: 343}} {...port}>
                 {ports}
               </select>
             </div>
