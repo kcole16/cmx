@@ -9,17 +9,11 @@ export const fields = ['validity', 'orders[].grade',
 const validate = values => {
   const errors = {}
   errors.orders = values.orders.map((order, index) => {
-    if (!order.grade) {
+    if (!order.price) {
       return 'Please enter grade';
     };
-    if (!order.quantity) {
+    if (!order.physical) {
       return 'Please'
-    };
-    if (!order.terms) {
-      return 'Please enter grade';
-    };
-    if (!order.delivery) {
-      return 'Please enter grade';
     };
   });
   return errors
@@ -169,7 +163,7 @@ export default EmptyQuote = reduxForm({
   		};
   	};
     return {
-      initialValues: {orders: state.deals.active.deal.orders}
+      initialValues: {orders: state.deals.active.deal.orders, 'validity': ''}
     }
   } 
 )(EmptyQuote);
