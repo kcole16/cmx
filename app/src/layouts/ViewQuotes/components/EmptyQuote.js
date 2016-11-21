@@ -52,12 +52,13 @@ class EmptyQuote extends Component {
   }
 
   render() {
-	const {index, quote, eta, etd, currency, handleSubmit, submitting} = this.props;
+	const {index, quote, eta, etd, currency, handleSubmit, submitting, unit} = this.props;
     const {fields: {phone, email, skype, validity, orders}} = this.props;
     let ordersList = null;
     let content = null;
 	if (this.state.edit) {
 		ordersList = orders.map((order, index) => {
+			const placeholder = "Price ["+order.unit.value+"]";
 			return (
 		            <div className="order" key={index}>
 		              <div className="detail">
@@ -79,7 +80,7 @@ class EmptyQuote extends Component {
 		                <input className="create-input" placeholder="Delivery" {...order.delivery}/>
 		              </div>
 		              <div className="detail">
-		                <input className="create-input" placeholder="Price" {...order.price}/>
+		                <input className="create-input" placeholder={placeholder} {...order.price}/>
 		              </div>
 		            </div>
 				)

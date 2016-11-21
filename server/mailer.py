@@ -22,7 +22,9 @@ def send_message(supplier, deal, orders):
         'personalizations': [{
             'to': [{
                 'email': 'kcole16@gmail.com'
-            }],
+            }, {
+                'email': 'danny@oilfront.com'
+            }]
         }],
         'from': {
             'email': 'OilFront <info@oilfront.com>'
