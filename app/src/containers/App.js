@@ -36,8 +36,8 @@ class App extends Component {
             {content}
           </div>
       )
-    }
   }
+}
 
 function mapStateToProps(state) {
   return {

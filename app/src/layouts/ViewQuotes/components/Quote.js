@@ -124,10 +124,14 @@ export default class Quote extends Component {
 		<div className="supplier">
 			<div className="order-details">
 				<div className="order-banner">
-					<label>{quote.name}</label>
-					{this.state.edit ? 
-					<button onClick={this.toggleEdit}>Cancel</button>: 
-					<button onClick={this.toggleEdit}>Edit</button> }
+					<div className="quote-name">
+						<label>{quote.name}</label>
+					</div>
+					<div className="edit">
+						{this.state.edit ? 
+						<button onClick={this.toggleEdit}>Cancel</button>: 
+						<button onClick={this.toggleEdit}>Edit</button> }
+					</div>
 				</div>
 				<div className="order-header">
 					<label className="title">Orders</label>

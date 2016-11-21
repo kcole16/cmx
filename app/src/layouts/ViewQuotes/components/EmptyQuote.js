@@ -6,6 +6,31 @@ export const fields = ['phone', 'email', 'skype', 'validity', 'orders[].grade',
     'orders[].maxSulphur', 'orders[].comments', 'orders[].price',
     'orders[].delivery','orders[].physical','orders[].terms'];
 
+const validate = values => {
+  const errors = {}
+  if (!values.phone) {
+    errors.phone = 'Required'
+  }
+  if (!values.email) {
+    errors.email = 'Required'
+  }
+  if (!values.skype) {
+    errors.skype = 'Required'
+  }
+  if (!values.validity) {
+    errors.validity = 'Required'
+  }
+  errors.orders = values.orders.map((order) => {
+    if (!order.grade) {
+      return 'Please enter grade';
+    };
+    if (!order.quantity) {
+      return 'Please'
+    }
+  });
+  return errors
+}
+
 class EmptyQuote extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +104,7 @@ class EmptyQuote extends Component {
 								<label>Physical</label>
 							</div>
 							<div className="detail">
-								<label>Delivery</label>
+								<label>Delivery Method</label>
 							</div>
 							<div className="detail">
 								<label>Price</label>
@@ -117,9 +142,14 @@ class EmptyQuote extends Component {
 		<div className="supplier">
 				<div className="order-details">
 					<div className="order-banner" style={{backgroundColor: 'lightgray', color: 'white'}}>
-						<label>{quote.name}</label>
-						{this.state.edit ? 
-							<button onClick={this.toggleEdit}>Cancel</button> : <button onClick={this.toggleEdit}>Edit</button> }
+						<div className="quote-name">
+							<label>{quote.name}</label>
+						</div>
+						<div className="waiting">
+							<label>Waiting for Quote</label>
+							{this.state.edit ? 
+								<button onClick={this.toggleEdit}>Cancel</button> : <button onClick={this.toggleEdit}>Add Manually</button> }
+						</div>
 					</div>
 					{content}
 				</div>
@@ -130,7 +160,8 @@ class EmptyQuote extends Component {
 
 export default EmptyQuote = reduxForm({ 
   form: 'emptyQuote',                      
-  fields},
+  fields,
+  validate},
   (state) => {
     return {
       initialValues: {orders: state.deals.active.deal.orders}

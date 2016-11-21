@@ -1,6 +1,6 @@
 import csv
 
-from models import db, Supplier
+from ..models import db, Supplier
 
 filename = input('Port name: ')
 file = open('%s.csv' % filename, 'r')

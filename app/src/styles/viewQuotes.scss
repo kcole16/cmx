@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 $main-bg-color: #fffff;
 $main-blue: #2B4175;
@@ -13,7 +13,7 @@ $break-large: 1200px;
 
 .layout-container {
   margin-bottom: 50px;
-  font-family: 'Roboto script=all rev=1', sans-serif;
+  font-family: 'Open Sans script=all rev=1', sans-serif;
 }
 
 .suppliers {
@@ -86,7 +86,6 @@ $break-large: 1200px;
     font-size: 14px;
     font-weight: 200;
     border-radius: 3px;
-    margin-right: 15px;
     @media screen and (max-width: $break-medium) {
       width: 270px;
       margin-top: 10px;
@@ -252,30 +251,84 @@ $break-large: 1200px;
     background-color: $main-blue;
     align-items: center;
 
-    label {
-      margin-left: 10px;
-      color: white;
-      font-size: 16px;
-      text-transform: uppercase;
+    .quote-name {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;
+      align-items: center;
+      justify-content: flex-start;
+
+      label {
+        margin-left: 10px;
+        color: white;
+        font-size: 16px;
+        text-transform: uppercase;
+      }
     }
 
-    button {
-      border: none;
-      height: 20px;
-      width: 80px;
-      background-color: $main-green;
-      color: white;
-      font-size: 14px;
-      font-weight: 200;
-      border-radius: 3px;
-      margin-right: 5px;
-      margin-left: 15px;
-      @media screen and (max-width: $break-medium) {
-        width: 270px;
-        margin-top: 10px;
-        margin-bottom: 5px;
-        margin-left: auto;
-        margin-right: auto;
+    .waiting {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;
+      align-items: center;
+      justify-content: flex-end;
+      margin-right: 2.5%;
+
+      label {
+        color: $main-blue;
+        font-size: 16px;
+        text-transform: uppercase;
+        padding-right: 10px;
+      }
+
+      button {
+        border: none;
+        height: 20px;
+        width: 120px;
+        background-color: $main-green;
+        color: white;
+        font-size: 14px;
+        font-weight: 200;
+        border-radius: 3px;
+        @media screen and (max-width: $break-medium) {
+          width: 270px;
+          margin-top: 10px;
+          margin-bottom: 5px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+
+    .edit {
+      display: flex;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      flex: 1;
+      align-items: center;
+      justify-content: flex-end;
+      margin-right: 2.5%;
+
+      button {
+        border: none;
+        height: 20px;
+        width: 80px;
+        background-color: $main-green;
+        color: white;
+        font-size: 14px;
+        font-weight: 200;
+        border-radius: 3px;
+        margin-right: 5px;
+        margin-left: 15px;
+        @media screen and (max-width: $break-medium) {
+          width: 270px;
+          margin-top: 10px;
+          margin-bottom: 5px;
+          margin-left: auto;
+          margin-right: auto;
+        }
       }
     }
   }

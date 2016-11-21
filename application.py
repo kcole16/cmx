@@ -411,6 +411,7 @@ def save_quote():
         db.session.commit()
     d = Deal.query.filter_by(id=quote.deal_id).first()
     deal = {
+        'id': d.id,
         'port': d.port, 
         'vessel': d.vessel,
         'imo': d.imo,
