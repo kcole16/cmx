@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
 import {reduxForm, getValues, addArrayValue} from 'redux-form';
 
-export const fields = ['phone', 'email', 'skype', 'validity', 'orders[].grade',
+export const fields = ['validity', 'orders[].grade',
     'orders[].quantity', 'orders[].unit', 'orders[].spec', 
     'orders[].maxSulphur', 'orders[].comments', 'orders[].price',
     'orders[].delivery','orders[].physical','orders[].terms'];
 
 const validate = values => {
   const errors = {}
-  if (!values.phone) {
-    errors.phone = 'Required'
-  }
-  if (!values.email) {
-    errors.email = 'Required'
-  }
-  if (!values.skype) {
-    errors.skype = 'Required'
-  }
   if (!values.validity) {
     errors.validity = 'Required'
   }
@@ -71,14 +62,30 @@ class EmptyQuote extends Component {
 		                <input className="create-input" placeholder="Specification" {...order.spec}/>
 		              </div>
 		              <div className="detail">
-		                <input className="create-input" placeholder="Terms" {...order.terms}/>
-		              </div>
+			              <select className="create-input" style={{height: 34, width: 125}} {...order.terms}>
+			                <option value="Prepay">Prepay</option>
+			                <option value="COD">COD</option>
+			                <option value="7 Days Credit">7 Days Credit</option>
+			                <option value="14 Days Credit">14 Days Credit</option>
+			                <option value="21 Days Credit">21 Days Credit</option>
+			                <option value="30 Days Credit">30 Days Credit</option>
+			                <option value="45 Days Credit">45 Days Credit</option>
+			                <option value="60 Days Credit">60 Days Credit</option>
+			              </select>		              
+			          </div>
 		              <div className="detail">
 		                <input className="create-input" placeholder="Physical" {...order.physical}/>
 		              </div>
 		              <div className="detail">
-		                <input className="create-input" placeholder="Delivery" {...order.delivery}/>
-		              </div>
+			              <select className="create-input" style={{height: 34, width: 125}} {...order.delivery}>
+							<option name="ExBarge" value="ExBarge">Ex Barge</option>
+							<option name="expipe" value="expipe">Ex Pipe</option>
+							<option name="exwharf" value="exwharf">Ex Wharf</option>
+							<option name="road_tanker" value="road_tanker">Road Tanker</option>
+							<option name="wagon" value="wagon">Wagon</option>
+							<option name="other" value="other">Other</option>
+			              </select>			              
+			          </div>
 		              <div className="detail">
 		                <input className="create-input" placeholder={placeholder} {...order.price}/>
 		              </div>
@@ -86,54 +93,40 @@ class EmptyQuote extends Component {
 				)
 		});
 		content = <form onSubmit={handleSubmit}>
-					<label className="title">Orders</label>
 					<div className="orders">
 						<div className="order">
 							<div className="detail">
-								<label>Grade</label>
+								<label>Grade<sup>*</sup></label>
 							</div>
 							<div className="detail">
-								<label>Quantity</label>
+								<label>Quantity<sup>*</sup></label>
 							</div>
 							<div className="detail">
-								<label>Specs</label>
+								<label>Specs<sup>*</sup></label>
 							</div>
 							<div className="detail">
-								<label>Terms</label>
+								<label>Terms<sup>*</sup></label>
 							</div>
 							<div className="detail">
-								<label>Physical</label>
+								<label>Physical<sup>*</sup></label>
 							</div>
 							<div className="detail">
-								<label>Delivery Method</label>
+								<label>Delivery Method<sup>*</sup></label>
 							</div>
 							<div className="detail">
-								<label>Price</label>
+								<label>Price<sup>*</sup></label>
 							</div>
 						</div>
 						{ordersList}
 					</div>
-					<label className="title">Contact</label>
 					<div className="form-row">
-						<div className="form-data">
-						  <label>Phone</label>
-						  <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...phone}/>
-						</div>
-						<div className="form-data">
-						  <label>Email</label>
-						  <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...email}/>
-						</div>
-						<div className="form-data">
-						  <label>Skype</label>
-						  <input type="text" placeholder="Autopopulates from Vessel" className="create-input" {...skype}/>
-						</div>
-						<div className="form-data">
+						<div className="form-data" style={{marginLeft: 20}}>
 						  <label>Validity</label>
 						  <input type="text" placeholder="In minutes" className="create-input" {...validity}/>
 						</div>
-					</div>
-					<div className="request-button">
-						<button type="submit" disabled={submitting}>Save Enquiry</button>
+						<div className="request-button" style={{marginRight: 20}}>
+							<button type="submit" disabled={submitting}>Save Enquiry</button>
+						</div>
 					</div>
 				</form>;
 	} else {

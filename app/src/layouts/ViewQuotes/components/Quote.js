@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Countdown from 'react-count-down';
 import moment from 'moment';
+import Phone from '../../../assets/img/phone-receiver.png';
+import Email from '../../../assets/img/message-closed-envelope.png';
+import Skype from '../../../assets/img/skype-logo.png';
 
 export default class Quote extends Component {
   constructor(props) {
@@ -127,15 +130,14 @@ export default class Quote extends Component {
 					<div className="quote-name">
 						<label>{quote.name}</label>
 					</div>
-					<div className="edit">
-						{this.state.edit ? 
-						<button onClick={this.toggleEdit}>Cancel</button>: 
-						<button onClick={this.toggleEdit}>Edit</button> }
+					<div className="contact">
+						<img src={Phone} />
+						<img src={Email} />
+						<a href={skypeLink}><img src={Skype} /></a>
 					</div>
 				</div>
 				<div className="order-header">
-					<label className="title">Orders</label>
-					<Countdown options={OPTIONS} style={{alignSelf: 'flex-end'}}/>
+					<label className="title"></label>
 				</div>
 				<div className="orders">
 					<div className="order">
@@ -176,19 +178,19 @@ export default class Quote extends Component {
 						</div>
 					</div></div> : null
 				}
-				<label className="title">Contact</label>
 				<div className="contact">
 					<div className="detail">
-						<label>Phone</label>
-						<p>{quote.phone}</p>
 					</div>
 					<div className="detail">
-						<label>Email</label>
-						<p>{quote.email}</p>
 					</div>
 					<div className="detail">
-						<label>Skype</label>
-						<p><a href={skypeLink}>{quote.skype}</a></p>
+					</div>
+					<div className="detail">
+					</div>
+					<div className="request-button edit-button">
+						{this.state.edit ? 
+						<button onClick={this.toggleEdit}>Cancel</button>: 
+						<button onClick={this.toggleEdit}>Edit</button> }
 					</div>
 					<div className="request-button">
 						{this.state.edit ?

@@ -43,6 +43,8 @@ export default class RecapEmail extends Component {
 	return (
 			<div className="email">
                 <p>{deal.broker ? <p>deal.broker, acting in accordance with instructions received from</p>: null} {user.companyName}, (hereafter referred to as "Buyers") have placed the following Bunker nomination with {quote.name} (hereafter referred to as "Sellers"):</p>
+                <p style={{marginTop: 15}}>This sale is subject to Sellers' General Terms and Conditions which, if not already held by the buyer, are available on
+                request to this office.</p>
                 <p style={{marginTop: 15}}>Vessel: {deal.vessel}</p>
                 <p>Port: {deal.port} ({deal.location})</p>
                 <p>ETA: {deal.eta}</p>
@@ -79,10 +81,15 @@ export default class RecapEmail extends Component {
                 <p>·         adversely affects performance of machinery or</p>
                 <p>·         is harmful to personnel or</p>
                 <p>·         contributes overall to additional air pollution</p>
-                <p style={{marginTop: 15}}>This sale is subject to Sellers' General Terms and Conditions which, if not already held by the buyer, are available on
-                request to this office.</p>
                 <p style={{marginTop: 15}}>Please advise immediately if you feel any of the above terms are incorrect.</p>
                 <p style={{marginTop: 15}}>Best Regards,</p>
+                <p style={{marginTop: 15}}>John Smith</p>
+                <p>OilFront Services</p>
+                <p>Tel: +44 5555555555</p>
+                <p>Mob: +44 555555555</p>
+                <p>Email: info@oilfront.com</p>
+                <p>Skype: oilfront</p>
+                <p><a href="www.oilfront.com">www.oilfront.com</a></p> 
             </div>
 	);
   }

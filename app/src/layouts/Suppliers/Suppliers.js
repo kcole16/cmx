@@ -79,8 +79,8 @@ class Suppliers extends Component {
             <p key={index}>{order.grade} {order.quantity}{order.unit} {order.specification} {order.comments}</p>
           )
       });
-      email =  <div className="email">
-                    <p>{deal.buyer}</p>
+      email =  <div className="email" style={{overflowY: null}}>
+                    <p>{state.user.companyName}</p>
                     <p>Bunker Enquiry</p>
                     <p style={{marginTop: 15}}>Please Offer:</p>
                     <p>{deal.vessel}</p>
@@ -102,8 +102,11 @@ class Suppliers extends Component {
                     <p><a href="www.oilfront.com">www.oilfront.com</a></p> 
                   </div>
     };
+    const orderGrades = deal.orders.map((order, index) => {
+      return order.grade.slice(0,3);
+    });
     const label = <div className="port-select">
-                    <p>{deal.vessel} / {deal.port} / {deal.eta}</p>
+                    <p>{deal.vessel} / {deal.port} / {deal.eta} / {orderGrades.join().replace(/,/g , " + ")}</p>
                   </div>;
     return (
       <div>

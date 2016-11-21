@@ -2,10 +2,9 @@ import requests
 import json
 from .settings import APP_URL, MAILGUN_API_KEY, MAILGUN_APP, SENDGRID_API_KEY
 
-def send_message(supplier, deal, orders):
-    subject = "Request for Quote from %s" % (deal.buyer)
-    link = "%s/send_quote?deal_id=%s&supplier_id=%s" % (APP_URL, deal.uuid, supplier.id)
-    print(link)
+def send_message(supplier, deal, orders, buyer):
+    subject = "Request for Quote from %s" % (buyer)
+    link = "%s/send_quote?deal_id=%s&supplier_id=%s" % (APP_URL, deal.id, supplier.id)
     order_html = ''
     ordered_by = ''
     headers = {
@@ -17,7 +16,7 @@ def send_message(supplier, deal, orders):
     for order in orders:
         order_html += '%s %s %s %s %s<br>' % (order['grade'], order['quantity'], 
             order['unit'], order['spec'], order['comments'])
-    message = '<p>%s<br>Bunker Enquiry<br><br>Please Offer:<br>%s (IMO: %s) (LOA: %s m) (GT: %s MT)<br>%s<br>@ %s (%s)<br>ETA %s<br>ETD %s<br><br><a href=%s>Click here</a> to submit a price.<br><br>%s<br><br>%s<br><br>Best Regards,<br><br>John Smith<br>Bunkers<br>OilFront Limited<br>PHONE +44 5555555555 <br>MOBILE +44 5555555555<br>Skype oilfront<br><a href="www.oilfront.com">www.oilfront.com</a></p>' % (deal.buyer, deal.vessel, deal.imo, deal.loa, deal.grossTonnage, order_html, deal.port, deal.location, deal.eta, deal.etd, link, ordered_by, deal.additionalInfo)
+    message = '<p>%s<br>Bunker Enquiry<br><br>Please Offer:<br>%s (IMO: %s) (LOA: %s m) (GT: %s MT)<br>%s<br>@ %s (%s)<br>ETA %s<br>ETD %s<br><br><a href=%s>Click here</a> to submit a price.<br><br>%s<br><br>%s<br><br>Best Regards,<br><br>John Smith<br>Bunkers<br>OilFront Limited<br>PHONE +44 5555555555 <br>MOBILE +44 5555555555<br>Skype oilfront<br><a href="www.oilfront.com">www.oilfront.com</a></p>' % (buyer, deal.vessel, deal.imo, deal.loa, deal.grossTonnage, order_html, deal.port, deal.location, deal.eta, deal.etd, link, ordered_by, deal.additionalInfo)
     data = {
         'personalizations': [{
             'to': [{
@@ -52,11 +51,10 @@ def new_signup(email):
               "html": message})
 
 
-def send_supplier_emails(suppliers, deal, orders):
-    print(orders)
+def send_supplier_emails(suppliers, deal, orders, buyer):
     for supplier in suppliers:
         print(supplier)
-        message = send_message(supplier, deal, orders)
+        message = send_message(supplier, deal, orders, buyer)
         print(message.text)
 
 

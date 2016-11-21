@@ -1,5 +1,3 @@
-require('../../../styles/suppliers.scss');
-
 import React, { Component } from 'react';
 import Logo from '../../../assets/img/internet.png'
 
@@ -10,7 +8,7 @@ export default class Supplier extends Component {
 	      <div className="supplier" style={{backgroundColor: background}}>
 	        <div className="item" id="logo">
 	        	<div className="logo-row">
-					<img src={Logo} style={{width: 30, height: 30, color:'red', marginRight: 10}}/>
+					<img src={Logo} />
 					<p>{supplier.name}</p>
 				</div>
 	        </div>

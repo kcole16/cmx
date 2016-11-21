@@ -37,14 +37,16 @@ body {
 
   .links {
     justify-content: flex-start;
+
     .nav-link {
       margin-right: 0px;
-      font-size: 12px;
+      font-size: 15px;
       color: white;
     }
 
     .active {
       font-weight: 500;
+      letter-spacing: 0.5px;
       border-bottom: 3px solid white;
     }
 
@@ -85,12 +87,13 @@ body {
 
     button {
       border: none;
-      height: 40px;
+      height: 35px;
       width: 150px;
       background: $main-green;
       border-radius: 37px;
       color: white;
       font-size: 14px;
+      font-weight: 500;
 
       @media screen and (max-width: $break-small) {
         width: 270px;
@@ -108,12 +111,16 @@ body {
   .title {
     width: 100%;
     border-bottom: 1px solid $border-color;
+    padding-top: 20px;
     padding-bottom: 10px;
     margin-bottom: 0px;
 
     label {
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 600;
       color: $main-blue;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
   }
 
@@ -127,7 +134,7 @@ body {
     align-items: center;
     justify-content: center;
     color: $dark-gray;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 200;
     width: 100%;
     min-height: 35px;
@@ -155,7 +162,8 @@ body {
         background: $main-green;
         border-radius: 4px;
         color: white;
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 500;
         @media screen and (max-width: $break-small) {
           width: 270px;
           margin-top: 15px;

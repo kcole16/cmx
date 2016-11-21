@@ -6,7 +6,9 @@ export default class OperatorBar extends Component {
     const {order} = this.props;
     return (
       <div className="main-bar">
-        <Link className="nav-link" to="/app/quoteSpecifics" activeClassName="active">Create Bunker Order</Link>
+      	<div className="links">
+        	<Link className="nav-link" to="/app/quoteSpecifics" activeClassName="active">Create Bunker Order</Link>
+        </div>
       </div>
     );
   }

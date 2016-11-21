@@ -184,6 +184,7 @@ class OperatorForm extends Component {
               <div className="detail">
                 <input className="create-input" placeholder="Comments on this parcel" {...order.comments}/>
               </div>
+              <p style={{color: 'red', cursor: 'pointer'}}onClick={() => orders.removeField(index)}>x</p>
             </div>)}
           </div>
           {orders.error && <div className="error">Please enter grade, quantity, units, and specifications</div>}

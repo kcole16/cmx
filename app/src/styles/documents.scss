@@ -34,10 +34,10 @@ body {
     align-items: center;
     justify-content: center;
     color: $dark-gray;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 200;
     width: 100%;
-    height: 80px;
+    height: 50px;
     margin-right: auto;
     margin-left: auto;
     border-bottom: 1px solid #DBD9D9;
@@ -130,8 +130,9 @@ body {
   align-items: flex-start;
 
   label {
-    font-size: 18px;
-    font-weight: 100;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     color: $main-blue;
     margin-bottom: 10px;
     @media screen and (max-width: $break-small) {
@@ -144,12 +145,13 @@ body {
 
   button {
     border: none;
-    height: 50px;
-    width: 150px;
+    height: 40px;
+    width: 180px;
     background: $main-green;
     border-radius: 37px;
     color: white;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 500;
   }
 }
 

@@ -43,7 +43,7 @@ class Documents extends Component {
 
   render() {
     const {state, actions} = this.props;
-    const active = state.deals.active.deal;
+    const deal = state.deals.active.deal;
     const docList = [{
       name: 'Contract',
       date: '27/11/2016',
@@ -58,11 +58,15 @@ class Documents extends Component {
           <Document key={index} name={doc.name} date={doc.date} url={doc.url} />
         )
     });
+    const orderGrades = deal.orders.map((order, index) => {
+      return order.grade.slice(0,3);
+    });
+    const label = deal.vessel+ ' / ' + deal.port + ' / ' + deal.eta + ' / ' + orderGrades.join().replace(/,/g , " + ");
     return (
       <div>
         <div className="main-bar">
           <div className="title">
-            <label>{active.vessel} / {active.port} / {active.eta} / {active.orders[0].grade}</label>
+            <label>{deal.vessel} / {deal.port} / {deal.eta} / {deal.orders[0].grade}</label>
           </div>
         </div>
         <div className="main-app-container">

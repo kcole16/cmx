@@ -139,8 +139,11 @@ class ViewQuotes extends Component {
           )
       }
     });
+    const orderGrades = deal.orders.map((order, index) => {
+      return order.grade.slice(0,3);
+    });
     const label = <div className="port-select">
-                    <p>{deal.vessel} / {deal.port} / {deal.eta}</p>
+                    <p>{deal.vessel} / {deal.port} / {deal.eta} / {orderGrades.join().replace(/,/g , " + ")}</p>
                   </div>;
     return (
       <div>

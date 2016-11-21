@@ -47,7 +47,7 @@ class QuoteForm extends Component {
 
   render() {
     const {deal, pristine, submitting, handleSubmit, onEtaChange, onEtdChange, eta, etd, selectPort, port} = this.props;
-    const {fields: {vessel, buyer, orderedBy, portCallReason, voyage, trade,
+    const {fields: {vessel, buyer, orderedBy, portCallReason, voyage, trade, location,
       agent, currency, orders, additionalInfo}} = this.props;
     if (!orders.length && !deal.orders.length) {
       orders.addField({
@@ -233,12 +233,12 @@ class QuoteForm extends Component {
               <input type="text" className="create-input" {...trade}/>
             </div>
             <div className="form-data">
-              <label>Broker</label>
+              <label>Buyer Name [Full Legal Style]</label>
               <input type="text" className="create-input" {...orderedBy}/>
             </div>
           </div>
           <div className="request-button">
-            <button type="submit" disabled={submitting}>Save Enquiry</button>
+            <button type="submit" disabled={submitting} style={{fontWeight: 500}}>Save Enquiry</button>
           </div>
         </form>
       </div>
@@ -252,7 +252,7 @@ export default QuoteForm = reduxForm({
   validate},
   (state) => {
     return {
-      initialValues: state.deals.active.deal
+      initialValues: {...state.deals.active.deal, orderedBy: state.user.companyName}
     }
   } 
 )(QuoteForm);

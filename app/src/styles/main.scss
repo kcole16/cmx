@@ -87,7 +87,7 @@ footer {
 
   img {
     margin-left: 3%;
-    width: 150px;
+    height: 30px;
   }
 
   .menu {
@@ -103,9 +103,11 @@ footer {
     p {
       cursor: pointer;
       font-size: 14px;
-      font-weight: 300;
+      font-weight: semi-bold;
+      letter-spacing: 0.5px;
       margin-left: 15px;
       color: white;
+      text-transform: uppercase;
     }
   }
 }
@@ -129,6 +131,9 @@ footer {
     height: 100%;
     align-items: flex-end;
     justify-content: center;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 
     .nav-link {
       display: flex;
@@ -141,7 +146,6 @@ footer {
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      font-weight: 100;
 
       @media screen and (max-width: $break-small) {
         margin-right: 20px;
@@ -168,8 +172,9 @@ footer {
     margin-left: 5%;
     margin-top: 0px;
     margin-bottom: 0px;
+
     label {
-      font-size: 28px;
+      font-size: 20px;
       font-weight: 100;
       color: $main-blue;
     }

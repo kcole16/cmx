@@ -87,7 +87,7 @@ def request_quotes():
     status = 'enquiry' if data['suppliers'] else 'order'
     d = Deal(user.email, company, uuid, data['port'], data['vessel'], data['imo'], data['loa'],
                 data['buyer'],
-                data['orderedBy'], data['grossTonnage'], data['additionalInfo'],
+                None, data['grossTonnage'], data['additionalInfo'],
                 data['eta'], data['etd'],
                 data['portCallReason'], data['agent'], data['currency'],
                 data['location'], status, data['voyage'], data['trade'])
@@ -129,6 +129,7 @@ def request_quotes():
 @jwt_required()
 def set_suppliers():
     user = current_identity
+    company = Company.query.filter_by(id=user.company_id). first()
     data = request.get_json()['deal']
     suppliers = []
     Deal.query.filter_by(id=data['id']).update(dict(status='enquiry'))
@@ -142,7 +143,7 @@ def set_suppliers():
                 supplier, deal)
             db.session.add(new_quote)
         db.session.commit()
-        send_supplier_emails(suppliers, deal, data['orders'])
+        send_supplier_emails(suppliers, deal, data['orders'], company.name)
     response = jsonify({'deal': deal.id})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -166,7 +167,7 @@ def send_quote():
     if request.method == 'POST':
         data = request.form
         supplier = Supplier.query.filter_by(id=data['supplier_id']).first()
-        deal = Deal.query.filter_by(uuid=data['deal_id']).first()
+        deal = Deal.query.filter_by(id=data['deal_id']).first()
         orders = Order.query.filter_by(deal_id=deal.id)
         quote = {
             'name': supplier.name,
@@ -207,7 +208,7 @@ def send_quote():
     else:
         deal_id = request.args['deal_id']
         supplier_id = request.args['supplier_id']
-        deal = Deal.query.filter_by(uuid=deal_id).first()
+        deal = Deal.query.filter_by(id=deal_id).first()
         orders = Order.query.filter_by(deal_id=deal.id)
         for order in orders:
             order = {
@@ -347,8 +348,8 @@ def get_quotes():
 @jwt_required()
 def add_quote():
     data = request.get_json()['quote']
-    Quote.query.filter_by(id=data['id']).update(dict(phone=data['phone'], 
-        skype=data['skype'], email=data['email'], validity=data['validity']))
+    Quote.query.filter_by(id=data['id']).update(dict(phone=None, 
+        skype=None, email=None, validity=data['validity']))
     quote = Quote.query.filter_by(id=data['id']).first()
     quote_data = {
         'id': quote.id,

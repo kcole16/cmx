@@ -74,7 +74,7 @@ class Dashboard extends Component {
           <Enquiry 
             key={index} 
             deal={deal} 
-            handleClick={handleClick.bind(this, deal, 'viewQuotes')} />
+            handleClick={state.user.role === 'buyer' ? handleClick.bind(this, deal, 'viewQuotes') : null} />
         )
       };
     });
@@ -94,7 +94,7 @@ class Dashboard extends Component {
           <Enquiry 
             key={index} 
             deal={deal}
-            handleClick={handleClick.bind(this, deal, 'quoteSpecifics')}  />
+            handleClick={state.user.role === 'buyer' ? handleClick.bind(this, deal, 'quoteSpecifics'): null}  />
         )
       }
     });
