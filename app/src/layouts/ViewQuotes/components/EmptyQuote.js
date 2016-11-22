@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {reduxForm, getValues, addArrayValue, reset} from 'redux-form';
+import {reduxForm, getValues, addArrayValue} from 'redux-form';
 
 export const fields = ['validity', 'orders[].grade',
     'orders[].quantity', 'orders[].unit', 'orders[].spec', 
@@ -16,9 +16,6 @@ const validate = values => {
       return 'Please'
     };
   });
-  if (values.orders.length === 0) {
-  	return 'No Orders'
-  };
   return errors
 }
 
@@ -44,8 +41,7 @@ class EmptyQuote extends Component {
 
   render() {
 	const {index, quote, eta, etd, currency, handleSubmit, submitting, unit, deal} = this.props;
-    const {fields: {phone, email, skype, validity}} = this.props;
-    let {fields: {orders}} = this.props;
+    const {fields: {phone, email, skype, validity, orders}} = this.props;
     let ordersList = null;
     let content = null;
     if (orders.length === 0) {
@@ -63,7 +59,14 @@ class EmptyQuote extends Component {
               price: null
             })
     	}
-    };
+    } else if (orders.length > deal.orders.length) {
+    	var count = 0;
+    	for (var i=0; i<orders.length; i++) {
+    		if (i % 2 == 0) {
+    			orders.removeField(count);
+    		};
+    	};
+    };	
 	if (this.state.edit) {
 		ordersList = orders.map((order, index) => {
 			const placeholder = "Price ["+order.unit.value+"]";
@@ -173,7 +176,7 @@ export default EmptyQuote = reduxForm({
   fields,
   validate},
   (state) => {
-  	const orders = state.deal.active.deal.orders;
+  	const orders = state.deals.active.deal.orders;
   	for (var order in orders) {
   		if (!orders[order].terms) {
   			orders[order].terms = 'Prepay';
