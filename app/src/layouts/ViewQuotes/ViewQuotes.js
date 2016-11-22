@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
-import {reduxForm, getValues} from 'redux-form';
+import {reduxForm, getValues, destroy} from 'redux-form';
 import { browserHistory } from 'react-router';
 import Quote from './components/Quote';
 import EmptyQuote from './components/EmptyQuote';
@@ -135,7 +135,8 @@ class ViewQuotes extends Component {
                 etd={state.deals.active.deal.etd} 
                 currency={state.deals.active.deal.currency}
                 addMode={addMode}
-                onSubmit={handleAdd}/>
+                onSubmit={handleAdd}
+                deal={state.deals.active.deal}/>
           )
       }
     });

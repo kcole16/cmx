@@ -80,3 +80,10 @@ export function fetchLogin(user) {
       .then(access_token => dispatch(fetchUser(access_token)))
   }
 }
+
+export function reload() {
+  return dispatch => {
+    return dispatch(triggerReload())
+      .then(() => location.reload())
+  }
+}

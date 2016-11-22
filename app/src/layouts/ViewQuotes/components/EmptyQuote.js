@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {reduxForm, getValues, addArrayValue} from 'redux-form';
+import {reduxForm, getValues, addArrayValue, reset} from 'redux-form';
 
 export const fields = ['validity', 'orders[].grade',
     'orders[].quantity', 'orders[].unit', 'orders[].spec', 
@@ -16,6 +16,9 @@ const validate = values => {
       return 'Please'
     };
   });
+  if (values.orders.length === 0) {
+  	return 'No Orders'
+  };
   return errors
 }
 
@@ -40,10 +43,27 @@ class EmptyQuote extends Component {
   }
 
   render() {
-	const {index, quote, eta, etd, currency, handleSubmit, submitting, unit} = this.props;
-    const {fields: {phone, email, skype, validity, orders}} = this.props;
+	const {index, quote, eta, etd, currency, handleSubmit, submitting, unit, deal} = this.props;
+    const {fields: {phone, email, skype, validity}} = this.props;
+    let {fields: {orders}} = this.props;
     let ordersList = null;
     let content = null;
+    if (orders.length === 0) {
+    	for (var order in deal.orders) {
+    	    orders.addField({
+              grade: deal.orders[order].grade,
+              quantity: deal.orders[order].quantity,
+              unit: deal.orders[order].unit,
+              maxSulphur: deal.orders[order].maxSulphur,
+              spec: deal.orders[order].spec,
+              comments: deal.orders[order].comments,
+              terms: 'Prepay',
+              physical: null,
+              delivery: 'ExBarge',
+              price: null
+            })
+    	}
+    };
 	if (this.state.edit) {
 		ordersList = orders.map((order, index) => {
 			const placeholder = "Price ["+order.unit.value+"]";
@@ -153,7 +173,7 @@ export default EmptyQuote = reduxForm({
   fields,
   validate},
   (state) => {
-  	const orders = state.deals.active.deal.orders;
+  	const orders = state.deal.active.deal.orders;
   	for (var order in orders) {
   		if (!orders[order].terms) {
   			orders[order].terms = 'Prepay';
@@ -163,7 +183,7 @@ export default EmptyQuote = reduxForm({
   		};
   	};
     return {
-      initialValues: {orders: state.deals.active.deal.orders, 'validity': ''}
+      initialValues: {orders: orders, 'validity': ''}
     }
   } 
 )(EmptyQuote);

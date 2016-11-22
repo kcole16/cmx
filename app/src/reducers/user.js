@@ -10,7 +10,8 @@ const initialState = {
   access_token: null,
   user_id: null,
   isAuthenticated: false,
-  incorrectLogin: false
+  incorrectLogin: false,
+  reloaded: false
 };
 
 function isUndefined(param) {
