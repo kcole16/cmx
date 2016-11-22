@@ -41,7 +41,7 @@ class ViewQuotes extends Component {
       actions.fetchQuotes(state.deals.active.deal);
     }, this);
     if (state.deals.active.deal.orders.length <= 0) {
-      browserHistory.push('/app/quoteSpecifics');
+      browserHistory.push('/app');
     };
   }
 

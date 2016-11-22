@@ -121,12 +121,14 @@ export function fetchCreateQuotes(deal) {
   return dispatch => {
     return fetch(req.url, req.obj)
       .then((res) => {
-        if (res.status >= 400) {
+        if (res.status === 401) {
           dispatch(removeUser());
           throw new Error("Not Logged In");
-        } else {
+        } else if (res.status === 200 || 201) {
           return res.json();
-        };
+        } else {
+          browserHistory.push('/app');
+        }
       })
       .then(json => dispatch(changeActiveDeal(json.deal)))
       .catch(err => console.log(err))
@@ -222,13 +224,15 @@ export function fetchQuotes(deal) {
   return dispatch => {
     return fetch(req.url, req.obj)
       .then((res) => {
-        if (res.status >= 400) {
+        if (res.status === 401) {
           dispatch(removeUser());
           throw new Error("Not Logged In");
-        } else {
+        } else if (res.status === 200 || 201) {
           return res.json();
-        };
-      })      
+        } else {
+          throw new Error("Error: "+res.status);
+        }
+      })  
       .then(json => dispatch(getQuotes(json)))
       .catch(err => console.log(err))
   }
@@ -243,12 +247,14 @@ export function fetchAddQuote(quote) {
   return dispatch => {
     return fetch(req.url, req.obj)
       .then((res) => {
-        if (res.status >= 400) {
+        if (res.status === 401) {
           dispatch(removeUser());
           throw new Error("Not Logged In");
-        } else {
+        } else if (res.status === 200 || 201) {
           return res.json();
-        };
+        } else {
+          throw new Error("Error: "+res.status);
+        }
       })      
       .then(json => dispatch(fetchQuotes(json)))
       .catch(err => console.log(err))
@@ -264,13 +270,15 @@ export function fetchSaveQuote(quote) {
   return dispatch => {
     return fetch(req.url, req.obj)
       .then((res) => {
-        if (res.status >= 400) {
+        if (res.status === 401) {
           dispatch(removeUser());
           throw new Error("Not Logged In");
-        } else {
+        } else if (res.status === 200 || 201) {
           return res.json();
-        };
-      })      
+        } else {
+          throw new Error("Error: "+res.status);
+        }
+      })     
       .then(json => dispatch(fetchQuotes(json)))
       .catch(err => console.log(err))
   }
@@ -286,12 +294,14 @@ export function fetchAcceptQuote(quote, deal) {
   return dispatch => {
     return fetch(req.url, req.obj)
       .then((res) => {
-        if (res.status >= 400) {
+        if (res.status === 401) {
           dispatch(removeUser());
           throw new Error("Not Logged In");
-        } else {
+        } else if (res.status === 200 || 201) {
           return res.json();
-        };
+        } else {
+          throw new Error("Error: "+res.status);
+        }
       })      
       .then(json => dispatch(acceptQuote(json)))
       .catch(err => console.log(err))
@@ -308,13 +318,15 @@ export function fetchActualize(deal, orders) {
   return dispatch => {
     return fetch(req.url, req.obj)
       .then((res) => {
-        if (res.status >= 400) {
+        if (res.status === 401) {
           dispatch(removeUser());
           throw new Error("Not Logged In");
-        } else {
+        } else if (res.status === 200 || 201) {
           return res.json();
-        };
-      })      
+        } else {
+          throw new Error("Error: "+res.status);
+        }
+      })       
       .then(json => dispatch(fetchGetDeals()))
       .catch(err => console.log(err))
   }
