@@ -66,7 +66,7 @@ class Documents extends Component {
       <div>
         <div className="main-bar">
           <div className="title">
-            <label>{deal.vessel} / {deal.port} / {deal.eta} / {deal.orders[0].grade}</label>
+            <label>{label}</label>
           </div>
         </div>
         <div className="main-app-container">

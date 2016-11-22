@@ -89,12 +89,16 @@ class Actualize extends Component {
             <Order key={index} order={order} editOrder={editOrder} editDate={editDate} />
         )
     });
+    const orderGrades = state.deals.active.deal.orders.map((order, index) => {
+      return order.grade.slice(0,3);
+    });
+    const label = active.vessel+ ' / ' + active.port + ' / ' + active.eta + ' / ' + orderGrades.join().replace(/,/g , " + ");
     return (
       <div>
         <div className="main-bar">
           <div className="title">
             <label>Actualize Deal</label>
-            <label className="tag">{active.vessel} / {active.port} / {active.eta} / {active.orders[0].grade}</label>
+            <label className="tag">{label}</label>
           </div>
         </div>
         <div className="main-app-container">
