@@ -7,7 +7,7 @@ export default class VesselSearch extends Component {
     this.changeSearch = this.changeSearch.bind(this);
     this.updateResults = this.updateResults.bind(this);
     this.state = {
-      search: this.props.vessel.value,
+      search: '',
       vesselList: []
     }
   }

@@ -233,6 +233,7 @@ def get_deals():
     user = current_identity
     company = Company.query.filter_by(id=user.company_id).first()
     deals = []
+    counterparty = None
     for d in Deal.query.filter_by(company_id=company.id):
         quotes = Quote.query.filter_by(deal_id=d.id)
         quote = None
@@ -241,6 +242,11 @@ def get_deals():
             for o in Order.query.filter_by(deal_id=d.id)]
         for q in quotes:
             if q.accepted:
+                try:
+                    supplier = Supplier.query.filter_by(id=q.supplier_id).first()
+                    counterparty = supplier.name
+                except AttributeError:
+                    print('No counterparty')
                 for order in orders:
                     price = Price.query.filter_by(order_id=order['id'], quote_id=q.id).first()
                     order['price'] = price.price
@@ -268,7 +274,8 @@ def get_deals():
             'additionalInfo': d.additionalInfo,
             'quotes': [],
             'orders': order_list,
-            'status': d.status
+            'status': d.status,
+            'counterparty': counterparty
         }
         deals.append(deal)
     response = jsonify({'deals': deals})
@@ -434,6 +441,7 @@ def accept_quote():
     data = request.get_json()['quote']
     Quote.query.filter_by(id=data['id']).update(dict(accepted=True))
     quote = Quote.query.filter_by(id=data['id']).first()
+    supplier = Supplier.query.filter_by(id=quote.supplier_id).first()
     Deal.query.filter_by(id=quote.deal_id).update(dict(status='done'))
     db.session.commit()
     d = Deal.query.filter_by(id=quote.deal_id).first()
@@ -448,7 +456,8 @@ def accept_quote():
         'eta': d.eta,
         'etd': d.etd,
         'orders': data['orders'],
-        'status': 'done'
+        'status': 'done',
+        'counterparty': supplier.name
     }
     response = jsonify(deal)
     response.headers.add('Access-Control-Allow-Origin', '*')

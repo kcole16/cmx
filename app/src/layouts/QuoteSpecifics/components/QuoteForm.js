@@ -166,7 +166,8 @@ class QuoteForm extends Component {
                   search={order.grade.value} 
                   onChange={order.grade.onChange} 
                   sulphur={order.maxSulphur.onChange} 
-                  spec={order.specification.onChange} />
+                  spec={order.specification.onChange} 
+                  count={index}/>
               </div>
               <div className="detail">
                 <input className="create-input" placeholder="Quantity" {...order.quantity}/>

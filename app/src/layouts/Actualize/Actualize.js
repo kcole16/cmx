@@ -124,7 +124,7 @@ class Actualize extends Component {
               <div className="row">
                 <div className="attribute">
                   <label>Counterparty</label>
-                  <p>Seller A</p>
+                  <p>{active.counterparty}</p>
                 </div>
                 <div className="attribute">
                   <label>Agent</label>

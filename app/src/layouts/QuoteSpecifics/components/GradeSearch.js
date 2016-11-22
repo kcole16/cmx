@@ -7,7 +7,7 @@ export default class GradeSearch extends Component {
     this.setGrade = this.setGrade.bind(this);
     this.changeSearch = this.changeSearch.bind(this);
     this.state = {
-      search: this.props.search
+      search: ''
     }
   }
 
@@ -26,7 +26,7 @@ export default class GradeSearch extends Component {
   }
 
   render() {
-    const {onChange} = this.props;
+    const {onChange, count} = this.props;
     let {search} = this.props;
     search = search ? search : '';
     const filteredGrades = gradeList.filter(createFilter(search, ['grade']))
@@ -44,7 +44,7 @@ export default class GradeSearch extends Component {
           <div className="detail" style={{flexDirection: 'column'}}>
             <input className="create-input" value={search} onChange={this.changeSearch}/>
             {this.state.search !== '' || null ? 
-            <div className="results">
+            <div className="results" style={{top: 520+count*70}}>
             	{searchResults}
             </div> : null}
           </div>

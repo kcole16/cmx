@@ -27,9 +27,9 @@ class Suppliers extends Component {
     // if (state.deals.active.deal.sent) {
     //   browserHistory.push('/viewQuotes');
     // };
-    // if (!state.deals.active.deal.orders.length) {
-    //   browserHistory.push('/app/quoteSpecifics');
-    // };
+    if (!state.deals.active.deal.vessel) {
+      browserHistory.push('/app/quoteSpecifics');
+    };
   }
 
   handleSubmit() {
@@ -87,7 +87,7 @@ class Suppliers extends Component {
                     <div>
                       {orders}
                     </div>
-                    <p style={{marginTop: 15}}>@ {state.deals.active.deal.port} ({state.deals.active.deal.location})</p>
+                    <p style={{marginTop: 15}}>@ {state.deals.active.deal.port} {state.deals.active.deal.location ? '('+state.deals.active.deal.location+')' : null}</p>
                     <p>ETA {deal.eta ? deal.eta : null}</p>
                     {deal.etd ? <p>ETD {deal.etd}</p>: null}
                     <p style={{marginTop: 15}}><a>Click here</a> to submit a price.</p>

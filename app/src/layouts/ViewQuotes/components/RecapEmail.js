@@ -49,7 +49,7 @@ export default class RecapEmail extends Component {
                 <p style={{marginTop: 15}}>This sale is subject to Sellers' General Terms and Conditions which, if not already held by the buyer, are available on
                 request to this office.</p>
                 <p style={{marginTop: 15}}>Vessel: {deal.vessel}</p>
-                <p>Port: {deal.port} ({deal.location})</p>
+                <p>Port: {deal.port} {deal.location ? '('+deal.location+')' : null}</p>
                 <p>ETA: {deal.eta}</p>
                 <div className="order" style={{marginTop: 15}}>
                   <div className="detail">
