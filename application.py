@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 from uuid import uuid4
 
@@ -14,9 +15,9 @@ from server.settings import PRODUCTION
 import pusher
 
 pusher_client = pusher.Pusher(
-    app_id='267433',
-    key='31409d0487a999b7a26c',
-    secret='82983e1e986f82e187da',
+    app_id=os.environ['PUSHER_APP_ID'],
+    key=os.environ['PUSHER_KEY'],
+    secret=os.environ['PUSHER_SECRET'],
     ssl=True
 )
 
